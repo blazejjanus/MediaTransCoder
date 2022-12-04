@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>MediaTransCoder.CLI</RootNamespace>
+    <BaseOutputPath>..\Build\bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>..\Build\obj\</BaseIntermediateOutputPath>
+    <AssemblyName>MediaTransCoder.CLI</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MediaTransCoder\MediaTransCoder.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,1 @@
+Instrukcja instalacji programu:

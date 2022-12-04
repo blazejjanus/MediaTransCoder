@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>MediaTransCoder.WPF</RootNamespace>
+    <BaseOutputPath>..\Build\bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>..\Build\obj\</BaseIntermediateOutputPath>
+    <AssemblyName>MediaTransCoder.WPF</AssemblyName>
+  </PropertyGroup>
+
+</Project>
