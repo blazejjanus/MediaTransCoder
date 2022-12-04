@@ -10,4 +10,8 @@
     <AssemblyName>MediaTransCoder.Backend</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
 </Project>
