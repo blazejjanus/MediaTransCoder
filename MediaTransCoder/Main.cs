@@ -5,7 +5,7 @@
         /// </summary>
         /// <param name="config"></param>
         /// <param name="gui"></param>
-        public void Init(IConfig config, IDisplay gui) {
+        public void Init(ConfigAbstract config, IDisplay gui) {
             if (config == null) {
                 throw new ArgumentNullException("Provided config was null!");
             }
@@ -15,11 +15,11 @@
             this.Config = config;
             this.GUI = gui;
         }
-        internal IConfig Config {
+        internal ConfigAbstract? Config {
             get;
             private set;
         }
-        internal IDisplay GUI {
+        internal IDisplay? GUI {
             get;
             private set;
         }

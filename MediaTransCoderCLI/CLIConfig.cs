@@ -1,23 +1,22 @@
 ﻿using MediaTransCoder.Backend;
 
 namespace MediaTransCoder.CLI {
-    public class CLIConfig : IConfig {
+    public class CLIConfig: ConfigAbstract {
         private CLIConfig() {
-            Logging = LoggingLevel.INFO;
+            
         }
-        public LoggingLevel Logging { get; set; }
 
-        public static IConfig GetConfig() {
+        public static ConfigAbstract GetConfig() {
             if (instance == null) {
                 instance = new CLIConfig();
             }
             return instance;
         }
 
-        public static void SetConfig(IConfig config) {
+        public static void SetConfig(ConfigAbstract config) {
             throw new NotImplementedException();
         }
 
-        private static IConfig instance;
+        private static ConfigAbstract instance;
     }
 }
