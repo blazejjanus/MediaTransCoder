@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoder", "MediaTra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoderCLI", "MediaTransCoderCLI\MediaTransCoderCLI.csproj", "{2B362D74-472E-4331-BBED-BCFEBFA404A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaTransCoderWPF", "MediaTransCoderWPF\MediaTransCoderWPF.csproj", "{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoderWPF", "MediaTransCoderWPF\MediaTransCoderWPF.csproj", "{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBB919D8-1B0E-4AE6-9B35-C8A4B41879EC}"
+	ProjectSection(SolutionItems) = preProject
+		.config\config.json = .config\config.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

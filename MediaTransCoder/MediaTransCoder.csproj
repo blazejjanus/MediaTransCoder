@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>MediaTransCoder.Backend</RootNamespace>
-    <BaseOutputPath>..\Build\bin</BaseOutputPath>
-    <BaseIntermediateOutputPath>..\Build\obj</BaseIntermediateOutputPath>
+    <BaseOutputPath>..\.build\bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>..\.build\obj\</BaseIntermediateOutputPath>
     <AssemblyName>MediaTransCoder.Backend</AssemblyName>
   </PropertyGroup>
 

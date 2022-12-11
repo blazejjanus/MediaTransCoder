@@ -3,7 +3,7 @@
 namespace MediaTransCoder.CLI {
     internal class CLIDisplay : IDisplay {
         private CLIDisplay() { }
-        public IDisplay GetInstance() {
+        public static IDisplay GetInstance() {
             if (instance == null) {
                 instance = new CLIDisplay();
             }
@@ -14,10 +14,24 @@ namespace MediaTransCoder.CLI {
             throw new NotImplementedException();
         }
 
-        public void Send(string message, MessageType type=MessageType.INFO) {
-            throw new NotImplementedException();
+        public void Send(string message, MessageType type = MessageType.INFO) {
+            SetColor(type);
+            Console.WriteLine(message);
+            Console.ResetColor();
         }
-
-        private IDisplay instance;
+        private void SetColor(MessageType type) {
+            switch (type) {
+                case MessageType.WARNING:
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    break;
+                case MessageType.ERROR:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case MessageType.SUCCESS:
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    break;
+            }
+        }
+        private static IDisplay? instance;
     }
 }
