@@ -7,7 +7,7 @@ namespace MediaTransCoder.CLI {
         private static CLIConfig? Config;
         private static IDisplay GUI = CLIDisplay.GetInstance();
         static void Main(string[] args) {
-            string path = "E:\\TEMP\\mtc\\input\\sample.mp4";
+            string path = "E:\\TEMP\\mtc\\input\\sample2.mp4";
             //Setup();
             Config = CLIConfig.ReadConfig();
             if(Config== null) {

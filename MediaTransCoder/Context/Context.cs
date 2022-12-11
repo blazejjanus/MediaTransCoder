@@ -3,7 +3,7 @@
     internal class Context
     {
         internal BackendConfig Config { get; set; }
-        internal EndpointArgs? Args { get; set; }
+        internal FfmpegArgs? Args { get; set; }
         internal IDisplay Display { get; set; }
         private static Context? instance;
         private Context(BackendConfig config, IDisplay display) { 
@@ -18,7 +18,7 @@
             }
             return instance;
         }
-        internal static void Init(BackendConfig config, IDisplay display, EndpointArgs? args = null)
+        internal static void Init(BackendConfig config, IDisplay display, FfmpegArgs? args = null)
         {
             if (instance != null)
             {

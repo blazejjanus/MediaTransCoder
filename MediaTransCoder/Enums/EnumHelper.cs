@@ -45,5 +45,17 @@ namespace MediaTransCoder.Backend {
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetName() ?? val.ToString();
         }
+        public static string GetResolution(Resolutions val) {
+            return val.GetType().GetMember(val.ToString())
+                .FirstOrDefault()?
+                .GetCustomAttribute<ResolutionAttribute>()?
+                .GetResolution() ?? val.ToString();
+        }
+        public static string GetName(Resolutions val) {
+            return val.GetType().GetMember(val.ToString())
+                .FirstOrDefault()?
+                .GetCustomAttribute<ResolutionAttribute>()?
+                .Name ?? val.ToString();
+        }
     }
 }

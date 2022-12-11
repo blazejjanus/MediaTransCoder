@@ -26,15 +26,23 @@ namespace MediaTransCoder.Backend
         internal bool Test() {
             try {
                 context.Display.Send("Starting process:\n" + process.StartInfo.FileName + " " + process.StartInfo.Arguments, MessageType.WARNING);
+                if(File.Exists(args.OutputPath)) {
+                    context.Display.Send("File " + args.OutputPath + " already exists!", MessageType.ERROR);
+                    context.Display.Send("Skipping.", MessageType.SUCCESS);
+                    return true;
+                }
                 process.Start();
-                context.Display.Send(process.StandardOutput.ReadToEnd());
+                string output = process.StandardOutput.ReadToEnd();
+                context.Display.Send(output);
                 process.WaitForExit();
+                context.Display.Send(output);
                 if (File.Exists(args.OutputPath)) {
                     FileInfo file = new FileInfo(args.OutputPath);
                     context.Display.Send("\tCreated file size: " + file.Length, MessageType.SUCCESS);
                     if(file.Length < 1000) {
                         context.Display.Send("\t\tDeleting file!", MessageType.ERROR);
                         File.Delete(args.OutputPath);
+                        return false;
                     }
                 }
                 if (process.ExitCode != 0) {

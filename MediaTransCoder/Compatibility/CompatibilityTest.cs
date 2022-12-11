@@ -26,7 +26,8 @@
                     ffmpegArgs.InputPath = inputPath;
                     ffmpegArgs.OutputPath = outputPath;
                     ffmpegArgs.Format = container;
-                    ffmpegArgs.AudioCodec = audioCodecs.ElementAt(i);
+                    ffmpegArgs.AudioOptions = new AudioOptions();
+                    ffmpegArgs.AudioOptions.Codec = audioCodecs.ElementAt(i);
                     using(var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
                             supportedAudioCodecs.Add(audioCodecs.ElementAt(i));
@@ -58,7 +59,8 @@
                     ffmpegArgs.InputPath = inputPath;
                     ffmpegArgs.OutputPath = outputPath;
                     ffmpegArgs.Format = container;
-                    ffmpegArgs.VideoCodec = videoCodecs.ElementAt(i);
+                    ffmpegArgs.VideoOptions = new VideoOptions();
+                    ffmpegArgs.VideoOptions.Codec = videoCodecs.ElementAt(i);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
                             supportedVideoCodecs.Add(videoCodecs.ElementAt(i));
@@ -97,8 +99,10 @@
                             EnumHelper.GetCommand(audioCodecs.ElementAt(j)) + "." + 
                             EnumHelper.GetCommand(container);
                         ffmpegArgs.Format = container;
-                        ffmpegArgs.VideoCodec = videoCodecs.ElementAt(i);
-                        ffmpegArgs.AudioCodec = audioCodecs.ElementAt(j);
+                        ffmpegArgs.AudioOptions = new AudioOptions();
+                        ffmpegArgs.VideoOptions = new VideoOptions();
+                        ffmpegArgs.VideoOptions.Codec = videoCodecs.ElementAt(i);
+                        ffmpegArgs.AudioOptions.Codec = audioCodecs.ElementAt(j);
                         using (var caller = new FfmpegCaller(ffmpegArgs)) {
                             if (caller.Test()) {
                                 anyGood = true;
