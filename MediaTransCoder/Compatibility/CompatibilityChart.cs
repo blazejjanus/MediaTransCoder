@@ -17,7 +17,7 @@ namespace MediaTransCoder.Backend.Compatibility {
         public string ToString(bool inline = false) {
             var sb  = new StringBuilder();
             string separator = "\n";
-            if (!inline)
+            if (inline)
                 separator = " ";
             sb.Append(EnumHelper.GetName(Foramt) + ":" + separator);
             if (AudioCodecs != null) {

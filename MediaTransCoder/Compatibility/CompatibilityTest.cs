@@ -88,44 +88,53 @@
                 context.Display.Send("Testing " + EnumHelper.GetName(container));
                 Directory.CreateDirectory(outputPath + "\\" + EnumHelper.GetCommand(container));
                 var supportedVideoCodecs = new List<VideoCodecs>();
-                for (int i = 0; i < videoCodecs.Count; i++) {
-                    var supportedAudioCodecs = new List<AudioCodecs>();
-                    bool anyGood = false;
-                    for (int j = 0; j < audioCodecs.Count; j++) {
-                        FfmpegArgs ffmpegArgs = new FfmpegArgs();
-                        ffmpegArgs.InputPath = inputPath;
-                        ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" + 
-                            EnumHelper.GetCommand(videoCodecs.ElementAt(i)) + "_" + 
-                            EnumHelper.GetCommand(audioCodecs.ElementAt(j)) + "." + 
+                var supportedAudioCodecs = new List<AudioCodecs>();
+                for (int i = 0; i < audioCodecs.Count; i++) {
+                    FfmpegArgs ffmpegArgs = new FfmpegArgs();
+                    ffmpegArgs.Format = container;
+                    ffmpegArgs.AudioOptions = new AudioOptions();
+                    ffmpegArgs.VideoOptions = new VideoOptions();
+                    ffmpegArgs.AudioOptions.Codec = audioCodecs.ElementAt(i);
+                    ffmpegArgs.VideoOptions.Codec = VideoCodecs.hevc;
+                    ffmpegArgs.InputPath = inputPath;
+                    ffmpegArgs.OutputPath = ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
+                            EnumHelper.GetCommand(ffmpegArgs.VideoOptions.Codec) + "_" +
+                            EnumHelper.GetCommand(ffmpegArgs.AudioOptions.Codec) + "." +
                             EnumHelper.GetCommand(container);
-                        ffmpegArgs.Format = container;
-                        ffmpegArgs.AudioOptions = new AudioOptions();
-                        ffmpegArgs.VideoOptions = new VideoOptions();
-                        ffmpegArgs.VideoOptions.Codec = videoCodecs.ElementAt(i);
-                        ffmpegArgs.AudioOptions.Codec = audioCodecs.ElementAt(j);
-                        using (var caller = new FfmpegCaller(ffmpegArgs)) {
-                            if (caller.Test()) {
-                                anyGood = true;
-                                supportedAudioCodecs.Add(audioCodecs.ElementAt(j));
-                            }
+                    using (var caller = new FfmpegCaller(ffmpegArgs)) {
+                        if (caller.Test()) {
+                            supportedAudioCodecs.Add(audioCodecs.ElementAt(i));
                         }
                     }
-                    if (anyGood) {
-                        supportedVideoCodecs.Add(videoCodecs.ElementAt(i));
-                    }
-                    result.Add(new CompatibilityChart(container) { 
-                        VideoCodecs = supportedVideoCodecs,
-                        AudioCodecs = supportedAudioCodecs
-                    });
                 }
+                for (int i = 0; i < videoCodecs.Count; i++) {
+                    FfmpegArgs ffmpegArgs = new FfmpegArgs();
+                    ffmpegArgs.Format = container;
+                    ffmpegArgs.AudioOptions = new AudioOptions();
+                    ffmpegArgs.VideoOptions = new VideoOptions();
+                    ffmpegArgs.AudioOptions.Codec = AudioCodecs.mp3;
+                    ffmpegArgs.VideoOptions.Codec = videoCodecs.ElementAt(i);
+                    ffmpegArgs.InputPath = inputPath;
+                    ffmpegArgs.OutputPath = ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
+                            EnumHelper.GetCommand(ffmpegArgs.VideoOptions.Codec) + "_" +
+                            EnumHelper.GetCommand(ffmpegArgs.AudioOptions.Codec) + "." +
+                            EnumHelper.GetCommand(container);
+                    using (var caller = new FfmpegCaller(ffmpegArgs)) {
+                        if (caller.Test()) {
+                            supportedVideoCodecs.Add(videoCodecs.ElementAt(i));
+                        }
+                    }
+                }
+                result.Add(new CompatibilityChart(container) { 
+                    VideoCodecs = supportedVideoCodecs, 
+                    AudioCodecs = supportedAudioCodecs,
+                });
             }
             return result;
         }
         private static string PrepeareOutput(string inputPath, string? outputPath) {
             if (outputPath == null)
                 outputPath = Path.GetDirectoryName(inputPath) + "\\output\\";
-            if (Directory.Exists(outputPath))
-                Directory.Delete(outputPath, true);
             Directory.CreateDirectory(outputPath);
             return outputPath;
         }

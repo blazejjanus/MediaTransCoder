@@ -6,9 +6,11 @@ namespace MediaTransCoder.Backend
         private Context context;
         private FfmpegArgs args;
         private Process process;
+        private bool started;
         internal FfmpegCaller(FfmpegArgs args) {
             context = Context.Get();
             this.args = args;
+            started = false;
             process = PrepeareProcess();
         }
         internal bool Running {
@@ -31,6 +33,7 @@ namespace MediaTransCoder.Backend
                     context.Display.Send("Skipping.", MessageType.SUCCESS);
                     return true;
                 }
+                started = true;
                 process.Start();
                 string output = process.StandardOutput.ReadToEnd();
                 context.Display.Send(output);
@@ -67,7 +70,12 @@ namespace MediaTransCoder.Backend
             return proc;
         }
         public void Dispose() {
-            process.Kill();
+            if(process != null) {
+                if (started) {
+                    process.Kill();
+                }
+                process.Dispose();
+            }
         }
     }
 }
