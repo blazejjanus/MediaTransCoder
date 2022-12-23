@@ -18,7 +18,7 @@ namespace MediaTransCoder.Backend {
         h263p,
         [Display(Name = "h264", Description = "h264")]
         h264,
-        [Display(Name = "hevc", Description = "HEVC (h265)")]
+        [Display(Name = "libx265", Description = "HEVC (h265)")]
         hevc,
         [Display(Name = "mpeg4", Description = "MPEG-4")]
         mpeg4,

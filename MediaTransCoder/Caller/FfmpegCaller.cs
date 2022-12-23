@@ -1,30 +1,62 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Timers;
 
-namespace MediaTransCoder.Backend
-{
+[assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
+namespace MediaTransCoder.Backend {
     internal class FfmpegCaller : IDisposable {
         private Context context;
         private FfmpegArgs args;
         private Process process;
         private bool started;
+        private string progressOutput;
+        private int progressOutputIndex;
+        private FfmpegVideoDetection metadata;
+
         internal FfmpegCaller(FfmpegArgs args) {
             context = Context.Get();
             this.args = args;
             started = false;
             process = PrepeareProcess();
+            progressOutput = string.Empty;
+            progressOutputIndex = 0;
+            metadata = new FfmpegVideoDetection();
         }
-        internal bool Running {
+
+        public double Progress {
             get {
-                return !process.HasExited;
+                return 0;
             }
         }
-        internal int? StatusCode {
-            get {
-                if(process.HasExited)
-                    return process.ExitCode;
-                return null;
-            }
+
+        public void RunAsync() {
+            context.Display.Send(process.StartInfo.FileName + " " + process.StartInfo.Arguments + "\n\n");
+            process.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
+            process.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
+            metadata.Read(args.InputPath);
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+            context.Display.Send("\n\nFFmpeg output after process exited: \n" + progressOutput);
         }
+
+        public void Run() {
+            /*
+            var timer = new System.Timers.Timer(500);
+            timer.Elapsed += (sender, e) => {
+                double progress = GetCurrentProgress();
+                context.Display.UpdateProgress(progress);
+            };
+            timer.Start();
+            */
+            //timer.Stop();
+            context.Display.UpdateProgress(100);
+            process.Start();
+            process.WaitForExit();
+            context.Display.Send("\n\nFFmpeg output after process exited: \n" + progressOutput);
+        }
+
         internal bool Test() {
             try {
                 context.Display.Send("Starting process:\n" + process.StartInfo.FileName + " " + process.StartInfo.Arguments, MessageType.WARNING);
@@ -36,7 +68,6 @@ namespace MediaTransCoder.Backend
                 started = true;
                 process.Start();
                 string output = process.StandardOutput.ReadToEnd();
-                context.Display.Send(output);
                 process.WaitForExit();
                 context.Display.Send(output);
                 if (File.Exists(args.OutputPath)) {
@@ -59,6 +90,15 @@ namespace MediaTransCoder.Backend
                 return false;
             }
         }
+
+        private void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
+            if(outLine.Data != null) {
+                progressOutputIndex++;
+                context.Display.Send(progressOutputIndex + ":\n" + outLine.Data);
+                progressOutput += outLine.Data;
+            }
+        }
+
         private Process PrepeareProcess() {
             var proc = new Process();
             proc.StartInfo.UseShellExecute = false;
@@ -69,6 +109,7 @@ namespace MediaTransCoder.Backend
             proc.StartInfo.Arguments = args.GetArgs();
             return proc;
         }
+
         public void Dispose() {
             if(process != null) {
                 if (started) {

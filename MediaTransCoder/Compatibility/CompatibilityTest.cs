@@ -1,10 +1,11 @@
-﻿namespace MediaTransCoder.Backend.Compatibility
-{
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
+namespace MediaTransCoder.Backend.Compatibility {
     /// <summary>
     /// Test purpose only! Class used to test format - codecs compatibility chart
     /// </summary>
-    internal static class CompatibilityTest
-    {
+    internal static class CompatibilityTest {
         /// <summary>
         /// Test audio codecs compatibility with containers
         /// </summary>

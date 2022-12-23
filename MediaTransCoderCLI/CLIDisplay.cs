@@ -32,6 +32,11 @@ namespace MediaTransCoder.CLI {
                     break;
             }
         }
+
+        public void UpdateProgress(double progress) {
+            throw new NotImplementedException();
+        }
+
         private static IDisplay? instance;
     }
 }
