@@ -19,10 +19,10 @@ namespace MediaTransCoder.Backend {
             StringBuilder sb = new StringBuilder();
             sb.Append("-hide_banner"); //Hide unused banner info
             sb.Append(" -loglevel " + EnumHelper.GetFfmpegLoggingLevel(LoggingLevel)); //Set logging level
-            sb.Append(" -progress");
+            sb.Append(" -progress -");
             if (OverrideExistingFiles)
                 sb.Append(" -y"); //Override existing output files?
-           // sb.Append(" -threads " + 16);
+            sb.Append(" -threads " + 16);
             sb.Append(" -i " + InputPath); //Single file path
             if(AudioOptions != null) {
                 sb.Append(" -acodec " + EnumHelper.GetCommand(AudioOptions.Codec));
@@ -45,6 +45,7 @@ namespace MediaTransCoder.Backend {
             WorkingDirectory = Directory.GetCurrentDirectory();
             InputPath = string.Empty; 
             OutputPath = string.Empty;
+            OverrideExistingFiles = true;
             Recursive = false;
         }
 
@@ -58,6 +59,7 @@ namespace MediaTransCoder.Backend {
             //TODO: Shall be calculated from input and output
             WorkingDirectory = Directory.GetCurrentDirectory();
             Recursive = false;
+            OverrideExistingFiles = true;
         }
 
         private void Validate() {
