@@ -3,7 +3,11 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
 namespace MediaTransCoder.Backend {
+    internal delegate void OnProgressCallback(int progress);
+    internal delegate void OnMetadataUpdateCallback(FfmpegVideoDetection metadata);
+
     internal class FfmpegCaller : IDisposable {
+        public bool IsRunning { get; private set; }
         public double Progress { 
             get {
                 return Math.Round((lastFrame / (metadata.TotalNumberOfFrames * metadata.Multiplayer)) * 100, 1);
@@ -12,15 +16,31 @@ namespace MediaTransCoder.Backend {
         private readonly Context context;
         private readonly FfmpegArgs args;
         private readonly Process process;
-        private readonly FfmpegVideoDetection metadata;
+        internal readonly FfmpegVideoDetection metadata;
         private int lastFrame;
+        OnProgressCallback? ProgressCallback;
+        OnMetadataUpdateCallback? MetadataCallback;
 
         internal FfmpegCaller(FfmpegArgs args) {
             context = Context.Get();
             this.args = args;
             process = PrepeareProcess();
             lastFrame = 0;
+            IsRunning = false;
             metadata = new FfmpegVideoDetection();
+            ProgressCallback = null;
+            MetadataCallback = null;
+        }
+
+        internal FfmpegCaller(FfmpegArgs args, OnProgressCallback? callback, OnMetadataUpdateCallback? metadataCallback) {
+            context = Context.Get();
+            this.args = args;
+            process = PrepeareProcess();
+            lastFrame = 0;
+            IsRunning = false;
+            metadata = new FfmpegVideoDetection();
+            ProgressCallback = callback;
+            MetadataCallback = metadataCallback;
         }
 
         public void Run() {
@@ -31,19 +51,25 @@ namespace MediaTransCoder.Backend {
             }
             process.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
             process.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
-            metadata.Read(args.InputPath);
+            process.Exited += new EventHandler(OnProcessExit);
+            metadata.Read(args.Files.Input);
+            if(MetadataCallback!= null) {
+                MetadataCallback(metadata);
+            }
             metadata.CalcMultiplayer(args?.Video?.FPS ?? metadata.FPS);
             process.Start();
+            IsRunning = true;
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
+            IsRunning = false;
         }
 
         internal bool Test() {
             try {
                 context.Display.Send("Starting process:\n" + process.StartInfo.FileName + " " + process.StartInfo.Arguments, MessageType.WARNING);
-                if(File.Exists(args.OutputPath)) {
-                    context.Display.Send("File " + args.OutputPath + " already exists!", MessageType.ERROR);
+                if(File.Exists(args.Files.Output)) {
+                    context.Display.Send("File " + args.Files.Output + " already exists!", MessageType.ERROR);
                     context.Display.Send("Skipping.", MessageType.SUCCESS);
                     return true;
                 }
@@ -51,12 +77,12 @@ namespace MediaTransCoder.Backend {
                 string output = process.StandardOutput.ReadToEnd();
                 process.WaitForExit();
                 context.Display.Send(output);
-                if (File.Exists(args.OutputPath)) {
-                    var file = new FileInfo(args.OutputPath);
+                if (File.Exists(args.Files.Output)) {
+                    var file = new FileInfo(args.Files.Output);
                     context.Display.Send("\tCreated file size: " + file.Length, MessageType.SUCCESS);
                     if(file.Length < 1000) {
                         context.Display.Send("\t\tDeleting file!", MessageType.ERROR);
-                        File.Delete(args.OutputPath);
+                        File.Delete(args.Files.Output);
                         return false;
                     }
                 }
@@ -71,19 +97,20 @@ namespace MediaTransCoder.Backend {
                 return false;
             }
         }
-        private bool first = true;
+        
         private void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
             if(outLine.Data != null) {
                 if (outLine.Data.Contains("frame=")) {
                     lastFrame = Int32.Parse(outLine.Data.Split("=")[1].Trim());
-                    if (first) {
-                        context.Display.Send(metadata.TotalNumberOfFrames + "  " + metadata.Multiplayer, MessageType.ERROR);
-                        first = false;
+                    if(ProgressCallback != null) {
+                        ProgressCallback(lastFrame);
                     }
-                    context.Display.Send(lastFrame + " / " + metadata.TotalNumberOfFrames * metadata.Multiplayer, MessageType.WARNING);
-                    context.Display.Send(Progress + "%");
                 }
             }
+        }
+
+        private void OnProcessExit(object sender, EventArgs e) {
+            IsRunning = false;
         }
 
         private Process PrepeareProcess() {
@@ -101,8 +128,8 @@ namespace MediaTransCoder.Backend {
             if(process != null) {
                 if (!process.HasExited) {
                     process.Kill();
-                    if (File.Exists(args.OutputPath)) {
-                        File.Delete(args.OutputPath); //Remove uncompleted conversion file
+                    if (File.Exists(args.Files.Output)) {
+                        File.Delete(args.Files.Output); //Remove uncompleted conversion file
                     }
                 }
                 process.Dispose();

@@ -1,7 +1,7 @@
 ﻿namespace MediaTransCoder.Backend {
     public class FileOption {
-        string Input { get; set; }
-        string Output { get; set; }
+        public string Input { get; set; }
+        public string Output { get; set; }
 
         public FileOption() {
             Input = string.Empty;
@@ -14,7 +14,7 @@
         /// <param name="inputFiles">List of input files.</param>
         /// <param name="outputDirectory">Common output directory for all source files.</param>
         /// <returns>List of prepared FileOption entries</returns>
-        public List<FileOption> GetFileOptions(List<string> inputFiles, string outputDirectory) {
+        public static List<FileOption> GetFileOptionsFromList(List<string> inputFiles, string outputDirectory) {
             var result = new List<FileOption>();
             foreach (var inputFile in inputFiles) {
                 if (!File.Exists(inputFile)) {
@@ -35,11 +35,16 @@
         /// <param name="outputDirectory">Output directory</param>
         /// <param name="searchCriteria">FileExtension to search</param>
         /// <returns>List of prepared FileOption entries</returns>
-        public List<FileOption> GetFileOptionsRecursive(string inputDirectory, string outputDirectory, string searchCriteria = "*.*") {
+        public static List<FileOption> GetFileOptionsFromDirectory(string inputDirectory, string outputDirectory, string searchCriteria = "*.*", bool recursive = false) {
             var result = new List<FileOption>();
             var inputRoot = new DirectoryInfo(inputDirectory);
+            List<FileInfo> inputFiles = new List<FileInfo>();
             //TODO: Get Extensions of supported formats
-            var inputFiles = inputRoot.GetFiles(searchCriteria, SearchOption.AllDirectories).ToList();
+            if (recursive) {
+                inputFiles = inputRoot.GetFiles(searchCriteria, SearchOption.AllDirectories).ToList();
+            } else {
+                inputFiles = inputRoot.GetFiles(searchCriteria, SearchOption.TopDirectoryOnly).ToList();
+            }
             foreach (var inputFile in inputFiles) {
                 result.Add(new FileOption() {
                     Input = inputFile.FullName,

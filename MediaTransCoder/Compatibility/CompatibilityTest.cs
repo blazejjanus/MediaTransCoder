@@ -1,7 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
-namespace MediaTransCoder.Backend.Compatibility {
+namespace MediaTransCoder.Backend
+{
     /// <summary>
     /// Test purpose only! Class used to test format - codecs compatibility chart
     /// </summary>
@@ -24,8 +25,8 @@ namespace MediaTransCoder.Backend.Compatibility {
                 var supportedAudioCodecs = new List<AudioCodecs>();
                 for(int i = 0; i < audioCodecs.Count; i++) {
                     FfmpegArgs ffmpegArgs = new FfmpegArgs();
-                    ffmpegArgs.InputPath = inputPath;
-                    ffmpegArgs.OutputPath = outputPath;
+                    ffmpegArgs.Files.Input = inputPath;
+                    ffmpegArgs.Files.Output = outputPath;
                     ffmpegArgs.Format = container;
                     ffmpegArgs.Audio = new AudioOptions();
                     ffmpegArgs.Audio.Codec = audioCodecs.ElementAt(i);
@@ -39,6 +40,7 @@ namespace MediaTransCoder.Backend.Compatibility {
             }
             return result;
         }
+
         /// <summary>
         /// Test video codecs compatibility with containers
         /// </summary>
@@ -57,8 +59,8 @@ namespace MediaTransCoder.Backend.Compatibility {
                 var supportedVideoCodecs = new List<VideoCodecs>();
                 for (int i = 0; i < videoCodecs.Count; i++) {
                     FfmpegArgs ffmpegArgs = new FfmpegArgs();
-                    ffmpegArgs.InputPath = inputPath;
-                    ffmpegArgs.OutputPath = outputPath;
+                    ffmpegArgs.Files.Input = inputPath;
+                    ffmpegArgs.Files.Output = outputPath;
                     ffmpegArgs.Format = container;
                     ffmpegArgs.Video = new VideoOptions();
                     ffmpegArgs.Video.Codec = videoCodecs.ElementAt(i);
@@ -72,6 +74,7 @@ namespace MediaTransCoder.Backend.Compatibility {
             }
             return result;
         }
+
         /// <summary>
         /// Test audio and video codecs compatibility with containers
         /// </summary>
@@ -97,10 +100,10 @@ namespace MediaTransCoder.Backend.Compatibility {
                     ffmpegArgs.Video = new VideoOptions();
                     ffmpegArgs.Audio.Codec = audioCodecs.ElementAt(i);
                     ffmpegArgs.Video.Codec = VideoCodecs.hevc;
-                    ffmpegArgs.InputPath = inputPath;
-                    ffmpegArgs.OutputPath = ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
-                            EnumHelper.GetCommand(ffmpegArgs.Video.Codec) + "_" +
-                            EnumHelper.GetCommand(ffmpegArgs.Audio.Codec) + "." +
+                    ffmpegArgs.Files.Input = inputPath;
+                    ffmpegArgs.Files.Output = ffmpegArgs.Files.Output = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
+                            EnumHelper.GetName(ffmpegArgs.Video.Codec) + "_" +
+                            EnumHelper.GetName(ffmpegArgs.Audio.Codec) + "." +
                             EnumHelper.GetCommand(container);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
@@ -115,10 +118,10 @@ namespace MediaTransCoder.Backend.Compatibility {
                     ffmpegArgs.Video = new VideoOptions();
                     ffmpegArgs.Audio.Codec = AudioCodecs.mp3;
                     ffmpegArgs.Video.Codec = videoCodecs.ElementAt(i);
-                    ffmpegArgs.InputPath = inputPath;
-                    ffmpegArgs.OutputPath = ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
-                            EnumHelper.GetCommand(ffmpegArgs.Video.Codec) + "_" +
-                            EnumHelper.GetCommand(ffmpegArgs.Audio.Codec) + "." +
+                    ffmpegArgs.Files.Input = inputPath;
+                    ffmpegArgs.Files.Output = ffmpegArgs.Files.Output = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
+                            EnumHelper.GetName(ffmpegArgs.Video.Codec) + "_" +
+                            EnumHelper.GetName(ffmpegArgs.Audio.Codec) + "." +
                             EnumHelper.GetCommand(container);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
@@ -133,6 +136,7 @@ namespace MediaTransCoder.Backend.Compatibility {
             }
             return result;
         }
+
         private static string PrepeareOutput(string inputPath, string? outputPath) {
             if (outputPath == null)
                 outputPath = Path.GetDirectoryName(inputPath) + "\\output\\";

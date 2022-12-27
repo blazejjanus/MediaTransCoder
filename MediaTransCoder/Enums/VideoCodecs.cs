@@ -6,45 +6,46 @@ namespace MediaTransCoder.Backend {
     /// </summary>
     public enum VideoCodecs {
         //Untested
-        [Display(Name = "dvvideo", Description = "DigitalVideo")]
+        [VideoCodec("dvvideo", "DigitalVideo", ".mov")]
         dvvideo,
-        [Display(Name = "ffv1", Description = "FFV1")]
+        [VideoCodec("ffv1", "FFV1", ".avi")]
         ffv1,
-        [Display(Name = "gif", Description = "GIF")]
+        [VideoCodec("gif", "GIF", ".gif")]
         gif,
-        [Display(Name = "h263", Description = "h263")]
+        [VideoCodec("h263", "h263", ".mp4")] //Rather container extension
         h263,
-        [Display(Name = "h263p", Description = "h263p")]
+        [VideoCodec("h263p", "h263p", ".mp4")] //Rather container extension
         h263p,
         [Display(Name = "h264", Description = "h264")]
+        [VideoCodec("h264", "h264", ".mp4")] //Rather container extension
         h264,
-        [Display(Name = "libx265", Description = "HEVC (h265)")]
+        [VideoCodec("libx265", "HEVC (h265)", ".mp4")] //Rather container extension
         hevc,
-        [Display(Name = "mpeg4", Description = "MPEG-4")]
+        [VideoCodec("mpeg4", "MPEG-4", ".mp4")]
         mpeg4,
-        [Display(Name = "msmpeg4v3", Description = "Microsoft MPEG-4")]
+        [VideoCodec("msmpeg4v3", "Microsoft MPEG-4", ".mp4")]
         msmpeg4v3,
-        [Display(Name = "msvideo1", Description = "Microsoft Video")]
+        [VideoCodec("msvideo1", "Microsoft Video", ".wmv")]
         msvideo1,
-        [Display(Name = "prores", Description = "Apple ProRes")]
+        [VideoCodec("prores", "Apple ProRes", ".mov")] //Rather container extension
         prores,
-        [Display(Name = "rawvideo", Description = "Raw Video")]
+        [VideoCodec("rawvideo", "Raw Video", ".raw")] 
         rawvideo,
-        [Display(Name = "rv20", Description = "RealVideo 2.0")]
+        [VideoCodec("rv20", "RealVideo 2.0", ".mov")] //Rather container extension
         rv20,
-        [Display(Name = "vp8", Description = "VP8")]
+        [VideoCodec("vp8", "VP8", ".webm")] //Rather container extension
         vp8,
-        [Display(Name = "vp9", Description = "VP9")]
+        [VideoCodec("dvvideo", "DigitalVideo", ".mov")] //Rather container extension
         vp9,
-        [Display(Name = "webp", Description = "Webp")]
+        [VideoCodec("webp", "Webp", ".webm")]
         webp,
-        [Display(Name = "wmv1", Description = "WMV-1")]
+        [VideoCodec("wmv1", "WMV-1", ".wmv")]
         wmv1,
-        [Display(Name = "wmv2", Description = "WMV-2")]
+        [VideoCodec("wmv2", "WMV-2", ".wmv")]
         wmv2,
-        [Display(Name = "zmbv", Description = "Zip Motion Blocks Video")]
+        [VideoCodec("zmbv", "Zip Motion Blocks Video", ".mov")] //Rather container extension
         zmbv,
-        [Display(Name = "zlib", Description = "LCL ZLib")]
+        [VideoCodec("zlib", "LCL ZLib", ".mov")] //Rather container extension
         zlib
     }
 }

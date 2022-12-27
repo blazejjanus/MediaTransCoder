@@ -5,25 +5,25 @@ namespace MediaTransCoder.Backend {
     /// Supported audio codecs. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum AudioCodecs {
-        [Display(Name = "libvorbis", Description = "Vorbis")]
+        [VideoCodec("libvorbis", "vorbis", ".ogg")]
         libvorbis,
-        [Display(Name = "libopus", Description = "Opus")]
+        [VideoCodec("libopus", "opus", ".ogg")]
         libopus,
-        [Display(Name = "mp3", Description = "MP3")]
+        [VideoCodec("mp3", "mp3", ".mp3")]
         mp3,
-        [Display(Name = "aac", Description = "AAC")]
+        [VideoCodec("aac", "aac", ".aac")]
         aac,
-        [Display(Name = "wmav1", Description = "WMAv1")]
+        [VideoCodec("wmav1", "wmav1", ".wma")]
         wmav1,
-        [Display(Name = "wmav2", Description = "WMAv2")]
+        [VideoCodec("wmav2", "wmav2", ".wma")]
         wmav2,
-        [Display(Name = "ac3", Description = "AC3")]
+        [VideoCodec("ac3", "ac3", ".ac3")]
         ac3,
-        [Display(Name = "eac3", Description = "EAC3")]
+        [VideoCodec("eac3", "eac3", ".eac3")]
         eac3,
-        [Display(Name = "flac", Description = "FLAC")]
+        [VideoCodec("flac", "flac", ".flac")]
         flac,
-        [Display(Name = "alac", Description = "ALAC")]
+        [VideoCodec("alac", "alac", ".alac")]
         alac
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
 
 namespace MediaTransCoder.Backend {
     public enum LoggingLevel {

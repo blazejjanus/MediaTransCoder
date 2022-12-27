@@ -1,6 +1,7 @@
 ﻿using System.Text;
 
-namespace MediaTransCoder.Backend.Compatibility {
+namespace MediaTransCoder.Backend
+{
     public class CompatibilityChart {
         /// <summary>
         /// Represents container type (format)
@@ -23,7 +24,7 @@ namespace MediaTransCoder.Backend.Compatibility {
             if (AudioCodecs != null) {
                 sb.Append("Audio:" + separator);
                 for(int i = 0; i < AudioCodecs.Count; i++) {
-                    sb.Append(EnumHelper.GetName(AudioCodecs.ElementAt(i)));
+                    sb.Append(EnumHelper.GetDescription(AudioCodecs.ElementAt(i)));
                     if(i < AudioCodecs.Count- 1) {
                         sb.Append(", ");
                     }
@@ -33,7 +34,7 @@ namespace MediaTransCoder.Backend.Compatibility {
             if (VideoCodecs != null) {
                 sb.Append("Video:" + separator);
                 for (int i = 0; i < VideoCodecs.Count; i++) {
-                    sb.Append(EnumHelper.GetName(VideoCodecs.ElementAt(i)));
+                    sb.Append(EnumHelper.GetDescription(VideoCodecs.ElementAt(i)));
                     if (i < VideoCodecs.Count - 1) {
                         sb.Append(", ");
                     }

@@ -1,9 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MediaTransCoder.Backend
-{
-    public class BackendConfig
-    {
+namespace MediaTransCoder.Backend {
+    public class BackendConfig {
         /// <summary>
         /// Configuration connected to system environemnt
         /// </summary>

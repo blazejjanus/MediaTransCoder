@@ -1,28 +1,30 @@
 ﻿using MediaTransCoder.Backend;
 using System.Diagnostics;
-using System.Drawing.Drawing2D;
 
 namespace MediaTransCoder.CLI {
     internal class Program {
         private static Endpoint? Backend;
         private static CLIConfig? Config;
-        private static IDisplay GUI = CLIDisplay.GetInstance();
+        private static ProgressBar Progress = new ProgressBar();
+        private static CLIDisplay GUI = CLIDisplay.GetInstance();
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
-            //string path = @"E:\TEMP\mtc\input\sample2.mp4";
-            string path = @"C:\mtc\sample2.mp4";
+            string path = @"E:\TEMP\mtc\input\sample2.mp4";
+            //string path = @"C:\mtc\sample2.mp4";
             Config = CLIConfig.ReadConfig();
             if(Config== null) {
                 throw new Exception("Obtained config was null!");
             }
+            GUI.Progress = Progress;
             Backend = new Endpoint(Config.Backend, GUI);
-            var ffmpegArgs = new FfmpegArgs() {
-                InputPath = path,
-                OutputPath = Path.GetDirectoryName(path) + "\\output\\result.mkv",
+            var options = new EndpointOptions() {
+                Input = path,
+                Output = Path.GetDirectoryName(path) + "\\output",
+                InputOption = InputOptions.FILE,
                 Format = ContainerFormat.matroska,
                 Video = new VideoOptions() {
                     Codec = VideoCodecs.hevc,
-                    Resolution = Resolutions.r1440p,
+                    Resolution = Resolutions.r1080p,
                     FPS = 60,
                     BitRate = 35000
                 },
@@ -33,7 +35,17 @@ namespace MediaTransCoder.CLI {
                     SamplingRate = 44100
                 }
             };
-            Backend.ConvertVideo(ffmpegArgs);
+            Backend.ConvertVideo(options);
+            /*
+            GUI.Progress = Progress;
+            Console.WriteLine("Starting progress bar simulation!");
+            Progress.Draw();
+            for(int i = 0; i < 1000; i++) {
+                Console.WriteLine("Iteration: " + i + 1);
+                Progress.Update((double)(i / 1000));
+                Thread.Sleep(1000);
+            }
+            */
             //Read(path);
             /*
             var charts = backend.TestAudioVideo(path);
@@ -101,7 +113,7 @@ namespace MediaTransCoder.CLI {
             cfg.SaveConfig(env.ConfigPath + "config.json");
         }
 
-        static void OnExit(object sender, ConsoleCancelEventArgs e) {
+        private static void OnExit(object sender, ConsoleCancelEventArgs e) {
             e.Cancel = true;
             Backend?.Dispose();
             Environment.ExitCode = 0;

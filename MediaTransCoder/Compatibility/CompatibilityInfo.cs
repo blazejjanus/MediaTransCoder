@@ -1,4 +1,4 @@
-﻿namespace MediaTransCoder.Backend.Compatibility {
+﻿namespace MediaTransCoder.Backend {
     internal static class CompatibilityInfo {
         
     }

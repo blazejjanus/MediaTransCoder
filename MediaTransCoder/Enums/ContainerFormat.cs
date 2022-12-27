@@ -1,24 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-
-namespace MediaTransCoder.Backend {
+﻿namespace MediaTransCoder.Backend {
     /// <summary>
     /// Supported container formats. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum ContainerFormat {
-        [Display(Name = "webm", Description = "Webm")]
+        [ContainerFormat("webm")]
         webm,
-        [Display(Name = "wav", Description = "Wave")]
+        [ContainerFormat("wav", "wave")]
         wav,
-        [Display(Name = "3gp", Description = "3gp")]
+        [ContainerFormat("3gp")]
         c3gp,
-        [Display(Name = "flv", Description = "FlashVideo")]
+        [ContainerFormat("flv", "FlashVideo")]
         flv,
-        [Display(Name = "matroska", Description = "Matroska")]
+        [ContainerFormat("matroska")]
         matroska,
-        [Display(Name = "ogg", Description = "OGG")]
+        [ContainerFormat("ogg")]
         ogg,
-        [Display(Name = "avi", Description = "AVI")]
+        [ContainerFormat("avi")]
         avi
     }
 }

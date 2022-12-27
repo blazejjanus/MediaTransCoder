@@ -1,8 +1,6 @@
 ﻿namespace MediaTransCoder.Backend {
     public interface IDisplay {
-        //COMMENT
-        public string Read(object resource);
-        //COMMENT
+        //TODO: Add comments
         public void Send(string message, MessageType type=MessageType.INFO);
         public void UpdateProgress(double progress);
     }

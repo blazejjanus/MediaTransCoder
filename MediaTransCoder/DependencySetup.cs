@@ -1,4 +1,4 @@
-﻿namespace MediaTransCoder.ClientShared {
+﻿namespace MediaTransCoder.Backend {
     public static class DependencySetup {
 
     }
