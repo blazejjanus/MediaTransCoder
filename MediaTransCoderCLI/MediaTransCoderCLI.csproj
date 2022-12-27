@@ -7,7 +7,6 @@
     <Nullable>enable</Nullable>
     <RootNamespace>MediaTransCoder.CLI</RootNamespace>
     <BaseOutputPath>..\.build\bin\</BaseOutputPath>
-    <BaseIntermediateOutputPath>..\.build\obj\</BaseIntermediateOutputPath>
     <AssemblyName>MediaTransCoder.CLI</AssemblyName>
   </PropertyGroup>
 

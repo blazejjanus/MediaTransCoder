@@ -7,8 +7,11 @@
     <UseWPF>true</UseWPF>
     <RootNamespace>MediaTransCoder.WPF</RootNamespace>
     <BaseOutputPath>..\.build\bin\</BaseOutputPath>
-    <BaseIntermediateOutputPath>..\.build\obj\</BaseIntermediateOutputPath>
     <AssemblyName>MediaTransCoder.WPF</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
 
 </Project>

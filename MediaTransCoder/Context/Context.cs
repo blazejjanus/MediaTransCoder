@@ -1,7 +1,5 @@
-﻿namespace MediaTransCoder.Backend
-{
-    internal class Context
-    {
+﻿namespace MediaTransCoder.Backend {
+    internal class Context {
         internal BackendConfig Config { get; set; }
         internal FfmpegArgs? Args { get; set; }
         internal IDisplay Display { get; set; }

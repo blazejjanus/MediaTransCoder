@@ -1,10 +1,9 @@
-﻿namespace MediaTransCoder.Backend
-{
-    public class VideoOptions
-    {
+﻿namespace MediaTransCoder.Backend {
+    public class VideoOptions {
+        //TODO: Get propper values by codec
         public VideoCodecs Codec { get; set; }
         public Resolutions Resolution { get; set; }
-        public uint BitRate {
+        public int BitRate {
             get {
                 return br;
             }
@@ -17,7 +16,7 @@
             }
         }
 
-        public uint FPS {
+        public int FPS {
             get {
                 return fps;
             }
@@ -29,27 +28,17 @@
             } 
         }
         
-        private uint fps;
-        private uint br;
+        public bool RemoveAudio { get; set; }
 
-        public string GetFormatedBitRate() {
-            /*
-            if (br >= 1000) {
-                if(br%1000 < 100) {
-                    return (br / 1000).ToString() + "m";
-                } else {
-                    return br.ToString() + "k";
-                }
-            } else {
-                return br.ToString() + "k";
-            }
-            */
-            return br.ToString() + "k";
-        }
+        private int fps;
+        private int br;
+
         public VideoOptions() {
             Codec = VideoCodecs.hevc;
+            Resolution = Resolutions.r1080p;
             BitRate = 1000;
             FPS = 30;
+            RemoveAudio = false;
         }
     }
 }

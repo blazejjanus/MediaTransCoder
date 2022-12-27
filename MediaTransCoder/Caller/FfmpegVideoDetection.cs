@@ -6,10 +6,11 @@ namespace MediaTransCoder.Backend {
     internal class FfmpegVideoDetection: IDisposable {
         public int FPS { get; private set; }
         public int TotalNumberOfFrames { get; private set; }
+        public double Multiplayer { get; private set; }
+
         public void Read(string filePath) {
             string processOutput = string.Empty;
-            // Run the ffmpeg command with the vstats file output redirected to stdout
-            Process process = new Process {
+            var process = new Process {
                 StartInfo = new ProcessStartInfo {
                     FileName = "ffmpeg",
                     WorkingDirectory = Path.GetDirectoryName(filePath),
@@ -26,6 +27,14 @@ namespace MediaTransCoder.Backend {
             ParseFfmpegOutput(processOutput);
         }
 
+        public void CalcMultiplayer(int outputFPS) {
+            Multiplayer = outputFPS / FPS;
+        }
+
+        /// <summary>
+        /// Parse video file metadata
+        /// </summary>
+        /// <param name="output">Ffmpeg video file metadata</param>
         private void ParseFfmpegOutput(string output) {
             string duration = string.Empty;
             string fps = string.Empty;
@@ -53,6 +62,7 @@ namespace MediaTransCoder.Backend {
             FPS = NumberParser.ParseDoubleStringToInt(fps);
             //Calc needed data
             TotalNumberOfFrames = parser.TotalSeconds * FPS;
+            Multiplayer = 1; //Assume the FPS won't change.
         }
 
         public void Dispose() {

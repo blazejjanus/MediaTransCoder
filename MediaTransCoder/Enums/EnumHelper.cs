@@ -9,12 +9,14 @@ namespace MediaTransCoder.Backend {
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetName() ?? val.ToString();
         }
+
         public static string GetName(AudioCodecs val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetDescription() ?? val.ToString();
         }
+
         public static string GetCommand(VideoCodecs val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
@@ -33,24 +35,28 @@ namespace MediaTransCoder.Backend {
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetName() ?? val.ToString();
         }
+
         public static string GetName(ContainerFormat val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetDescription() ?? val.ToString();
         }
+
         public static string GetFfmpegLoggingLevel(LoggingLevel val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
                 .GetCustomAttribute<DisplayAttribute>()?
                 .GetName() ?? val.ToString();
         }
+
         public static string GetResolution(Resolutions val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
                 .GetCustomAttribute<ResolutionAttribute>()?
                 .GetResolution() ?? val.ToString();
         }
+
         public static string GetName(Resolutions val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?

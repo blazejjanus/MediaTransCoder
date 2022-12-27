@@ -1,9 +1,10 @@
 ﻿using MediaTransCoder.Backend.Compatibility;
 
 namespace MediaTransCoder.Backend {
-    public class Endpoint {
+    public class Endpoint : IDisposable {
         #region Fields
         private Context context;
+        private List<FfmpegCaller> callers;
         protected static Endpoint? instance;
         #endregion
         #region Constructor
@@ -17,24 +18,32 @@ namespace MediaTransCoder.Backend {
             Context.Init(config, gui);
             context = Context.Get();
             context.Display = gui;
+            callers = new List<FfmpegCaller>();
             instance = this;
         }
 
         #region Methods
-        public void ConvertVideo(FfmpegArgs args) {
-            args.ValidateVideo();
-            using(var caller = new FfmpegCaller(args)) {
-                caller.RunAsync();
+        public void ConvertVideo(EndpointOptions options) {
+            options.ValidateVideo();
+            callers.Add(new FfmpegCaller(options));
+            callers.First().Run(); //TODO: Rethink for recursive mode
+            callers.First().Dispose();
+        }
+
+        public void ConvertAudio(EndpointOptions options) {
+
+        }
+
+        public void ConvertImage(EndpointOptions options) {
+
+        }
+
+        public void Dispose() {
+            foreach(var caller in callers) {
+                caller.Dispose();
             }
         }
 
-        public void ConvertAudio(FfmpegArgs args) {
-
-        }
-
-        public void ConvertImage(FfmpegArgs args) {
-
-        }
         #region Test
         public List<CompatibilityChart> TestAudio(string input, string? output = null) {
             return CompatibilityTest.Audio(input, output);

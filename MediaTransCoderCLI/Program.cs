@@ -4,32 +4,36 @@ using System.Drawing.Drawing2D;
 
 namespace MediaTransCoder.CLI {
     internal class Program {
-        //private static Endpoint? Backend;
+        private static Endpoint? Backend;
         private static CLIConfig? Config;
         private static IDisplay GUI = CLIDisplay.GetInstance();
         static void Main(string[] args) {
-            string path = @"E:\TEMP\mtc\input\sample2.mp4";
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
+            //string path = @"E:\TEMP\mtc\input\sample2.mp4";
+            string path = @"C:\mtc\sample2.mp4";
             Config = CLIConfig.ReadConfig();
             if(Config== null) {
                 throw new Exception("Obtained config was null!");
             }
-            var backend = new Endpoint(Config.Backend, GUI);
+            Backend = new Endpoint(Config.Backend, GUI);
             var ffmpegArgs = new FfmpegArgs() {
                 InputPath = path,
                 OutputPath = Path.GetDirectoryName(path) + "\\output\\result.mkv",
                 Format = ContainerFormat.matroska,
-                VideoOptions = new VideoOptions() {
+                Video = new VideoOptions() {
                     Codec = VideoCodecs.hevc,
                     Resolution = Resolutions.r1440p,
                     FPS = 60,
                     BitRate = 35000
                 },
-                AudioOptions = new AudioOptions() {
+                Audio = new AudioOptions() {
                     Codec = AudioCodecs.mp3,
-                    BitRate = 128
+                    BitRate = 128,
+                    AudioChannels = 1,
+                    SamplingRate = 44100
                 }
             };
-            backend.ConvertVideo(ffmpegArgs);
+            Backend.ConvertVideo(ffmpegArgs);
             //Read(path);
             /*
             var charts = backend.TestAudioVideo(path);
@@ -95,6 +99,13 @@ namespace MediaTransCoder.CLI {
             cfg.Backend.Logging.LogFilePath = env.LogPath;
             cfg.Backend.Logging.LoggingLevel = LoggingLevel.INFO;
             cfg.SaveConfig(env.ConfigPath + "config.json");
+        }
+
+        static void OnExit(object sender, ConsoleCancelEventArgs e) {
+            e.Cancel = true;
+            Backend?.Dispose();
+            Environment.ExitCode = 0;
+            Environment.Exit(0);
         }
     }
 }

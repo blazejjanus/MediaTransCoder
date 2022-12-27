@@ -1,42 +1,73 @@
-﻿using System.ComponentModel;
-using System.Text;
+﻿using System.Text;
 
 namespace MediaTransCoder.Backend {
-    public class FfmpegArgs {
+    internal class FfmpegArgs {
         public string FfmpegPath { get; set; }
         //TODO: Obtain WorkingDirectory as common path of input and output path
         public string WorkingDirectory { get; set; }
         public string InputPath { get; set; }
-        public bool Recursive { get; set; }
         public string OutputPath { get; set; }
         public bool OverrideExistingFiles { get; set; }
+        public HardwareAcceleration Acceleration { get; set; }
         public LoggingLevel LoggingLevel { get; set; }
         public ContainerFormat? Format { get; set; }
-        public AudioOptions? AudioOptions { get; set; }
-        public VideoOptions? VideoOptions { get; set; }
+        public AudioOptions? Audio { get; set; }
+        public VideoOptions? Video { get; set; }
 
         internal string GetArgs() {
             StringBuilder sb = new StringBuilder();
             sb.Append("-hide_banner"); //Hide unused banner info
             sb.Append(" -loglevel " + EnumHelper.GetFfmpegLoggingLevel(LoggingLevel)); //Set logging level
             sb.Append(" -progress -");
-            if (OverrideExistingFiles)
+            if (OverrideExistingFiles) {
                 sb.Append(" -y"); //Override existing output files?
-            sb.Append(" -threads " + 16);
+            }
+            if (Acceleration == HardwareAcceleration.CPU) {
+                sb.Append(" -threads " + Context.Get().Config.Hardware.CPUCores);
+                //TODO: Mechanism of choosing codecs for GPU acceleration
+            }
             sb.Append(" -i " + InputPath); //Single file path
-            if(AudioOptions != null) {
-                sb.Append(" -acodec " + EnumHelper.GetCommand(AudioOptions.Codec));
-            } 
-            if(VideoOptions != null) {
-                sb.Append(" -vcodec " + EnumHelper.GetCommand(VideoOptions.Codec));
-                sb.Append(" -r " + VideoOptions.FPS);
-                sb.Append(" -vf \"scale=" + EnumHelper.GetResolution(VideoOptions.Resolution) + "\"");
-                sb.Append(" -b:v " + VideoOptions.GetFormatedBitRate());
+            if(Video != null) {
+                sb.Append(" -vcodec " + EnumHelper.GetCommand(Video.Codec));
+                sb.Append(" -r " + Video.FPS);
+                sb.Append(" -vf \"scale=" + EnumHelper.GetResolution(Video.Resolution) + "\"");
+                sb.Append(" -b:v " + Video.BitRate + "k");
+            }
+            if(Audio != null) {
+                sb.Append(" -acodec " + EnumHelper.GetCommand(Audio.Codec));
+                sb.Append(" -b:a " + Audio.BitRate + "k");
+                sb.Append(" -ar " + Audio.SamplingRate);
+                sb.Append(" -ac " + Audio.AudioChannels);
             }
             if(Format != null)
                 sb.Append(" -f " + EnumHelper.GetCommand(Format.Value));
             sb.Append(" " + OutputPath);
             return sb.ToString();
+        }
+
+        internal static FfmpegArgs Get(EndpointOptions options, string input, string output) {
+            var result = new FfmpegArgs();
+            result.InputPath = input;
+            result.OutputPath = output;
+            result.Format = options.Format;
+            result.Acceleration = options.Acceleration;
+            result.Audio = options.Audio;
+            result.Video = options.Video;
+            return result;
+        }
+
+        internal static FfmpegArgs Get(EndpointOptions options) {
+            if(options.InputOption != InputOptions.FILE) {
+                throw new Exception("Cannot convert Endpoint Options to FfmpegArgs!");
+            }
+            var result = new FfmpegArgs();
+            result.InputPath = options.Input;
+            result.OutputPath = options.Output;
+            result.Format = options.Format;
+            result.Acceleration = options.Acceleration;
+            result.Audio = options.Audio;
+            result.Video = options.Video;
+            return result;
         }
 
         public FfmpegArgs() {
@@ -47,6 +78,7 @@ namespace MediaTransCoder.Backend {
             OutputPath = string.Empty;
             OverrideExistingFiles = true;
             Recursive = false;
+            Acceleration = HardwareAcceleration.NONE;
         }
 
         public FfmpegArgs(string inputPath, string outputPath) {
@@ -60,28 +92,17 @@ namespace MediaTransCoder.Backend {
             WorkingDirectory = Directory.GetCurrentDirectory();
             Recursive = false;
             OverrideExistingFiles = true;
+            Acceleration = HardwareAcceleration.NONE;
         }
 
-        private void Validate() {
-            if(Recursive) {
-                if (!Directory.Exists(InputPath)) {
-                    throw new Exception("Input directory cannot be accessed!");
-                }
+        internal Dictionary<string, string> GetFilePathes() {
+            var result = new Dictionary<string, string>();
+            if (Recursive) { //Calc all file pathes
+
             } else {
-                if (!File.Exists(InputPath)) {
-                    throw new Exception("Input file cannot be accessed!");
-                }
-            }
-        }
 
-        internal void ValidateVideo() {
-            Validate();
-            if(Format == null) {
-                throw new Exception("Container value was null!");
             }
-            if(VideoOptions == null) {
-                throw new Exception("Video options was null!");
-            }
+            return result;
         }
     }
 }

@@ -1,22 +1,17 @@
 ﻿using System.Numerics;
 
-namespace MediaTransCoder.Backend
-{
-    public class ResolutionAttribute : Attribute
-    {
+namespace MediaTransCoder.Backend {
+    public class ResolutionAttribute : Attribute {
+        public Vector2 Size { get; set; }
+        public string? Name { get; set; }
+
         public ResolutionAttribute(uint wigth, uint height, string? name = null) { 
-            Width = wigth;
-            Height = height;
+            Size = new Vector2(wigth, height);
             Name = name;
         }
+
         public string GetResolution() {
-            return Width + ":" + Height;
+            return Size.X + ":" + Size.Y;
         }
-        public Vector2 GetVector() {
-            return new Vector2(Width, Height);
-        }
-        public uint Height;
-        public uint Width;
-        public string? Name;
     }
 }

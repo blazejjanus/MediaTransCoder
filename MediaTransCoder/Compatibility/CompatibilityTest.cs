@@ -27,8 +27,8 @@ namespace MediaTransCoder.Backend.Compatibility {
                     ffmpegArgs.InputPath = inputPath;
                     ffmpegArgs.OutputPath = outputPath;
                     ffmpegArgs.Format = container;
-                    ffmpegArgs.AudioOptions = new AudioOptions();
-                    ffmpegArgs.AudioOptions.Codec = audioCodecs.ElementAt(i);
+                    ffmpegArgs.Audio = new AudioOptions();
+                    ffmpegArgs.Audio.Codec = audioCodecs.ElementAt(i);
                     using(var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
                             supportedAudioCodecs.Add(audioCodecs.ElementAt(i));
@@ -60,8 +60,8 @@ namespace MediaTransCoder.Backend.Compatibility {
                     ffmpegArgs.InputPath = inputPath;
                     ffmpegArgs.OutputPath = outputPath;
                     ffmpegArgs.Format = container;
-                    ffmpegArgs.VideoOptions = new VideoOptions();
-                    ffmpegArgs.VideoOptions.Codec = videoCodecs.ElementAt(i);
+                    ffmpegArgs.Video = new VideoOptions();
+                    ffmpegArgs.Video.Codec = videoCodecs.ElementAt(i);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
                             supportedVideoCodecs.Add(videoCodecs.ElementAt(i));
@@ -93,14 +93,14 @@ namespace MediaTransCoder.Backend.Compatibility {
                 for (int i = 0; i < audioCodecs.Count; i++) {
                     FfmpegArgs ffmpegArgs = new FfmpegArgs();
                     ffmpegArgs.Format = container;
-                    ffmpegArgs.AudioOptions = new AudioOptions();
-                    ffmpegArgs.VideoOptions = new VideoOptions();
-                    ffmpegArgs.AudioOptions.Codec = audioCodecs.ElementAt(i);
-                    ffmpegArgs.VideoOptions.Codec = VideoCodecs.hevc;
+                    ffmpegArgs.Audio = new AudioOptions();
+                    ffmpegArgs.Video = new VideoOptions();
+                    ffmpegArgs.Audio.Codec = audioCodecs.ElementAt(i);
+                    ffmpegArgs.Video.Codec = VideoCodecs.hevc;
                     ffmpegArgs.InputPath = inputPath;
                     ffmpegArgs.OutputPath = ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
-                            EnumHelper.GetCommand(ffmpegArgs.VideoOptions.Codec) + "_" +
-                            EnumHelper.GetCommand(ffmpegArgs.AudioOptions.Codec) + "." +
+                            EnumHelper.GetCommand(ffmpegArgs.Video.Codec) + "_" +
+                            EnumHelper.GetCommand(ffmpegArgs.Audio.Codec) + "." +
                             EnumHelper.GetCommand(container);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
@@ -111,14 +111,14 @@ namespace MediaTransCoder.Backend.Compatibility {
                 for (int i = 0; i < videoCodecs.Count; i++) {
                     FfmpegArgs ffmpegArgs = new FfmpegArgs();
                     ffmpegArgs.Format = container;
-                    ffmpegArgs.AudioOptions = new AudioOptions();
-                    ffmpegArgs.VideoOptions = new VideoOptions();
-                    ffmpegArgs.AudioOptions.Codec = AudioCodecs.mp3;
-                    ffmpegArgs.VideoOptions.Codec = videoCodecs.ElementAt(i);
+                    ffmpegArgs.Audio = new AudioOptions();
+                    ffmpegArgs.Video = new VideoOptions();
+                    ffmpegArgs.Audio.Codec = AudioCodecs.mp3;
+                    ffmpegArgs.Video.Codec = videoCodecs.ElementAt(i);
                     ffmpegArgs.InputPath = inputPath;
                     ffmpegArgs.OutputPath = ffmpegArgs.OutputPath = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
-                            EnumHelper.GetCommand(ffmpegArgs.VideoOptions.Codec) + "_" +
-                            EnumHelper.GetCommand(ffmpegArgs.AudioOptions.Codec) + "." +
+                            EnumHelper.GetCommand(ffmpegArgs.Video.Codec) + "_" +
+                            EnumHelper.GetCommand(ffmpegArgs.Audio.Codec) + "." +
                             EnumHelper.GetCommand(container);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {

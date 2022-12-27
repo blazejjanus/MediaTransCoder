@@ -11,10 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoderWPF", "Media
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBB919D8-1B0E-4AE6-9B35-C8A4B41879EC}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.config\config.json = .config\config.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{D6F01722-78DE-40C6-B456-68E126A63BB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{D6F01722-78DE-40C6-B456-68E126A63BB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
