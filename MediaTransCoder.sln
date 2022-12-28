@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoder", "MediaTransCoder\MediaTransCoder.csproj", "{155B3B9F-85E6-4364-948C-A43D4B3E9868}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoderCLI", "MediaTransCoderCLI\MediaTransCoderCLI.csproj", "{2B362D74-472E-4331-BBED-BCFEBFA404A3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaTransCoderWPF", "MediaTransCoderWPF\MediaTransCoderWPF.csproj", "{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBB919D8-1B0E-4AE6-9B35-C8A4B41879EC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.config\config.json = .config\config.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{D6F01722-78DE-40C6-B456-68E126A63BB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{155B3B9F-85E6-4364-948C-A43D4B3E9868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{155B3B9F-85E6-4364-948C-A43D4B3E9868}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{155B3B9F-85E6-4364-948C-A43D4B3E9868}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{155B3B9F-85E6-4364-948C-A43D4B3E9868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B362D74-472E-4331-BBED-BCFEBFA404A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B362D74-472E-4331-BBED-BCFEBFA404A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B362D74-472E-4331-BBED-BCFEBFA404A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B362D74-472E-4331-BBED-BCFEBFA404A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A9D6224-FCAA-4D4B-9604-25DC66AEB911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6F01722-78DE-40C6-B456-68E126A63BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6F01722-78DE-40C6-B456-68E126A63BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6F01722-78DE-40C6-B456-68E126A63BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6F01722-78DE-40C6-B456-68E126A63BB8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BF0FBA77-391E-4D62-B001-C785E7C15676}
+	EndGlobalSection
+EndGlobal

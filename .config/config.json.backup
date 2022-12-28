@@ -1,0 +1,16 @@
+{
+  "Backend": {
+    "EnvironmentType": 2,
+    "Logging": {
+      "LoggingLevel": 3,
+      "LogFilePath": "E:\\users\\blaze\\Syncthing\\Projekty\\Polibuda\\MediaTransCoder\\.logs//"
+    },
+    "Interface": {
+      "Type": 0,
+      "UseConsole": false,
+      "UseDebug": false
+    },
+    "FfmpegPath": "ffmpeg",
+    "TempDirPath": "E:\\users\\blaze\\Syncthing\\Projekty\\Polibuda\\MediaTransCoder\\.temp//"
+  }
+}
