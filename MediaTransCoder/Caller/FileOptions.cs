@@ -33,17 +33,36 @@
         /// </summary>
         /// <param name="inputDirectory">Input directory</param>
         /// <param name="outputDirectory">Output directory</param>
-        /// <param name="searchCriteria">FileExtension to search</param>
+        /// <param name="searchCriteria">VideoExtension to search</param>
         /// <returns>List of prepared FileOption entries</returns>
-        public static List<FileOption> GetFileOptionsFromDirectory(string inputDirectory, string outputDirectory, string searchCriteria = "*.*", bool recursive = false) {
+        public static List<FileOption> GetFileOptionsFromDirectory(string inputDirectory, string outputDirectory, string searchCriteria, bool recursive = false) {
             var result = new List<FileOption>();
             var inputRoot = new DirectoryInfo(inputDirectory);
             List<FileInfo> inputFiles = new List<FileInfo>();
-            //TODO: Get Extensions of supported formats
             if (recursive) {
                 inputFiles = inputRoot.GetFiles(searchCriteria, SearchOption.AllDirectories).ToList();
             } else {
                 inputFiles = inputRoot.GetFiles(searchCriteria, SearchOption.TopDirectoryOnly).ToList();
+            }
+            foreach (var inputFile in inputFiles) {
+                result.Add(new FileOption() {
+                    Input = inputFile.FullName,
+                    Output = Path.Combine(outputDirectory, Path.GetRelativePath(inputFile.FullName, inputRoot.FullName))
+                });
+            }
+            return result;
+        }
+
+        public static List<FileOption> GetFileOptionsFromDirectory(string inputDirectory, string outputDirectory, List<string> searchCriteria, bool recursive = false) {
+            var result = new List<FileOption>();
+            var inputRoot = new DirectoryInfo(inputDirectory);
+            List<FileInfo> inputFiles = new List<FileInfo>();
+            foreach (var criteria in searchCriteria) {
+                if (recursive) {
+                    inputFiles.AddRange(inputRoot.GetFiles(criteria, SearchOption.AllDirectories).ToList());
+                } else {
+                    inputFiles.AddRange(inputRoot.GetFiles(criteria, SearchOption.TopDirectoryOnly).ToList());
+                }
             }
             foreach (var inputFile in inputFiles) {
                 result.Add(new FileOption() {

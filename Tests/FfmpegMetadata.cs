@@ -3,10 +3,10 @@ using System.Diagnostics;
 
 namespace MediaTransCoder.Tests {
     [TestClass]
-    public class FfmpegVideoDetectionTest {
+    public class FfmpegMetadata {
         [TestMethod]
         public void ReadTest() {
-            using(var info = new FfmpegVideoDetection()) {
+            using(var info = new Backend.FfmpegMetadata()) {
                 Assert.IsTrue(File.Exists(UnitTestsEnvironment.InputVideo));
                 info.Read(UnitTestsEnvironment.InputVideo);
                 Assert.IsNotNull(info.TotalNumberOfFrames);

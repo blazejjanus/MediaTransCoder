@@ -16,11 +16,11 @@ namespace MediaTransCoder.Backend {
                 .Description ?? val.ToString();
         }
 
-        public static string GetFileExtension(AudioCodecs val) {
+        public static string? GetFileExtension(AudioCodecs val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
                 .GetCustomAttribute<AudioCodecAttribute>()?
-                .FileExtension ?? val.ToString();
+                .FileExtension;
         }
     }
 }

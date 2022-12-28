@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
 namespace MediaTransCoder.Backend {
-    internal class FfmpegVideoDetection: IDisposable {
+    internal class FfmpegMetadata: IDisposable {
         public int FPS { get; private set; }
         public int TotalNumberOfFrames { get; private set; }
         public double Multiplayer { get; private set; }
@@ -14,7 +14,7 @@ namespace MediaTransCoder.Backend {
                 StartInfo = new ProcessStartInfo {
                     FileName = "ffmpeg",
                     WorkingDirectory = Path.GetDirectoryName(filePath),
-                    Arguments = "-hide_banner -vstats -i " + Path.GetFileName(filePath),
+                    Arguments = "-hide_banner -vstats -i \"" + Path.GetFileName(filePath) + "\"",
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
@@ -56,17 +56,23 @@ namespace MediaTransCoder.Backend {
             //Parse fps
             if (output.Contains("Video:")) {
                 int Pos1 = output.IndexOf("Video:") + "Video:".Length;
-                int Pos2 = output.IndexOf("fps") + "fps".Length;
-                string temp = output.Substring(Pos1, Pos2 - Pos1).Trim();
-                string[] lines = temp.Split(',');
-                foreach (var line in lines) {
-                    if (line.Contains("fps")) {
-                        fps = line.Split("fps").First().Trim();
-                        break;
+                if (output.Contains("fps")) {
+                    int Pos2 = output.IndexOf("fps") + "fps".Length;
+                    string temp = output.Substring(Pos1, Pos2 - Pos1).Trim();
+                    string[] lines = temp.Split(',');
+                    foreach (var line in lines) {
+                        if (line.Contains("fps")) {
+                            fps = line.Split("fps").First().Trim();
+                            break;
+                        }
                     }
                 }
             }
-            FPS = NumberParser.ParseDoubleStringToInt(fps);
+            if (!string.IsNullOrEmpty(fps)) {
+                FPS = NumberParser.ParseDoubleStringToInt(fps);
+            } else {
+                FPS = 1;
+            }
             //Calc needed data
             TotalNumberOfFrames = parser.TotalSeconds * FPS;
             Multiplayer = 1; //Assume the FPS won't change.

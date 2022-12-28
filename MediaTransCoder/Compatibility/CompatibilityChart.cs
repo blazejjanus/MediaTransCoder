@@ -20,7 +20,7 @@ namespace MediaTransCoder.Backend
             string separator = "\n";
             if (inline)
                 separator = " ";
-            sb.Append(EnumHelper.GetName(Foramt) + ":" + separator);
+            sb.Append(EnumHelper.GetDescription(Foramt) + ":" + separator);
             if (AudioCodecs != null) {
                 sb.Append("Audio:" + separator);
                 for(int i = 0; i < AudioCodecs.Count; i++) {
