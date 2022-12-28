@@ -1,5 +1,5 @@
 ﻿using MediaTransCoder.Backend;
-using System.Diagnostics;
+using System.IO;
 
 namespace MediaTransCoder.CLI {
     internal class Program {
@@ -7,17 +7,21 @@ namespace MediaTransCoder.CLI {
         private static CLIConfig? Config;
         private static ProgressBar Progress = new ProgressBar();
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
+        private static string input = @"E:\TEMP\mtc\input\audio\";
+        private static string output = @"E:\TEMP\mtc\output\audio\";
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
-            string input = @"E:\TEMP\mtc\input\test";
-            string output = @"E:\TEMP\mtc\output\";
-            //string path = @"C:\mtc\sample2.mp4";
             Config = CLIConfig.ReadConfig();
             if(Config== null) {
                 throw new Exception("Obtained config was null!");
             }
             GUI.Progress = Progress;
             Backend = new Endpoint(Config.Backend, GUI);
+            ConvertAudio();
+        }
+
+        #region Tests
+        private static void ConvertVideo() {
             var options = new EndpointOptions() {
                 Input = input,
                 Output = output,
@@ -36,73 +40,56 @@ namespace MediaTransCoder.CLI {
                     SamplingRate = 44100
                 }
             };
-            Backend.ConvertVideo(options);
-            /*
-            GUI.Progress = Progress;
-            Console.WriteLine("Starting progress bar simulation!");
-            Progress.Draw();
-            for(int i = 0; i < 1000; i++) {
-                Console.WriteLine("Iteration: " + i + 1);
-                Progress.Update((double)(i / 1000));
-                Thread.Sleep(1000);
-            }
-            */
-            //Read(path);
-            /*
-            var charts = backend.TestAudioVideo(path);
-            File.Create(new FileInfo(path).Directory + "\\result.txt");
-            foreach(var chart in charts) {
-                Console.WriteLine("");
-                Console.WriteLine(chart.ToString());
-            }
-            */
+            Backend?.ConvertVideo(options);
         }
 
-        public static void Read(string filePath) {
-            string processOutput = string.Empty;
-            // Run the ffmpeg command with the vstats file output redirected to stdout
-            Process process = new Process {
-                StartInfo = new ProcessStartInfo {
-                    FileName = "ffmpeg",
-                    WorkingDirectory = Path.GetDirectoryName(filePath),
-                    Arguments = "-hide_banner -vstats -i " + Path.GetFileName(filePath),
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
+        private static void ConvertAudio() {
+            var options = new EndpointOptions() {
+                Input = input,
+                Output = output,
+                InputOption = InputOptions.DIRECTORY,
+                Format = ContainerFormat.ogg,
+                Audio = new AudioOptions() {
+                    Codec = AudioCodecs.libvorbis,
+                    BitRate = 192,
+                    AudioChannels = 2,
+                    SamplingRate = 48000
                 }
             };
-            process.Start();
-            processOutput += process.StandardOutput.ReadToEnd();
-            processOutput += process.StandardError.ReadToEnd();
-            process.WaitForExit();
-            ParseFfmpegOutput(processOutput);
+            Backend?.ConvertAudio(options);
         }
 
-        private static void ParseFfmpegOutput(string output) {
-            string duration = string.Empty;
-            string fps = string.Empty;
+        private static void ConvertImage() {
 
-            if (output.Contains("Duration:")) {
-                output = output.Substring(output.IndexOf("Duration:"));
-                int Pos1 = output.IndexOf("Duration:") + "Duration:".Length;
-                int Pos2 = output.IndexOf(",");
-                duration = output.Substring(Pos1, Pos2 - Pos1).Trim();
+        }
+
+        private static void GetExtensions(bool searchCriteria = false) {
+            var audio = FileExtensions.GetAudioExtensions(searchCriteria);
+            Console.WriteLine("##############################");
+            Console.WriteLine("Audio Extensions:");
+            foreach(var extension in audio) {
+                Console.WriteLine("\t" + extension);
             }
-            if (output.Contains("Video:")) {
-                int Pos1 = output.IndexOf("Video:") + "Video:".Length;
-                int Pos2 = output.IndexOf("fps") + "fps".Length;
-                string temp = output.Substring(Pos1, Pos2 - Pos1).Trim();
-                string[] lines = temp.Split(',');
-                foreach(var line in lines) {
-                    if (line.Contains("fps")) {
-                        fps = line.Split("fps").First().Trim();
-                    }
+            Console.WriteLine("##############################");
+            var video = FileExtensions.GetVideoExtensions(searchCriteria);
+            Console.WriteLine("Video Extensions:");
+            foreach (var extension in video) {
+                Console.WriteLine("\t" + extension);
+            }
+            Console.WriteLine("##############################");
+        }
+
+        private void Test() {
+            var charts = Backend?.TestAudioVideo(input);
+            File.Create(new FileInfo(input).Directory + "\\result.txt");
+            if(charts != null) {
+                foreach (var chart in charts) {
+                    Console.WriteLine("");
+                    Console.WriteLine(chart.ToString());
                 }
             }
-
-            Console.WriteLine("\n\n" + duration);
-            Console.WriteLine(fps);
         }
+        #endregion
 
         private static void Setup() {
             var cfg = CLIConfig.Defaults();

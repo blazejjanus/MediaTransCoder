@@ -20,8 +20,8 @@ namespace MediaTransCoder.Backend
             Context context = Context.Get();
             context.Display.Send("Attempting to test audio codecs compatibility...");
             foreach (ContainerFormat container in Enum.GetValues(typeof(ContainerFormat))) {
-                context.Display.Send("Testing " + EnumHelper.GetName(container));
-                Directory.CreateDirectory(outputPath + EnumHelper.GetCommand(container));
+                context.Display.Send("Testing " + EnumHelper.GetDescription(container));
+                Directory.CreateDirectory(outputPath + EnumHelper.GetName(container));
                 var supportedAudioCodecs = new List<AudioCodecs>();
                 for(int i = 0; i < audioCodecs.Count; i++) {
                     FfmpegArgs ffmpegArgs = new FfmpegArgs();
@@ -54,8 +54,8 @@ namespace MediaTransCoder.Backend
             Context context = Context.Get();
             context.Display.Send("Attempting to test video codecs compatibility...");
             foreach (ContainerFormat container in Enum.GetValues(typeof(ContainerFormat))) {
-                context.Display.Send("Testing " + EnumHelper.GetName(container));
-                Directory.CreateDirectory(outputPath + EnumHelper.GetCommand(container));
+                context.Display.Send("Testing " + EnumHelper.GetDescription(container));
+                Directory.CreateDirectory(outputPath + EnumHelper.GetName(container));
                 var supportedVideoCodecs = new List<VideoCodecs>();
                 for (int i = 0; i < videoCodecs.Count; i++) {
                     FfmpegArgs ffmpegArgs = new FfmpegArgs();
@@ -89,8 +89,8 @@ namespace MediaTransCoder.Backend
             Context context = Context.Get();
             context.Display.Send("Attempting to test audio and video codecs compatibility...");
             foreach (ContainerFormat container in Enum.GetValues(typeof(ContainerFormat))) {
-                context.Display.Send("Testing " + EnumHelper.GetName(container));
-                Directory.CreateDirectory(outputPath + "\\" + EnumHelper.GetCommand(container));
+                context.Display.Send("Testing " + EnumHelper.GetDescription(container));
+                Directory.CreateDirectory(outputPath + "\\" + EnumHelper.GetName(container));
                 var supportedVideoCodecs = new List<VideoCodecs>();
                 var supportedAudioCodecs = new List<AudioCodecs>();
                 for (int i = 0; i < audioCodecs.Count; i++) {
@@ -101,10 +101,10 @@ namespace MediaTransCoder.Backend
                     ffmpegArgs.Audio.Codec = audioCodecs.ElementAt(i);
                     ffmpegArgs.Video.Codec = VideoCodecs.hevc;
                     ffmpegArgs.Files.Input = inputPath;
-                    ffmpegArgs.Files.Output = ffmpegArgs.Files.Output = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
+                    ffmpegArgs.Files.Output = ffmpegArgs.Files.Output = outputPath + EnumHelper.GetName(container) + "\\output_" +
                             EnumHelper.GetName(ffmpegArgs.Video.Codec) + "_" +
                             EnumHelper.GetName(ffmpegArgs.Audio.Codec) + "." +
-                            EnumHelper.GetCommand(container);
+                            EnumHelper.GetName(container);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
                             supportedAudioCodecs.Add(audioCodecs.ElementAt(i));
@@ -119,10 +119,10 @@ namespace MediaTransCoder.Backend
                     ffmpegArgs.Audio.Codec = AudioCodecs.mp3;
                     ffmpegArgs.Video.Codec = videoCodecs.ElementAt(i);
                     ffmpegArgs.Files.Input = inputPath;
-                    ffmpegArgs.Files.Output = ffmpegArgs.Files.Output = outputPath + EnumHelper.GetCommand(container) + "\\output_" +
+                    ffmpegArgs.Files.Output = ffmpegArgs.Files.Output = outputPath + EnumHelper.GetName(container) + "\\output_" +
                             EnumHelper.GetName(ffmpegArgs.Video.Codec) + "_" +
                             EnumHelper.GetName(ffmpegArgs.Audio.Codec) + "." +
-                            EnumHelper.GetCommand(container);
+                            EnumHelper.GetName(container);
                     using (var caller = new FfmpegCaller(ffmpegArgs)) {
                         if (caller.Test()) {
                             supportedVideoCodecs.Add(videoCodecs.ElementAt(i));

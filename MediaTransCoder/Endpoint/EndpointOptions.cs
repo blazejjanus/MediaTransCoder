@@ -45,8 +45,18 @@
             if (Video == null) {
                 throw new Exception("Video options was null!");
             }
-            if(Audio == null) {
+            if (Audio == null) {
                 throw new Exception("Audio options are null and an option to cut audio is not set!");
+            }
+        }
+
+        internal void ValidateAudio() {
+            Validate();
+            if (Format == null) {
+                throw new Exception("Container value was null!");
+            }
+            if (Audio == null) {
+                throw new Exception("Audio options was null!");
             }
         }
     }

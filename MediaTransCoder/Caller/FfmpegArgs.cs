@@ -26,7 +26,7 @@ namespace MediaTransCoder.Backend
                 sb.Append(" -threads " + Context.Get().Config.Hardware.CPUCores);
                 //TODO: Mechanism of choosing codecs for GPU acceleration
             }
-            sb.Append(" -i " + Files.Input); //Single file path
+            sb.Append(" -i \"" + Files.Input + "\""); //Single file path
             if(Video != null) {
                 sb.Append(" -vcodec " + EnumHelper.GetName(Video.Codec));
                 sb.Append(" -r " + Video.FPS);
@@ -40,8 +40,8 @@ namespace MediaTransCoder.Backend
                 sb.Append(" -ac " + Audio.AudioChannels);
             }
             if(Format != null)
-                sb.Append(" -f " + EnumHelper.GetCommand(Format.Value));
-            sb.Append(" " + Files.Output);
+                sb.Append(" -f " + EnumHelper.GetName(Format.Value));
+            sb.Append(" \"" + Files.Output + "\"");
             return sb.ToString();
         }
 
@@ -81,11 +81,23 @@ namespace MediaTransCoder.Backend
 
         public void GenerateOutputFileName() {
             string name = Path.GetFileNameWithoutExtension(Files.Input);
+            string? containerExtension = null;
+            string? codecExtension = null;
+            if(Format != null) {
+                containerExtension = EnumHelper.GetFileExtension(Format.Value, true);
+            }
             if(Video != null) {
-                name += EnumHelper.GetFileExtension(Video.Codec);
+                codecExtension = EnumHelper.GetFileExtension(Video.Codec);
             } else {
                 if(Audio != null) {
-                    name += EnumHelper.GetFileExtension(Audio.Codec);
+                    codecExtension = EnumHelper.GetFileExtension(Audio.Codec);
+                }
+            }
+            if(codecExtension != null) {
+                name += codecExtension;
+            } else {
+                if(containerExtension != null) {
+                    name += containerExtension;
                 }
             }
             if (Files.Output.EndsWith("..")) {

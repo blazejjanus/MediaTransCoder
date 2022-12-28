@@ -2,9 +2,9 @@
     public class VideoCodecAttribute : Attribute {
         public string Name { get; set; }
         public string Description { get; set; }
-        public string FileExtension { get; set; }
+        public string? FileExtension { get; set; }
 
-        public VideoCodecAttribute(string name, string description, string fileExtension) {
+        public VideoCodecAttribute(string name, string description, string? fileExtension = null) {
             Name = name;
             Description = description;
             FileExtension = fileExtension;

@@ -3,17 +3,17 @@
     /// Supported container formats. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum ContainerFormat {
-        [ContainerFormat("webm")]
+        [ContainerFormat("webm", "Webm", ".webm")]
         webm,
-        [ContainerFormat("wav", "wave")]
+        [ContainerFormat("wav", "wave", ".wav", true)]
         wav,
-        [ContainerFormat("3gp")]
+        [ContainerFormat("3gp", "3GP", ".3gp")]
         c3gp,
         [ContainerFormat("flv", "FlashVideo")]
         flv,
-        [ContainerFormat("matroska")]
+        [ContainerFormat("matroska", "Matroska", ".mkv", ".mka")]
         matroska,
-        [ContainerFormat("ogg")]
+        [ContainerFormat("ogg", "ogg", ".ogg", true)]
         ogg,
         [ContainerFormat("avi")]
         avi

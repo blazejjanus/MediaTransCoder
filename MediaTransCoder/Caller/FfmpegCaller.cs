@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
 namespace MediaTransCoder.Backend {
     internal delegate void OnProgressCallback(int progress);
-    internal delegate void OnMetadataUpdateCallback(FfmpegVideoDetection metadata);
+    internal delegate void OnMetadataUpdateCallback(FfmpegMetadata metadata);
 
     internal class FfmpegCaller : IDisposable {
         public bool IsRunning { get; private set; }
@@ -17,7 +17,7 @@ namespace MediaTransCoder.Backend {
         private readonly FfmpegArgs args;
         private readonly Process process;
         private bool wasStarted = false;
-        internal readonly FfmpegVideoDetection metadata;
+        internal readonly FfmpegMetadata metadata;
         private int lastFrame;
         OnProgressCallback? ProgressCallback;
         OnMetadataUpdateCallback? MetadataCallback;
@@ -28,7 +28,7 @@ namespace MediaTransCoder.Backend {
             process = PrepeareProcess();
             lastFrame = 0;
             IsRunning = false;
-            metadata = new FfmpegVideoDetection();
+            metadata = new FfmpegMetadata();
             ProgressCallback = null;
             MetadataCallback = null;
         }
@@ -39,7 +39,7 @@ namespace MediaTransCoder.Backend {
             process = PrepeareProcess();
             lastFrame = 0;
             IsRunning = false;
-            metadata = new FfmpegVideoDetection();
+            metadata = new FfmpegMetadata();
             ProgressCallback = callback;
             MetadataCallback = metadataCallback;
         }

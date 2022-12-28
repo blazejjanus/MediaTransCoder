@@ -5,25 +5,25 @@ namespace MediaTransCoder.Backend {
     /// Supported audio codecs. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum AudioCodecs {
-        [VideoCodec("libvorbis", "vorbis", ".ogg")]
+        [AudioCodec("libvorbis", "vorbis")]
         libvorbis,
-        [VideoCodec("libopus", "opus", ".ogg")]
+        [AudioCodec("libopus", "opus")]
         libopus,
-        [VideoCodec("mp3", "mp3", ".mp3")]
+        [AudioCodec("mp3", "mp3", ".mp3")]
         mp3,
-        [VideoCodec("aac", "aac", ".aac")]
+        [AudioCodec("aac", "aac", ".aac")]
         aac,
-        [VideoCodec("wmav1", "wmav1", ".wma")]
+        [AudioCodec("wmav1", "wmav1", ".wma")]
         wmav1,
-        [VideoCodec("wmav2", "wmav2", ".wma")]
+        [AudioCodec("wmav2", "wmav2", ".wma")]
         wmav2,
-        [VideoCodec("ac3", "ac3", ".ac3")]
+        [AudioCodec("ac3", "ac3", ".ac3")]
         ac3,
-        [VideoCodec("eac3", "eac3", ".eac3")]
+        [AudioCodec("eac3", "eac3", ".eac3")]
         eac3,
-        [VideoCodec("flac", "flac", ".flac")]
+        [AudioCodec("flac", "flac", ".flac")]
         flac,
-        [VideoCodec("alac", "alac", ".alac")]
+        [AudioCodec("alac", "alac", ".alac")]
         alac
     }
 }
