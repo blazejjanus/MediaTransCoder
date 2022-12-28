@@ -20,6 +20,7 @@
             callers = new List<FfmpegCaller>();
             instance = this;
         }
+        #endregion
 
         #region Methods
         public void ConvertVideo(EndpointOptions options) {
@@ -94,7 +95,6 @@
         public List<CompatibilityChart> TestAudioVideo(string input, string? output = null) {
             return CompatibilityTest.AudioVideo(input, output);
         }
-        #endregion
         #endregion
         #endregion
     }

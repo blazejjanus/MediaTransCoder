@@ -88,6 +88,9 @@ namespace MediaTransCoder.Backend
                     name += EnumHelper.GetFileExtension(Audio.Codec);
                 }
             }
+            if (Files.Output.EndsWith("..")) {
+                Files.Output = Files.Output.Split("..").First();
+            }
             Files.Output = Path.Combine(Files.Output, name);
         }
     }

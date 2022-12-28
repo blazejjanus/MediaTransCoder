@@ -20,6 +20,10 @@ namespace MediaTransCoder.Backend {
                     RedirectStandardError = true,
                 }
             };
+            if (Context.Get().Config.Environment == EnvironmentType.Development) {
+                Context.Get().Display.Send("Metadata ffmpeg call: \n" + process.StartInfo.FileName + " " 
+                    + process.StartInfo.Arguments, MessageType.WARNING);
+            }
             process.Start();
             processOutput += process.StandardOutput.ReadToEnd();
             processOutput += process.StandardError.ReadToEnd();
@@ -36,6 +40,9 @@ namespace MediaTransCoder.Backend {
         /// </summary>
         /// <param name="output">Ffmpeg video file metadata</param>
         private void ParseFfmpegOutput(string output) {
+            if(Context.Get().Config.Environment == EnvironmentType.Development) {
+                Context.Get().Display.Send("Metadata output: \n" + output, MessageType.WARNING);
+            }
             string duration = string.Empty;
             string fps = string.Empty;
             //Parse duration

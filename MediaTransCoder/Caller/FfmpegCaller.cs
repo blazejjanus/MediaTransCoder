@@ -16,6 +16,7 @@ namespace MediaTransCoder.Backend {
         private readonly Context context;
         private readonly FfmpegArgs args;
         private readonly Process process;
+        private bool wasStarted = false;
         internal readonly FfmpegVideoDetection metadata;
         private int lastFrame;
         OnProgressCallback? ProgressCallback;
@@ -43,11 +44,17 @@ namespace MediaTransCoder.Backend {
             MetadataCallback = metadataCallback;
         }
 
-        public void Run() {
+        public int Run() {
             if((int)context.Config.Logging.LoggingLevel > 2) {
                 context.Display.Send("FFmpeg command:\n" + 
                     process.StartInfo.FileName + " " + 
                     process.StartInfo.Arguments + "\n\n");
+            }
+            if (context.Config.Environment == EnvironmentType.Development) {
+                if (File.Exists(args.Files.Output)) {
+                    context.Display.Send("Skipping convertedfile!", MessageType.WARNING);
+                    return 0;
+                }
             }
             process.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
             process.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
@@ -58,11 +65,13 @@ namespace MediaTransCoder.Backend {
             }
             metadata.CalcMultiplayer(args?.Video?.FPS ?? metadata.FPS);
             process.Start();
+            wasStarted = true;
             IsRunning = true;
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
             IsRunning = false;
+            return process.ExitCode;
         }
 
         internal bool Test() {
@@ -125,7 +134,8 @@ namespace MediaTransCoder.Backend {
         }
 
         public void Dispose() {
-            if(process != null) {
+            if(process != null && wasStarted) {
+                process.Refresh();
                 if (!process.HasExited) {
                     process.Kill();
                     if (File.Exists(args.Files.Output)) {

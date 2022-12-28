@@ -9,7 +9,8 @@ namespace MediaTransCoder.CLI {
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
-            string path = @"E:\TEMP\mtc\input\sample2.mp4";
+            string input = @"E:\TEMP\mtc\input\test";
+            string output = @"E:\TEMP\mtc\output\";
             //string path = @"C:\mtc\sample2.mp4";
             Config = CLIConfig.ReadConfig();
             if(Config== null) {
@@ -18,9 +19,9 @@ namespace MediaTransCoder.CLI {
             GUI.Progress = Progress;
             Backend = new Endpoint(Config.Backend, GUI);
             var options = new EndpointOptions() {
-                Input = path,
-                Output = Path.GetDirectoryName(path) + "\\output",
-                InputOption = InputOptions.FILE,
+                Input = input,
+                Output = output,
+                InputOption = InputOptions.RECURSIVE,
                 Format = ContainerFormat.matroska,
                 Video = new VideoOptions() {
                     Codec = VideoCodecs.hevc,
