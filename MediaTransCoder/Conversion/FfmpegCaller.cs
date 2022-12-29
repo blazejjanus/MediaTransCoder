@@ -3,8 +3,8 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
 namespace MediaTransCoder.Backend {
-    internal delegate void OnProgressCallback(int progress);
-    internal delegate void OnMetadataUpdateCallback(FfmpegMetadata metadata);
+    //internal delegate void OnProgressCallback(int progress);
+    //internal delegate void OnMetadataUpdateCallback(FfmpegMetadata metadata);
 
     internal class FfmpegCaller : IDisposable {
         public bool IsRunning { get; private set; }
@@ -64,6 +64,12 @@ namespace MediaTransCoder.Backend {
                 MetadataCallback(metadata);
             }
             metadata.CalcMultiplayer(args?.Video?.FPS ?? metadata.FPS);
+            string? outputDirPath = Path.GetDirectoryName(args?.Files.Output);
+            if(outputDirPath != null) {
+                if(!Directory.Exists(outputDirPath)) { 
+                    Directory.CreateDirectory(outputDirPath);
+                }
+            }
             process.Start();
             wasStarted = true;
             IsRunning = true;
@@ -108,6 +114,7 @@ namespace MediaTransCoder.Backend {
         }
         
         private void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
+            context.Display.Send(outLine.Data);
             if(outLine.Data != null) {
                 if (outLine.Data.Contains("frame=")) {
                     lastFrame = Int32.Parse(outLine.Data.Split("=")[1].Trim());

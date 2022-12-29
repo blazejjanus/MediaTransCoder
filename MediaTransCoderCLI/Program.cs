@@ -47,7 +47,7 @@ namespace MediaTransCoder.CLI {
             var options = new EndpointOptions() {
                 Input = input,
                 Output = output,
-                InputOption = InputOptions.DIRECTORY,
+                InputOption = InputOptions.RECURSIVE,
                 Format = ContainerFormat.ogg,
                 Audio = new AudioOptions() {
                     Codec = AudioCodecs.libvorbis,

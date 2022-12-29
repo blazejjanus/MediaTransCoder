@@ -4,8 +4,6 @@ namespace MediaTransCoder.Backend
 {
     internal class FfmpegArgs {
         public string FfmpegPath { get; set; }
-        //TODO: Obtain WorkingDirectory as common path of input and output path
-        public string WorkingDirectory { get; set; }
         public FileOption Files { get; set; }
         public bool OverrideExistingFiles { get; set; }
         public HardwareAcceleration Acceleration { get; set; }
@@ -73,7 +71,6 @@ namespace MediaTransCoder.Backend
         public FfmpegArgs() {
             FfmpegPath = Context.Get().Config.FfmpegPath ?? "ffmpeg";
             LoggingLevel = LoggingLevel.WARNING;
-            WorkingDirectory = Directory.GetCurrentDirectory();
             Files = new FileOption();
             OverrideExistingFiles = true;
             Acceleration = HardwareAcceleration.NONE;
