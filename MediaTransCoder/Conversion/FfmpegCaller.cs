@@ -56,7 +56,11 @@ namespace MediaTransCoder.Backend {
             }
             process.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
             process.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
-            metadata.Read(args.Files.Input);
+            if(args.AudioOnly) {
+                metadata.ReadAudio(args.Files.Input);
+            } else {
+                metadata.ReadVideo(args.Files.Input);
+            }
             if(MetadataCallback!= null) {
                 MetadataCallback(metadata);
             }

@@ -6,7 +6,7 @@ namespace MediaTransCoder.CLI {
         private static CLIConfig? Config;
         private static ProgressBar Progress = new ProgressBar();
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
-        private static string input = @"E:\TEMP\mtc\input\video\sample2.mp4";
+        private static string input = @"E:\TEMP\mtc\input\video\sample.mp4";
         private static string output = @"E:\TEMP\mtc\output\video\";
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);

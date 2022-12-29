@@ -43,7 +43,11 @@ namespace MediaTransCoder.Backend {
         }
 
         protected void ReadMetadata() {
-            metadata.Read(args.Files.Input);
+            if (args.AudioOnly) {
+                metadata.ReadAudio(args.Files.Input);
+            } else {
+                metadata.ReadVideo(args.Files.Input);
+            }
             if (MetadataCallback != null) {
                 MetadataCallback(metadata);
             }

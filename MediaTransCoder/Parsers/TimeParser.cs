@@ -6,7 +6,13 @@
             } 
         }
 
-        private TimeSpan Time { get; set; }
+        internal int TotalMiliseconds {
+            get {
+                return (int)Time.TotalMilliseconds;
+            }
+        }
+
+        internal TimeSpan Time { get; private set; }
 
         internal TimeParser(string time) {
             Time = Parse(time);
