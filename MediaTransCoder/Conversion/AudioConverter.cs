@@ -1,10 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 
-namespace MediaTransCoder.Backend.Audio {
-    internal class AudioConverter {
+namespace MediaTransCoder.Backend {
+    internal class AudioConverter : AbstractConverter {
+        public AudioConverter(FfmpegArgs args, OnProgressCallback? callback, OnMetadataUpdateCallback? metadataCallback) : 
+            base(args, callback, metadataCallback) {
+
+        }
+
+        public override int Convert() {
+            throw new NotImplementedException();
+        }
+
+        protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
+            throw new NotImplementedException();
+        }
+
+        internal override bool Test() {
+            throw new NotImplementedException();
+        }
     }
 }

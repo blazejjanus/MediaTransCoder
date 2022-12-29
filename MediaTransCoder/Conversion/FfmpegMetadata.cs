@@ -6,7 +6,6 @@ namespace MediaTransCoder.Backend {
     internal class FfmpegMetadata: IDisposable {
         public int FPS { get; private set; }
         public int TotalNumberOfFrames { get; private set; }
-        public double Multiplayer { get; private set; }
 
         public void Read(string filePath) {
             string processOutput = string.Empty;
@@ -29,10 +28,6 @@ namespace MediaTransCoder.Backend {
             processOutput += process.StandardError.ReadToEnd();
             process.WaitForExit();
             ParseFfmpegOutput(processOutput);
-        }
-
-        public void CalcMultiplayer(int outputFPS) {
-            Multiplayer = outputFPS / FPS;
         }
 
         /// <summary>
@@ -75,7 +70,6 @@ namespace MediaTransCoder.Backend {
             }
             //Calc needed data
             TotalNumberOfFrames = parser.TotalSeconds * FPS;
-            Multiplayer = 1; //Assume the FPS won't change.
         }
 
         public void Dispose() {

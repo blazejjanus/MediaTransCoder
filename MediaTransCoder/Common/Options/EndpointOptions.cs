@@ -1,6 +1,7 @@
 ﻿namespace MediaTransCoder.Backend {
     public class EndpointOptions {
         public bool OverrideExistingFiles { get; set; }
+        public bool AudioOnly { get; set; }
         public string Input { get; set; }
         public string Output { get; set; }
         public InputOptions InputOption { get; set; }
@@ -11,6 +12,7 @@
 
         public EndpointOptions() {
             OverrideExistingFiles = true;
+            AudioOnly = false;
             Acceleration = HardwareAcceleration.NONE;
             Input = string.Empty;
             Output = string.Empty;

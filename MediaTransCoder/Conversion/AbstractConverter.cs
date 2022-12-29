@@ -8,38 +8,31 @@ namespace MediaTransCoder.Backend {
 
     internal abstract class AbstractConverter : IDisposable {
         public double Progress { get; protected set; }
-        internal bool WasStarted { get; private set; }
-        internal bool IsRunning { get; private set; }
-        private readonly Context context;
-        private readonly FfmpegArgs args;
-        private readonly Process process;
-        private OnProgressCallback? ProgressCallback;
-        private OnMetadataUpdateCallback? MetadataCallback;
+        public bool WasStarted { get; protected set; } = false;
+        public bool IsRunning { get; protected set; } = false;
+        protected readonly Context context;
+        protected readonly FfmpegArgs args;
+        protected readonly Process process;
+        protected FfmpegMetadata metadata;
+        protected OnProgressCallback? ProgressCallback;
+        protected OnMetadataUpdateCallback? MetadataCallback;
 
-        internal AbstractConverter(FfmpegArgs args, OnProgressCallback? callback, OnMetadataUpdateCallback? metadataCallback) {
+        public AbstractConverter(FfmpegArgs args, OnProgressCallback? progressCallback, OnMetadataUpdateCallback? metadataCallback) {
             context = Context.Get();
             this.args = args;
             process = PrepeareProcess();
+            ProgressCallback = progressCallback;
+            MetadataCallback = metadataCallback;
+            metadata = new FfmpegMetadata();
         }
 
-        private Process PrepeareProcess() {
-            var proc = new Process();
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.RedirectStandardError = true;
-            proc.StartInfo.RedirectStandardInput = true;
-            proc.StartInfo.FileName = args.FfmpegPath;
-            proc.StartInfo.Arguments = args.GetArgs();
-            return proc;
-        }
-
-        public abstract void Convert(FfmpegArgs args);
+        public abstract int Convert();
 
         protected abstract void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine);
 
         internal abstract bool Test();
 
-        private void OnProcessExit(object sender, EventArgs e) {
+        protected void OnProcessExit(object sender, EventArgs e) {
             IsRunning = false;
             if(process.ExitCode != 0) {
                 if (File.Exists(args.Files.Output)) {
@@ -47,6 +40,33 @@ namespace MediaTransCoder.Backend {
                 }
                 throw new Exception("Fmmpeg exited with status code: " + process.ExitCode);
             }
+        }
+
+        protected void ReadMetadata() {
+            metadata.Read(args.Files.Input);
+            if (MetadataCallback != null) {
+                MetadataCallback(metadata);
+            }
+        }
+
+        protected void CheckOutputDirectory() {
+            string? outputDirPath = Path.GetDirectoryName(args?.Files.Output);
+            if (outputDirPath != null) {
+                if (!Directory.Exists(outputDirPath)) {
+                    Directory.CreateDirectory(outputDirPath);
+                    Logging.Debug("Created directory: " + outputDirPath);
+                }
+            }
+        }
+
+        protected int StartProcess() {
+            WasStarted = true;
+            IsRunning = true;
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            process.WaitForExit();
+            return process.ExitCode;
         }
 
         public void Dispose() {
@@ -60,6 +80,20 @@ namespace MediaTransCoder.Backend {
                 }
                 process.Dispose();
             }
+        }
+
+        private Process PrepeareProcess() {
+            var proc = new Process();
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
+            proc.StartInfo.RedirectStandardInput = true;
+            proc.StartInfo.FileName = args.FfmpegPath;
+            proc.StartInfo.Arguments = args.GetArgs();
+            proc.Exited += new EventHandler(OnProcessExit);
+            proc.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
+            proc.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
+            return proc;
         }
     }
 }

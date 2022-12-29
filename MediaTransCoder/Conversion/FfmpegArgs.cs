@@ -6,16 +6,53 @@ namespace MediaTransCoder.Backend
         public string FfmpegPath { get; set; }
         public FileOption Files { get; set; }
         public bool OverrideExistingFiles { get; set; }
+        public bool AudioOnly { get; set; }
         public HardwareAcceleration Acceleration { get; set; }
-        public LoggingLevel LoggingLevel { get; set; }
         public ContainerFormat? Format { get; set; }
         public AudioOptions? Audio { get; set; }
         public VideoOptions? Video { get; set; }
 
+        public FfmpegArgs() {
+            FfmpegPath = Context.Get().Config.FfmpegPath ?? "ffmpeg";
+            Files = new FileOption();
+            OverrideExistingFiles = true;
+            AudioOnly = false;
+            Acceleration = HardwareAcceleration.NONE;
+        }
+
+        internal static FfmpegArgs Get(EndpointOptions options, string input, string output) {
+            var result = new FfmpegArgs();
+            result.Files.Input = input;
+            result.Files.Output = output;
+            result.AudioOnly = options.AudioOnly;
+            result.OverrideExistingFiles = options.OverrideExistingFiles;
+            result.Format = options.Format;
+            result.Acceleration = options.Acceleration;
+            result.Audio = options.Audio;
+            result.Video = options.Video;
+            return result;
+        }
+
+        internal static FfmpegArgs Get(EndpointOptions options) {
+            if (options.InputOption != InputOptions.FILE) {
+                throw new Exception("Cannot convert Endpoint Options to FfmpegArgs!");
+            }
+            var result = new FfmpegArgs();
+            result.Files.Input = options.Input;
+            result.Files.Output = options.Output;
+            result.AudioOnly = options.AudioOnly;
+            result.OverrideExistingFiles = options.OverrideExistingFiles;
+            result.Format = options.Format;
+            result.Acceleration = options.Acceleration;
+            result.Audio = options.Audio;
+            result.Video = options.Video;
+            return result;
+        }
+
         internal string GetArgs() {
             StringBuilder sb = new StringBuilder();
             sb.Append("-hide_banner"); //Hide unused banner info
-            sb.Append(" -loglevel " + EnumHelper.GetFfmpegLoggingLevel(LoggingLevel)); //Set logging level
+            sb.Append(" -loglevel " + Logging.LoggingLevel); //Set logging level
             sb.Append(" -progress -");
             if (OverrideExistingFiles) {
                 sb.Append(" -y"); //Override existing output files?
@@ -43,45 +80,12 @@ namespace MediaTransCoder.Backend
             return sb.ToString();
         }
 
-        internal static FfmpegArgs Get(EndpointOptions options, string input, string output) {
-            var result = new FfmpegArgs();
-            result.Files.Input = input;
-            result.Files.Output = output;
-            result.Format = options.Format;
-            result.Acceleration = options.Acceleration;
-            result.Audio = options.Audio;
-            result.Video = options.Video;
-            return result;
-        }
-
-        internal static FfmpegArgs Get(EndpointOptions options) {
-            if(options.InputOption != InputOptions.FILE) {
-                throw new Exception("Cannot convert Endpoint Options to FfmpegArgs!");
-            }
-            var result = new FfmpegArgs();
-            result.Files.Input = options.Input;
-            result.Files.Output = options.Output;
-            result.Format = options.Format;
-            result.Acceleration = options.Acceleration;
-            result.Audio = options.Audio;
-            result.Video = options.Video;
-            return result;
-        }
-
-        public FfmpegArgs() {
-            FfmpegPath = Context.Get().Config.FfmpegPath ?? "ffmpeg";
-            LoggingLevel = LoggingLevel.WARNING;
-            Files = new FileOption();
-            OverrideExistingFiles = true;
-            Acceleration = HardwareAcceleration.NONE;
-        }
-
         public void GenerateOutputFileName() {
             string name = Path.GetFileNameWithoutExtension(Files.Input);
             string? containerExtension = null;
             string? codecExtension = null;
             if(Format != null) {
-                containerExtension = EnumHelper.GetFileExtension(Format.Value, true);
+                containerExtension = EnumHelper.GetFileExtension(Format.Value, AudioOnly);
             }
             if(Video != null) {
                 codecExtension = EnumHelper.GetFileExtension(Video.Codec);

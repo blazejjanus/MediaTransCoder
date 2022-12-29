@@ -10,7 +10,7 @@ namespace MediaTransCoder.Backend {
         public bool IsRunning { get; private set; }
         public double Progress { 
             get {
-                return Math.Round((lastFrame / (metadata.TotalNumberOfFrames * metadata.Multiplayer)) * 100, 1);
+                return Math.Round(((double)lastFrame / metadata.TotalNumberOfFrames) * 100, 1);
             } 
         }
         private readonly Context context;
@@ -45,25 +45,21 @@ namespace MediaTransCoder.Backend {
         }
 
         public int Run() {
-            if((int)context.Config.Logging.LoggingLevel > 2) {
-                context.Display.Send("FFmpeg command:\n" + 
-                    process.StartInfo.FileName + " " + 
-                    process.StartInfo.Arguments + "\n\n");
-            }
-            if (context.Config.Environment == EnvironmentType.Development) {
-                if (File.Exists(args.Files.Output)) {
-                    context.Display.Send("Skipping convertedfile!", MessageType.WARNING);
-                    return 0;
+            Logging.Debug("FFmpeg command:\n" + process.StartInfo.FileName + " " + process.StartInfo.Arguments + "\n");
+            if (Logging.IsDebug) {
+                if (File.Exists(args.Files.Output)) { //Skip already processed file?
+                    if (context.Display.GetBool("Shall remove existing file?")) {
+                        context.Display.Send("Skipping convertedfile!", MessageType.WARNING);
+                        return 0;
+                    }
                 }
             }
             process.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
             process.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
-            process.Exited += new EventHandler(OnProcessExit);
             metadata.Read(args.Files.Input);
             if(MetadataCallback!= null) {
                 MetadataCallback(metadata);
             }
-            metadata.CalcMultiplayer(args?.Video?.FPS ?? metadata.FPS);
             string? outputDirPath = Path.GetDirectoryName(args?.Files.Output);
             if(outputDirPath != null) {
                 if(!Directory.Exists(outputDirPath)) { 
@@ -114,8 +110,8 @@ namespace MediaTransCoder.Backend {
         }
         
         private void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
-            context.Display.Send(outLine.Data);
             if(outLine.Data != null) {
+                context.Display.Send(outLine.Data);
                 if (outLine.Data.Contains("frame=")) {
                     lastFrame = Int32.Parse(outLine.Data.Split("=")[1].Trim());
                     if(ProgressCallback != null) {
@@ -137,6 +133,7 @@ namespace MediaTransCoder.Backend {
             proc.StartInfo.RedirectStandardInput = true;
             proc.StartInfo.FileName = args.FfmpegPath;
             proc.StartInfo.Arguments = args.GetArgs();
+            process.Exited += new EventHandler(OnProcessExit);
             return proc;
         }
 

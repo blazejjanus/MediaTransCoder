@@ -4,6 +4,7 @@
         INFO,
         WARNING,
         ERROR,
-        SUCCESS
+        SUCCESS,
+        DEBUG
     }
 }
