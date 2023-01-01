@@ -3,43 +3,46 @@
     public class Endpoint : IDisposable {
         #region Fields
         private Context context;
-        private int TotalFrames { get; set; }
+        private int TotalSteps { get; set; }
         private List<AbstractConverter> Converters { get; set; }
+        private EndpointOptions? Options { get; set; }
         #endregion
         #region Constructor
-        public Endpoint(BackendConfig config, IDisplay gui) {
+        public Endpoint(BackendConfig config, IDisplay gui, bool? debug = null) {
             if (config == null) {
                 throw new ArgumentNullException("Provided config was null!");
             }
             if (gui == null) {
                 throw new ArgumentNullException("Provided gui was null!");
             }
-            Context.Init(config, gui);
+            Context.Init(config, gui, debug);
             context = Context.Get();
             context.Display = gui;
             Converters = new List<AbstractConverter>();
+            Options = null;
         }
         #endregion
 
         #region Methods
         public void ConvertVideo(EndpointOptions options) {
-            options.ValidateVideo();
+            Options = options;
+            Options.ValidateVideo();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
             List<FileOption> files = new List<FileOption>();
-            switch (options.InputOption) {
+            switch (Options.InputOption) {
                 case InputOptions.FILE:
-                    args.Add(FfmpegArgs.Get(options));
+                    args.Add(FfmpegArgs.Get(Options));
                     break;
                 case InputOptions.DIRECTORY:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetVideoExtensions(true));
+                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true));
                     foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
+                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
                     }
                     break;
                 case InputOptions.RECURSIVE:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetVideoExtensions(true), true);
+                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true), true);
                     foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
+                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
                     }
                     break;
             }
@@ -55,23 +58,24 @@
         }
 
         public void ConvertAudio(EndpointOptions options) {
-            options.ValidateAudio();
+            Options = options;
+            Options.ValidateVideo();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
             List<FileOption> files = new List<FileOption>();
-            switch (options.InputOption) {
+            switch (Options.InputOption) {
                 case InputOptions.FILE:
-                    args.Add(FfmpegArgs.Get(options));
+                    args.Add(FfmpegArgs.Get(Options));
                     break;
                 case InputOptions.DIRECTORY:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetAudioExtensions(true));
+                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true));
                     foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
+                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
                     }
                     break;
                 case InputOptions.RECURSIVE:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetAudioExtensions(true), true);
+                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true), true);
                     foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
+                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
                     }
                     break;
             }
@@ -87,7 +91,8 @@
         }
 
         public void ConvertImage(EndpointOptions options) {
-
+            Options = options;
+            Options.ValidateImage();
         }
 
         public void Dispose() {
@@ -97,15 +102,17 @@
         }
 
         private void UpdateMetadata(FfmpegMetadata metadata) {
-            TotalFrames += metadata.TotalNumberOfFrames;
+            if (Options?.AudioOnly ?? false) {
+                TotalSteps += metadata.Duration.TotalMiliseconds;
+            } else {
+                TotalSteps += metadata.TotalNumberOfFrames;
+            }
         }
 
         private void UpdateProgress(int lastframe) {
             double progress = 0;
-            progress = Math.Round((((double)lastframe / TotalFrames) * 100), 1);
-            if(context.Config.Environment == EnvironmentType.Development) {
-                context.Display.Send(progress.ToString());
-            }
+            progress = Math.Round((((double)lastframe / TotalSteps) * 100), 1);
+            Logging.Debug(progress.ToString());
             context.Display.UpdateProgress(progress);
         }
 

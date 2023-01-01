@@ -3,7 +3,12 @@
 
         public static bool IsDebug {
             get {
-                if (context.Config.Environment == EnvironmentType.Production) {
+                if (Context.IsSet) {
+                    if(context != null && context.IsDebug != null) {
+                        return context.IsDebug.Value; //Context setting override everything
+                    }
+                }
+                if (context?.Config.Environment == EnvironmentType.Production) {
                     if (System.Diagnostics.Debugger.IsAttached) {
                         return true;
                     }

@@ -13,7 +13,7 @@ namespace MediaTransCoder.Backend {
             if (Logging.IsDebug) {
                 if (File.Exists(args.Files.Output)) { //Skip already processed file?
                     if(context.Display.GetBool("Shall remove existing file?")) {
-                        context.Display.Send("Skipping convertedfile!", MessageType.WARNING);
+                        context.Display.Send("Skipping converted file!", MessageType.WARNING);
                         Progress = 100.0;
                         return 0;
                     }
@@ -26,7 +26,7 @@ namespace MediaTransCoder.Backend {
 
         protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
             if (outLine.Data != null) {
-                context.Display.Send(outLine.Data);
+                Logging.Debug(outLine.Data);
                 if (outLine.Data.Contains("frame=")) {
                     LastFrame = Int32.Parse(outLine.Data.Split("=")[1].Trim());
                     Progress = Math.Round((double)LastFrame / metadata.TotalNumberOfFrames * 100, 1);
