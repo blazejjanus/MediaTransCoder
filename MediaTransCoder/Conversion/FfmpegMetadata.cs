@@ -4,16 +4,17 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
 namespace MediaTransCoder.Backend {
     internal class FfmpegMetadata: IDisposable {
-        public int? Duration { get; private set; } = 0; 
-        public int? FPS { get; private set; } = 0;
+        public TimeParser Duration { get; private set; }
+        public int FPS { get; private set; } = 0;
         public int TotalNumberOfFrames {
             get {
-                return (Duration ?? 0) * (FPS ?? 0);
+                return (Duration?.TotalSeconds ?? 0) * FPS;
             }
         }
         private Context context;
 
         public FfmpegMetadata() {
+            Duration = new TimeParser();
             context = Context.Get();
         }
 
@@ -56,8 +57,7 @@ namespace MediaTransCoder.Backend {
                 int Pos2 = output.IndexOf(",");
                 duration = output.Substring(Pos1, Pos2 - Pos1).Trim();
             }
-            var parser = new TimeParser(duration);
-            Duration = parser.TotalSeconds;
+            Duration = new TimeParser(duration);
         }
 
         private void ParseFPS(string output) {

@@ -14,6 +14,10 @@
 
         internal TimeSpan Time { get; private set; }
 
+        internal TimeParser() {
+            Time = TimeSpan.Zero;
+        }
+
         internal TimeParser(string time) {
             Time = Parse(time);
         }

@@ -30,7 +30,38 @@ namespace MediaTransCoder.Backend {
 
         protected abstract void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine);
 
-        internal abstract bool Test();
+        internal bool Test() {
+            try {
+                context.Display.Send("Starting process:\n" + process.StartInfo.FileName + " " + process.StartInfo.Arguments, MessageType.WARNING);
+                if (File.Exists(args.Files.Output)) {
+                    context.Display.Send("File " + args.Files.Output + " already exists!", MessageType.ERROR);
+                    context.Display.Send("Skipping.", MessageType.SUCCESS);
+                    return true;
+                }
+                process.Start();
+                string output = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
+                context.Display.Send(output);
+                if (File.Exists(args.Files.Output)) {
+                    var file = new FileInfo(args.Files.Output);
+                    context.Display.Send("\tCreated file size: " + file.Length, MessageType.SUCCESS);
+                    if (file.Length < 1000) {
+                        context.Display.Send("\t\tDeleting file!", MessageType.ERROR);
+                        File.Delete(args.Files.Output);
+                        return false;
+                    }
+                }
+                if (process.ExitCode != 0) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (Exception exc) {
+                context.Display.Send(exc.Message, MessageType.ERROR);
+                Debug.WriteLine(exc.ToString());
+                return false;
+            }
+        }
 
         protected void OnProcessExit(object sender, EventArgs e) {
             IsRunning = false;

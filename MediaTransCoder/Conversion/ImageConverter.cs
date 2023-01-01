@@ -14,9 +14,5 @@ namespace MediaTransCoder.Backend {
         protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
             throw new NotImplementedException();
         }
-
-        internal override bool Test() {
-            throw new NotImplementedException();
-        }
     }
 }
