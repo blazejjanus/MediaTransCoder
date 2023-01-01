@@ -10,6 +10,8 @@
     <RootNamespace>MediaTransCoder.Tests</RootNamespace>
 
     <AssemblyName>MediaTransCoder.Tests</AssemblyName>
+
+    <BaseOutputPath>..\.build\bin\</BaseOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MediaTransCoderCLI\MediaTransCoderCLI.csproj" />
     <ProjectReference Include="..\MediaTransCoder\MediaTransCoder.csproj" />
   </ItemGroup>
 

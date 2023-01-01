@@ -11,7 +11,7 @@
         c3gp,
         [ContainerFormat("flv", "FlashVideo")]
         flv,
-        [ContainerFormat("matroska", "Matroska", ".mkv", ".mka")]
+        [ContainerFormat(Name = "matroska", Description = "Matroska", VideoExtension = ".mkv", AudioExtension = ".mka", AudioOnly = false)]
         matroska,
         [ContainerFormat("ogg", "ogg", ".ogg", true)]
         ogg,

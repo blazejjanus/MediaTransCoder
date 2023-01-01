@@ -65,9 +65,10 @@
                 }
             }
             foreach (var inputFile in inputFiles) {
+                string relative = Path.GetRelativePath(inputRoot.FullName, inputFile.FullName);
                 result.Add(new FileOption() {
                     Input = inputFile.FullName,
-                    Output = Path.Combine(outputDirectory, Path.GetRelativePath(inputFile.FullName, inputRoot.FullName))
+                    Output = Path.Combine(outputDirectory, Path.GetDirectoryName(relative) ?? "")
                 });
             }
             return result;

@@ -3,9 +3,8 @@
     public class Endpoint : IDisposable {
         #region Fields
         private Context context;
-        private List<FfmpegCaller> callers;
         private int TotalFrames { get; set; }
-        protected static Endpoint? instance;
+        private List<AbstractConverter> Converters { get; set; }
         #endregion
         #region Constructor
         public Endpoint(BackendConfig config, IDisplay gui) {
@@ -18,8 +17,7 @@
             Context.Init(config, gui);
             context = Context.Get();
             context.Display = gui;
-            callers = new List<FfmpegCaller>();
-            instance = this;
+            Converters = new List<AbstractConverter>();
         }
         #endregion
 
@@ -47,12 +45,12 @@
             }
             foreach(var arg in args) {
                 arg.GenerateOutputFileName();
-                var caller = new FfmpegCaller(arg, UpdateProgress, UpdateMetadata);
-                callers.Add(caller);
+                var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata);
+                Converters.Add(converter);
             }
-            foreach(var caller in callers) {
-                caller.Run();
-                caller.Dispose();
+            foreach(var converter in Converters) {
+                converter.Convert();
+                converter.Dispose();
             }
         }
 
@@ -79,12 +77,12 @@
             }
             foreach (var arg in args) {
                 arg.GenerateOutputFileName();
-                var caller = new FfmpegCaller(arg, UpdateProgress, UpdateMetadata);
-                callers.Add(caller);
+                var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata);
+                Converters.Add(converter);
             }
-            foreach (var caller in callers) {
-                caller.Run();
-                caller.Dispose();
+            foreach (var converter in Converters) {
+                converter.Convert();
+                converter.Dispose();
             }
         }
 
@@ -93,8 +91,8 @@
         }
 
         public void Dispose() {
-            foreach(var caller in callers) {
-                caller.Dispose();
+            foreach(var converter in Converters) {
+                converter.Dispose();
             }
         }
 

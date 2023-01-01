@@ -19,6 +19,36 @@ namespace MediaTransCoder.CLI {
             Console.ResetColor();
         }
 
+        public void UpdateProgress(double progress) {
+            Progress?.Update(progress, true);
+        }
+
+        public string Read(string message) {
+            Console.WriteLine(message);
+            string? result = null;
+            while (true) {
+                result = Console.ReadLine();
+                if(result != null) {
+                    result = result.Trim();
+                    return result;
+                }
+            }
+        }
+
+        public bool GetBool(string message) {
+            var result = string.Empty;
+            while (true) {
+                result = Read(message);
+                if(result == "y" || result == "t") {
+                    return true;
+                }
+                if (result == "n") {
+                    return false;
+                }
+                Console.WriteLine("Invalid value provided!");
+            }
+        }
+
         private void SetColor(MessageType type) {
             switch (type) {
                 case MessageType.WARNING:
@@ -30,11 +60,10 @@ namespace MediaTransCoder.CLI {
                 case MessageType.SUCCESS:
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     break;
+                case MessageType.DEBUG:
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    break;
             }
-        }
-
-        public void UpdateProgress(double progress) {
-            Progress?.Update(progress, true);
         }
     }
 }

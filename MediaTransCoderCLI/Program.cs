@@ -1,5 +1,4 @@
 ﻿using MediaTransCoder.Backend;
-using System.IO;
 
 namespace MediaTransCoder.CLI {
     internal class Program {
@@ -7,8 +6,8 @@ namespace MediaTransCoder.CLI {
         private static CLIConfig? Config;
         private static ProgressBar Progress = new ProgressBar();
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
-        private static string input = @"E:\TEMP\mtc\input\audio\";
-        private static string output = @"E:\TEMP\mtc\output\audio\";
+        private static string input = @"E:\TEMP\mtc\input\video\sample.mp4";
+        private static string output = @"E:\TEMP\mtc\output\video\";
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
             Config = CLIConfig.ReadConfig();
@@ -17,7 +16,7 @@ namespace MediaTransCoder.CLI {
             }
             GUI.Progress = Progress;
             Backend = new Endpoint(Config.Backend, GUI);
-            ConvertAudio();
+            ConvertVideo();
         }
 
         #region Tests
@@ -25,7 +24,7 @@ namespace MediaTransCoder.CLI {
             var options = new EndpointOptions() {
                 Input = input,
                 Output = output,
-                InputOption = InputOptions.RECURSIVE,
+                InputOption = InputOptions.FILE,
                 Format = ContainerFormat.matroska,
                 Video = new VideoOptions() {
                     Codec = VideoCodecs.hevc,
@@ -47,7 +46,7 @@ namespace MediaTransCoder.CLI {
             var options = new EndpointOptions() {
                 Input = input,
                 Output = output,
-                InputOption = InputOptions.DIRECTORY,
+                InputOption = InputOptions.RECURSIVE,
                 Format = ContainerFormat.ogg,
                 Audio = new AudioOptions() {
                     Codec = AudioCodecs.libvorbis,
@@ -96,8 +95,6 @@ namespace MediaTransCoder.CLI {
             var env = EnvironmentalSettings.Get();
             cfg.Backend.Environment = EnvironmentType.Development;
             cfg.Backend.TempDirPath = env.RootPath + ".temp//";
-            cfg.Backend.Logging.LogFilePath = env.LogPath;
-            cfg.Backend.Logging.LoggingLevel = LoggingLevel.INFO;
             cfg.SaveConfig(env.ConfigPath + "config.json");
         }
 
