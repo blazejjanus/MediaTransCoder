@@ -6,7 +6,6 @@ namespace MediaTransCoder.Backend {
 
         public VideoConverter(FfmpegArgs args, OnProgressCallback? callback, OnMetadataUpdateCallback? metadataCallback) : 
             base(args, callback, metadataCallback) {
-
         }
 
         public override int Convert() {
@@ -30,6 +29,7 @@ namespace MediaTransCoder.Backend {
                 context.Display.Send(outLine.Data);
                 if (outLine.Data.Contains("frame=")) {
                     LastFrame = Int32.Parse(outLine.Data.Split("=")[1].Trim());
+                    Progress = Math.Round((double)LastFrame / metadata.TotalNumberOfFrames * 100, 1);
                     if (ProgressCallback != null) {
                         ProgressCallback(LastFrame);
                     }
