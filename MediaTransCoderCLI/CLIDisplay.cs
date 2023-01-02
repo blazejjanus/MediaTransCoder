@@ -1,10 +1,19 @@
 ﻿using MediaTransCoder.Backend;
+using System;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace MediaTransCoder.CLI {
+    delegate string? ConsoleReader();
+
     internal class CLIDisplay : IDisplay {
         private static CLIDisplay? instance;
         public ProgressBar? Progress { get; set; }
-        private CLIDisplay() {}
+        private bool WasTimeout { get; set; }
+
+        private CLIDisplay() {
+            WasTimeout = false;
+        }
 
         public static CLIDisplay GetInstance() {
             if (instance == null) {
@@ -23,14 +32,25 @@ namespace MediaTransCoder.CLI {
             Progress?.Update(progress, true);
         }
 
-        public string Read(string message) {
+        public string Read(string message, string defaultValue = "") {
             Console.WriteLine(message);
             string? result = null;
+            var timeout = GetTimer();
             while (true) {
-                result = Console.ReadLine();
+                timeout.Start();
+                if(Console.KeyAvailable) {
+                    result = Console.ReadLine();
+                }
                 if(result != null) {
                     result = result.Trim();
+                    timeout.Stop();
                     return result;
+                }
+                if(WasTimeout) {
+                    Send("No user interaction fro 10s, default value will be returned.", MessageType.WARNING);
+                    timeout.Stop();
+                    WasTimeout = false;
+                    return defaultValue;
                 }
             }
         }
@@ -38,7 +58,7 @@ namespace MediaTransCoder.CLI {
         public bool GetBool(string message) {
             var result = string.Empty;
             while (true) {
-                result = Read(message);
+                result = Read(message, "n");
                 if(result == "y" || result == "t") {
                     return true;
                 }
@@ -47,6 +67,18 @@ namespace MediaTransCoder.CLI {
                 }
                 Console.WriteLine("Invalid value provided!");
             }
+        }
+
+        private void TimerCallback(object source, ElapsedEventArgs e) {
+            WasTimeout = true;
+        }
+
+        private Timer GetTimer() {
+            var result = new Timer();
+            result.Elapsed += new ElapsedEventHandler(TimerCallback);
+            result.Interval = 10000;
+            result.Enabled = true;
+            return result;
         }
 
         private void SetColor(MessageType type) {

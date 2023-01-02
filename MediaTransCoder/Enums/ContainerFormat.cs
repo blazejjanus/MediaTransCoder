@@ -9,7 +9,7 @@
         wav,
         [ContainerFormat("3gp", "3GP", ".3gp")]
         c3gp,
-        [ContainerFormat("flv", "FlashVideo")]
+        [ContainerFormat("flv", "FlashVideo", ".flv")]
         flv,
         [ContainerFormat(Name = "matroska", Description = "Matroska", VideoExtension = ".mkv", AudioExtension = ".mka", AudioOnly = false)]
         matroska,

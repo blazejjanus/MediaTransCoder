@@ -9,6 +9,7 @@
         public ContainerFormat? Format { get; set; }
         public AudioOptions? Audio { get; set; }
         public VideoOptions? Video { get; set; }
+        public ImageOptions? Image { get; set; }
 
         public EndpointOptions() {
             OverrideExistingFiles = true;
@@ -59,6 +60,17 @@
             }
             if (Audio == null) {
                 throw new Exception("Audio options was null!");
+            }
+        }
+
+        internal void ValidateImage() {
+            Validate();
+            if(Image == null) {
+                throw new Exception("Image options was null!");
+            } else {
+                if(Image.Size.X < 1 || Image.Size.Y < 1) {
+                    throw new Exception("Image size must be specified!");
+                }
             }
         }
     }

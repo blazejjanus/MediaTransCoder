@@ -18,7 +18,7 @@ namespace MediaTransCoder.Tests {
             return true;
         }
 
-        public string Read(string message) {
+        public string Read(string message, string defaultValue = "") {
             Debug.WriteLine(message);
             return "";
         }

@@ -1,10 +1,10 @@
 ﻿using System.Diagnostics;
+using System.Drawing;
 
 namespace MediaTransCoder.Backend {
     internal class ImageConverter : AbstractConverter {
         public ImageConverter(FfmpegArgs args, OnProgressCallback? callback, OnMetadataUpdateCallback? metadataCallback) : 
             base(args, callback, metadataCallback) {
-
         }
 
         public override int Convert() {

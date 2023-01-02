@@ -17,6 +17,18 @@ namespace MediaTransCoder.Backend {
         protected OnProgressCallback? ProgressCallback;
         protected OnMetadataUpdateCallback? MetadataCallback;
 
+        public string OutputFile {
+            get {
+                return args.Files.Output;
+            }
+        }
+
+        public string InputFile {
+            get {
+                return args.Files.Input;
+            }
+        }
+
         public AbstractConverter(FfmpegArgs args, OnProgressCallback? progressCallback, OnMetadataUpdateCallback? metadataCallback) {
             context = Context.Get();
             this.args = args;

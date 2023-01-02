@@ -7,7 +7,7 @@
         private int StartingIndex { get; set; }
         public double Percentage {
             get {
-                return Math.Round(((double)Done / Size) * 100, 2);
+                return Math.Round((double)Done / Size * 100, 2);
             }
         }
 
@@ -34,15 +34,15 @@
             Console.SetCursorPosition(Location.Left, Location.Top);
             ConsoleColor defaultColor = Console.ForegroundColor;
             Console.ForegroundColor = Options.UndoneColor;
-            if(Options.Prefix != null) {
+            if (Options.Prefix != null) {
                 Console.Write(Options.Prefix + " ");
                 StartingIndex += Options.Prefix.Length + 1;
             }
-            if(Options.StartingChar != null) {
+            if (Options.StartingChar != null) {
                 Console.Write(Options.StartingChar);
                 StartingIndex += 1;
             }
-            for(int i = 0; i < Size; i++) {
+            for (int i = 0; i < Size; i++) {
                 Console.Write(Options.UndoneChar);
             }
             Console.Write(Options.EndingChar);
@@ -58,7 +58,7 @@
             ConsoleColor defaultColor = Console.ForegroundColor;
             Console.ForegroundColor = Options.DoneColor;
             Console.SetCursorPosition(Location.Left + StartingIndex, Location.Top);
-            for(int i = 0; i < Done; i++) {
+            for (int i = 0; i < Done; i++) {
                 Console.Write(Options.DoneChar);
             }
             Console.SetCursorPosition(Location.Left + StartingIndex + Size + 1, Location.Top);
@@ -72,11 +72,11 @@
         }
 
         public void Update(double progress, bool writeValue = false) {
-            if(progress > 1) {
-                progress = Math.Round((progress / 100), 2);
+            if (progress > 1) {
+                progress = Math.Round(progress / 100, 2);
             }
             var originalLocation = Console.GetCursorPosition();
-            Done = (int)Math.Round((progress * Size));
+            Done = (int)Math.Round(progress * Size);
             ConsoleColor defaultColor = Console.ForegroundColor;
             Console.ForegroundColor = Options.DoneColor;
             Console.SetCursorPosition(Location.Left + StartingIndex, Location.Top);

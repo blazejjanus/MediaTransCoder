@@ -10,6 +10,6 @@
         public bool DrawInNewLine { get; set; } = true;
         public bool EndWithNewLine { get; set; } = true;
 
-        public ProgressBarOptions() {}
+        public ProgressBarOptions() { }
     }
 }
