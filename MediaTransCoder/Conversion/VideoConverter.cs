@@ -26,7 +26,6 @@ namespace MediaTransCoder.Backend {
 
         protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
             if (outLine.Data != null) {
-                Logging.Debug(outLine.Data);
                 if (outLine.Data.Contains("frame=")) {
                     LastFrame = Int32.Parse(outLine.Data.Split("=")[1].Trim());
                     Progress = Math.Round((double)LastFrame / metadata.TotalNumberOfFrames * 100, 1);

@@ -74,8 +74,9 @@ namespace MediaTransCoder.Backend
                 sb.Append(" -ar " + Audio.SamplingRate);
                 sb.Append(" -ac " + Audio.AudioChannels);
             }
-            if(Format != null)
+            if(Format != null) {
                 sb.Append(" -f " + EnumHelper.GetName(Format.Value));
+            }
             sb.Append(" \"" + Files.Output + "\"");
             return sb.ToString();
         }

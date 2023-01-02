@@ -5,7 +5,6 @@ namespace MediaTransCoder.Backend {
     /// Supported video codecs. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum VideoCodecs {
-        //Untested
         [VideoCodec("dvvideo", "DigitalVideo", ".mov")]
         dvvideo,
         [VideoCodec("ffv1", "FFV1", ".avi")]

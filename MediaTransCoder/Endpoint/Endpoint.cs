@@ -51,7 +51,11 @@
                 var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata);
                 Converters.Add(converter);
             }
+            DisplayFileList(files);
             foreach(var converter in Converters) {
+                context.Display.Send("Converting file: ", MessageType.SUCCESS);
+                context.Display.Send("\t" + converter.InputFile, MessageType.SUCCESS);
+                Logging.Debug("Output file name:\n\t" + converter.OutputFile);
                 converter.Convert();
                 converter.Dispose();
             }
@@ -84,7 +88,11 @@
                 var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata);
                 Converters.Add(converter);
             }
+            DisplayFileList(files);
             foreach (var converter in Converters) {
+                context.Display.Send("Converting file: ", MessageType.SUCCESS);
+                context.Display.Send("\t" + converter.InputFile, MessageType.SUCCESS);
+                Logging.Debug("Output file name:\n\t" + converter.OutputFile);
                 converter.Convert();
                 converter.Dispose();
             }
@@ -109,11 +117,19 @@
             }
         }
 
-        private void UpdateProgress(int lastframe) {
+        private void UpdateProgress(int lastStep) {
             double progress = 0;
-            progress = Math.Round((((double)lastframe / TotalSteps) * 100), 1);
+            progress = Math.Round((((double)lastStep / TotalSteps) * 100), 1);
             Logging.Debug(progress.ToString());
             context.Display.UpdateProgress(progress);
+        }
+
+        private void DisplayFileList(List<FileOption>? files) {
+            if(files != null) {
+                foreach (var file in files) {
+                    context.Display.Send(file.ToString());
+                }
+            }
         }
 
         #region Test

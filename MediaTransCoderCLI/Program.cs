@@ -5,7 +5,7 @@ namespace MediaTransCoder.CLI {
         private static Endpoint? Backend;
         private static CLIConfig? Config;
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
-        private static string input = @"E:\TEMP\mtc\input\video\sample.mp4";
+        private static string input = @"E:\TEMP\mtc\input\video\";
         private static string output = @"E:\TEMP\mtc\output\video\";
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
@@ -14,7 +14,9 @@ namespace MediaTransCoder.CLI {
                 throw new Exception("Obtained config was null!");
             }
             GUI.Progress = new ProgressBar();
-            Backend = new Endpoint(Config.Backend, GUI, false);
+            Backend = new Endpoint(Config.Backend, GUI);
+            GetExtensions();
+            Console.ReadLine();
             ConvertVideo();
         }
 
@@ -23,7 +25,7 @@ namespace MediaTransCoder.CLI {
             var options = new EndpointOptions() {
                 Input = input,
                 Output = output,
-                InputOption = InputOptions.FILE,
+                InputOption = InputOptions.RECURSIVE,
                 Format = ContainerFormat.matroska,
                 Video = new VideoOptions() {
                     Codec = VideoCodecs.hevc,

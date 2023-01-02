@@ -73,5 +73,9 @@
             }
             return result;
         }
+
+        public override string ToString() {
+            return Input + " -> " + Output;
+        }
     }
 }
