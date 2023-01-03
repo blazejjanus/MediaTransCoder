@@ -25,7 +25,7 @@ namespace MediaTransCoder.Backend {
         flac,
         [AudioCodec("alac", "alac", ".alac")]
         alac,
-        [AudioCodec("pcm_s16le", "alac")]
+        [AudioCodec("pcm_s16le", "PCM")]
         pcm
     }
 }
