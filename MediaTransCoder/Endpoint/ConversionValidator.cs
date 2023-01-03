@@ -20,11 +20,12 @@
             if (!File.Exists(path)) {
                 throw new FileNotFoundException(path);
             }
-            if (!string.IsNullOrEmpty(Path.GetExtension(path))) {
+            var ext = Path.GetExtension(path);
+            if (string.IsNullOrEmpty(ext)) {
                 if(deleteInvalid) {
                     File.Delete(path);
                 }
-                throw new Exception("File doesn't have a valid extension!");
+                throw new Exception("File doesn't have a valid extension!", new Exception(ext + " is not a valid extension."));
             }
             var info = new FileInfo(path);
             if(info.Length < 512) {

@@ -169,7 +169,7 @@ namespace MediaTransCoder.CLI {
                             File.AppendAllText(rootDir + "compatibility.log", "OK");
                         } catch(Exception exc) {
                             string errorMessage = "Error while processing: " + format + " " + vcodec + " " + acodec;
-                            errorMessage += "Exception:\n" + exc.Message;
+                            errorMessage += "\nException:\n" + exc.Message;
                             if (exc.InnerException != null) {
                                 errorMessage += "Inner:\n" + exc.InnerException.Message;
                             }
@@ -206,7 +206,7 @@ namespace MediaTransCoder.CLI {
                         File.AppendAllText(rootDir + "compatibility.log", "OK");
                     } catch (Exception exc) {
                         string errorMessage = "Error while processing: " + format + " " + acodec;
-                        errorMessage += "Exception:\n" + exc.Message;
+                        errorMessage += "\nException:\n" + exc.Message;
                         if (exc.InnerException != null) {
                             errorMessage += "Inner:\n" + exc.InnerException.Message;
                         }
