@@ -129,8 +129,10 @@ namespace MediaTransCoder.CLI {
             Resolutions resolution = defaultResolution;
             //Test video
             File.AppendAllText(rootDir + "compatibility.log", "Video tests:\n\n");
+            GUI.Send("Video tests:\n\n", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
                 File.AppendAllText(rootDir + "compatibility.log", "Testing " + format + ":\n");
+                GUI.Send("Testing " + format + ":\n", MessageType.SUCCESS);
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
                 foreach(var vcodec in videoCodecs) {
@@ -182,7 +184,10 @@ namespace MediaTransCoder.CLI {
             }
             //Test audio
             File.AppendAllText(rootDir + "compatibility.log", "Audio tests:\n\n");
+            GUI.Send("Audio tests:\n\n", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
+                File.AppendAllText(rootDir + "compatibility.log", "Testing " + format + ":\n");
+                GUI.Send("Testing " + format + ":\n", MessageType.SUCCESS);
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
                     var options = new EndpointOptions() {
