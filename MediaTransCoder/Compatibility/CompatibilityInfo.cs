@@ -85,7 +85,6 @@
                     result.Add(VideoCodecs.msmpeg4v3);
                     result.Add(VideoCodecs.prores);
                     result.Add(VideoCodecs.rawvideo);
-                    result.Add(VideoCodecs.rv20);
                     result.Add(VideoCodecs.vp8);
                     result.Add(VideoCodecs.vp9);
                     result.Add(VideoCodecs.webp);

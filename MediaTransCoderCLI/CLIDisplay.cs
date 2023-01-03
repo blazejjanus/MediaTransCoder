@@ -8,6 +8,7 @@ namespace MediaTransCoder.CLI {
     internal class CLIDisplay : IDisplay {
         private static CLIDisplay? instance;
         public ProgressBar? Progress { get; set; }
+        public string? LogFile { get; set; } = null;
         private bool WasTimeout { get; set; }
 
         private CLIDisplay() {
@@ -66,6 +67,20 @@ namespace MediaTransCoder.CLI {
                 }
                 Console.WriteLine("Invalid value provided!");
             }
+        }
+
+        internal void Log(string message, MessageType type = MessageType.INFO) {
+            Send(message, type);
+            if(LogFile!= null) {
+                File.AppendAllText(LogFile, message + "\n");
+            } else {
+                throw new Exception("LogFile path was not set!");
+            }
+        }
+
+        internal void Log(string message, string file, MessageType type = MessageType.INFO) {
+            Send(message, type);
+            File.AppendAllText(file, message + "\n");
         }
 
         private void TimerCallback(object source, ElapsedEventArgs e) {

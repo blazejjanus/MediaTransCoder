@@ -1,8 +1,7 @@
 ﻿using System.Text;
 
-namespace MediaTransCoder.Backend
-{
-    internal class FfmpegArgs {
+namespace MediaTransCoder.Backend {
+    public class FfmpegArgs {
         public string FfmpegPath { get; set; }
         public FileOption Files { get; set; }
         public bool OverrideExistingFiles { get; set; }
@@ -109,6 +108,30 @@ namespace MediaTransCoder.Backend
                 Files.Output = Files.Output.Split("..").First();
             }
             Files.Output = Path.Combine(Files.Output, name);
+        }
+
+        public static string GenerateOutputFileExtension(ContainerFormat? format, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
+            string name = string.Empty;
+            string? containerExtension = null;
+            string? codecExtension = null;
+            if (format != null) {
+                containerExtension = EnumHelper.GetFileExtension(format.Value, audioOnly);
+            }
+            if (vcodec != null) {
+                codecExtension = EnumHelper.GetFileExtension(vcodec.Value);
+            } else {
+                if (acodec != null) {
+                    codecExtension = EnumHelper.GetFileExtension(acodec.Value);
+                }
+            }
+            if (codecExtension != null) {
+                name += codecExtension;
+            } else {
+                if (containerExtension != null) {
+                    name += containerExtension;
+                }
+            }
+            return name;
         }
     }
 }

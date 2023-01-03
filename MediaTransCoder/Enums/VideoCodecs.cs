@@ -11,7 +11,7 @@ namespace MediaTransCoder.Backend {
         ffv1,
         [VideoCodec("gif", "GIF", ".gif")]
         gif,
-        [VideoCodec("h263", "h263")]
+        [VideoCodec("h263+", "h263+")]
         h263,
         [VideoCodec("h263p", "h263p")]
         h263p,
