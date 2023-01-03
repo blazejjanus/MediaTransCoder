@@ -34,7 +34,7 @@ namespace MediaTransCoder.Backend {
         rv20,
         [VideoCodec("vp8", "VP8")]
         vp8,
-        [VideoCodec("dvvideo", "DigitalVideo")]
+        [VideoCodec("vp9", "VP9")]
         vp9,
         [VideoCodec("webp", "Webp", ".webm")]
         webp,
