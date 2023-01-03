@@ -5,6 +5,7 @@ namespace MediaTransCoder.CLI {
         private static Endpoint? Backend;
         private static CLIConfig? Config;
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
+        private static ConversionValidator Validator = new ConversionValidator(GUI);
         private static string input = @"E:\TEMP\mtc\input\video\";
         private static string output = @"E:\TEMP\mtc\output\video\";
         private static string rootDir = string.Empty;
@@ -112,7 +113,12 @@ namespace MediaTransCoder.CLI {
             string outputPath = @"E:\TEMP\mtc\output\compatibility\";
             string audioInput = @"E:\TEMP\mtc\input\compatibility\sample.mp3";
             string videoInput = @"E:\TEMP\mtc\input\compatibility\sample.mp4";
-
+            if(File.Exists(rootDir + "compatibility.log")) {
+                if(File.Exists(rootDir + "compatibility.log.old")) {
+                    File.Delete(rootDir + "compatibility.log.old");
+                }
+                File.Move(rootDir + "compatibility.log", rootDir + "compatibility.log.old");
+            }
             if(Backend != null) {
                 Backend.IsDebug = false;
             }
@@ -122,7 +128,9 @@ namespace MediaTransCoder.CLI {
             Resolutions dvResolution = Resolutions.r720p;
             Resolutions resolution = defaultResolution;
             //Test video
+            File.AppendAllText(rootDir + "compatibility.log", "Video tests:\n\n");
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
+                File.AppendAllText(rootDir + "compatibility.log", "Testing " + format + ":\n");
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
                 foreach(var vcodec in videoCodecs) {
@@ -151,8 +159,14 @@ namespace MediaTransCoder.CLI {
                                 SamplingRate = 48000
                             }
                         };
+                        File.AppendAllText(rootDir + "compatibility.log", vcodec + "_" + acodec + ": ");
                         try {
                             Backend?.ConvertVideo(options);
+                            foreach(var file in Backend?.Files ?? new List<FileOption>()) {
+                                Validator.Validate(file.Output);
+                            }
+                            GUI.Send("OK", MessageType.SUCCESS);
+                            File.AppendAllText(rootDir + "compatibility.log", "OK");
                         } catch(Exception exc) {
                             string errorMessage = "Error while processing: " + format + " " + vcodec + " " + acodec;
                             errorMessage += "Exception:\n" + exc.Message;
@@ -167,6 +181,7 @@ namespace MediaTransCoder.CLI {
                 }
             }
             //Test audio
+            File.AppendAllText(rootDir + "compatibility.log", "Audio tests:\n\n");
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
@@ -184,6 +199,11 @@ namespace MediaTransCoder.CLI {
                     };
                     try {
                         Backend?.ConvertAudio(options);
+                        foreach (var file in Backend?.Files ?? new List<FileOption>()) {
+                            Validator.Validate(file.Output);
+                        }
+                        GUI.Send("OK", MessageType.SUCCESS);
+                        File.AppendAllText(rootDir + "compatibility.log", "OK");
                     } catch (Exception exc) {
                         string errorMessage = "Error while processing: " + format + " " + acodec;
                         errorMessage += "Exception:\n" + exc.Message;
@@ -196,6 +216,8 @@ namespace MediaTransCoder.CLI {
                     }
                 }
             }
+            //Cleanup
+            Validator.RemoveEmptyDirs(outputPath);
         }
 
         private void Test() {
