@@ -19,11 +19,9 @@ namespace MediaTransCoder.CLI {
             }
             GUI.Progress = new ProgressBar();
             Backend = new Endpoint(Config.Backend, GUI);
-            TestExtensionsGeneration();
-            Console.ReadKey();
+            //TestExtensionsGeneration();
             //GetCompatibilityLists(true);
             //GetExtensions();
-            //Console.ReadLine();
             //ConvertVideo();
             TestCompatibilityInfo();
         }
