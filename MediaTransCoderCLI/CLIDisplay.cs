@@ -1,10 +1,19 @@
 ﻿using MediaTransCoder.Backend;
+using System.Timers;
+using Timer = System.Timers.Timer;
 
 namespace MediaTransCoder.CLI {
+    delegate string? ConsoleReader();
+
     internal class CLIDisplay : IDisplay {
         private static CLIDisplay? instance;
         public ProgressBar? Progress { get; set; }
-        private CLIDisplay() {}
+        public string? LogFile { get; set; } = null;
+        private bool WasTimeout { get; set; }
+
+        private CLIDisplay() {
+            WasTimeout = false;
+        }
 
         public static CLIDisplay GetInstance() {
             if (instance == null) {
@@ -19,6 +28,73 @@ namespace MediaTransCoder.CLI {
             Console.ResetColor();
         }
 
+        public void UpdateProgress(double progress) {
+            //Progress?.Update(progress, true);
+        }
+
+        public string Read(string message, string defaultValue = "") {
+            Console.WriteLine(message);
+            string? result = null;
+            var timeout = GetTimer();
+            while (true) {
+                timeout.Start();
+                if(Console.KeyAvailable) {
+                    result = Console.ReadLine();
+                }
+                if(result != null) {
+                    result = result.Trim();
+                    timeout.Stop();
+                    return result;
+                }
+                if(WasTimeout) {
+                    Send("No user interaction fro 10s, default value will be returned.", MessageType.WARNING);
+                    timeout.Stop();
+                    WasTimeout = false;
+                    return defaultValue;
+                }
+            }
+        }
+
+        public bool GetBool(string message) {
+            var result = string.Empty;
+            while (true) {
+                result = Read(message, "n");
+                if(result == "y" || result == "t") {
+                    return true;
+                }
+                if (result == "n") {
+                    return false;
+                }
+                Console.WriteLine("Invalid value provided!");
+            }
+        }
+
+        internal void Log(string message, MessageType type = MessageType.INFO) {
+            Send(message, type);
+            if(LogFile!= null) {
+                File.AppendAllText(LogFile, message + "\n");
+            } else {
+                throw new Exception("LogFile path was not set!");
+            }
+        }
+
+        internal void Log(string message, string file, MessageType type = MessageType.INFO) {
+            Send(message, type);
+            File.AppendAllText(file, message + "\n");
+        }
+
+        private void TimerCallback(object source, ElapsedEventArgs e) {
+            WasTimeout = true;
+        }
+
+        private Timer GetTimer() {
+            var result = new Timer();
+            result.Elapsed += new ElapsedEventHandler(TimerCallback);
+            result.Interval = 10000;
+            result.Enabled = true;
+            return result;
+        }
+
         private void SetColor(MessageType type) {
             switch (type) {
                 case MessageType.WARNING:
@@ -30,11 +106,10 @@ namespace MediaTransCoder.CLI {
                 case MessageType.SUCCESS:
                     Console.ForegroundColor = ConsoleColor.DarkGreen;
                     break;
+                case MessageType.DEBUG:
+                    Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    break;
             }
-        }
-
-        public void UpdateProgress(double progress) {
-            Progress?.Update(progress, true);
         }
     }
 }

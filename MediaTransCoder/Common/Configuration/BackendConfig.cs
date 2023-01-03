@@ -15,12 +15,6 @@ namespace MediaTransCoder.Backend {
         public HardwareConfig Hardware { get; set; }
 
         /// <summary>
-        /// Configuration connected to Logging
-        /// </summary>
-        [JsonPropertyName("Logging")]
-        public LoggingConfig Logging { get; set; }
-
-        /// <summary>
         /// Configuration connected to interface calling backend
         /// </summary>
         [JsonPropertyName("Interface")]
@@ -39,7 +33,6 @@ namespace MediaTransCoder.Backend {
         public string? TempDirPath { get; set; }
 
         public BackendConfig() {
-            Logging = new LoggingConfig();
             Interface = new InterfaceConfig();
             Hardware = new HardwareConfig();
             Environment = EnvironmentType.Production;

@@ -1,25 +1,27 @@
 ﻿using MediaTransCoder.Backend;
-using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MediaTransCoder.CLI
-{
+namespace MediaTransCoder.CLI {
     public class CLIConfig {
         [JsonPropertyName("Backend")]
         public BackendConfig Backend { get; set; }
+
         public CLIConfig() { 
             Backend = new BackendConfig();
         }
+
         public static CLIConfig GetConfig() {
             if (instance == null) {
                 instance = new CLIConfig();
             }
             return instance;
         }
+
         private static void Set(CLIConfig config) {
             instance = config;
         }
+
         public static CLIConfig ReadConfig() {
             var env = EnvironmentalSettings.Get();
             if(!File.Exists(env.ConfigPath + "config.json")) {
@@ -49,6 +51,7 @@ namespace MediaTransCoder.CLI
                 File.WriteAllText(path, json);
             }
         }
+
         [JsonIgnore]
         private static CLIConfig? instance;
     }

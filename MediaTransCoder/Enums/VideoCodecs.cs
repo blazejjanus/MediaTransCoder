@@ -5,14 +5,13 @@ namespace MediaTransCoder.Backend {
     /// Supported video codecs. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum VideoCodecs {
-        //Untested
         [VideoCodec("dvvideo", "DigitalVideo", ".mov")]
         dvvideo,
         [VideoCodec("ffv1", "FFV1", ".avi")]
         ffv1,
         [VideoCodec("gif", "GIF", ".gif")]
         gif,
-        [VideoCodec("h263", "h263")]
+        [VideoCodec("h263+", "h263+")]
         h263,
         [VideoCodec("h263p", "h263p")]
         h263p,
@@ -35,7 +34,7 @@ namespace MediaTransCoder.Backend {
         rv20,
         [VideoCodec("vp8", "VP8")]
         vp8,
-        [VideoCodec("dvvideo", "DigitalVideo")]
+        [VideoCodec("vp9", "VP9")]
         vp9,
         [VideoCodec("webp", "Webp", ".webm")]
         webp,

@@ -8,6 +8,16 @@
             Output = string.Empty;
         }
 
+        public FileOption(string input, string output) {
+            Input = input;
+            Output = output;
+        }
+
+        public FileOption(EndpointOptions options) {
+            Input = options.Input;
+            Output = options.Output;
+        }
+
         /// <summary>
         /// Genrate list of FileOption for multiple input files with single directory output
         /// </summary>
@@ -65,12 +75,17 @@
                 }
             }
             foreach (var inputFile in inputFiles) {
+                string relative = Path.GetRelativePath(inputRoot.FullName, inputFile.FullName);
                 result.Add(new FileOption() {
                     Input = inputFile.FullName,
-                    Output = Path.Combine(outputDirectory, Path.GetRelativePath(inputFile.FullName, inputRoot.FullName))
+                    Output = Path.Combine(outputDirectory, Path.GetDirectoryName(relative) ?? "")
                 });
             }
             return result;
+        }
+
+        public override string ToString() {
+            return Input + " -> " + Output;
         }
     }
 }

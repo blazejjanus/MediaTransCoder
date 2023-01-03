@@ -13,7 +13,7 @@
         r480p,
         [Resolution(960, 540)]
         r540p,
-        [Resolution(1290, 720, "HD")]
+        [Resolution(1280, 720, "HD")]
         r720p,
         [Resolution(1920, 1080, "FullHD")]
         r1080p,

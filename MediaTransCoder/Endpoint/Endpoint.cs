@@ -2,113 +2,135 @@
 {
     public class Endpoint : IDisposable {
         #region Fields
+        public bool IsDebug {
+            get {
+                return context.IsDebug ?? false;
+            }
+            set {
+                if (Context.IsSet) {
+                    context.IsDebug = value;
+                }
+            }
+        }
+        public List<FileOption> Files = new List<FileOption>();
+        private int TotalSteps { get; set; }
+        private EndpointOptions? Options { get; set; }
         private Context context;
-        private List<FfmpegCaller> callers;
-        private int TotalFrames { get; set; }
-        protected static Endpoint? instance;
         #endregion
         #region Constructor
-        public Endpoint(BackendConfig config, IDisplay gui) {
+        public Endpoint(BackendConfig config, IDisplay gui, bool? debug = null) {
             if (config == null) {
                 throw new ArgumentNullException("Provided config was null!");
             }
             if (gui == null) {
                 throw new ArgumentNullException("Provided gui was null!");
             }
-            Context.Init(config, gui);
+            Context.Init(config, gui, debug);
             context = Context.Get();
             context.Display = gui;
-            callers = new List<FfmpegCaller>();
-            instance = this;
+            Options = null;
         }
         #endregion
 
         #region Methods
         public void ConvertVideo(EndpointOptions options) {
-            options.ValidateVideo();
+            Options = options;
+            Options.ValidateVideo();
+            Files = new List<FileOption>();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
-            List<FileOption> files = new List<FileOption>();
-            switch (options.InputOption) {
+            switch (Options.InputOption) {
                 case InputOptions.FILE:
-                    args.Add(FfmpegArgs.Get(options));
+                    Files.Add(new FileOption(options));
                     break;
                 case InputOptions.DIRECTORY:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetVideoExtensions(true));
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true));
                     break;
                 case InputOptions.RECURSIVE:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetVideoExtensions(true), true);
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true), true);
                     break;
             }
-            foreach(var arg in args) {
+            foreach(var file in Files) {
+                var arg = FfmpegArgs.Get(Options, file.Input, file.Output);
                 arg.GenerateOutputFileName();
-                var caller = new FfmpegCaller(arg, UpdateProgress, UpdateMetadata);
-                callers.Add(caller);
+                file.Output = arg.Files.Output;
+                args.Add(arg);
             }
-            foreach(var caller in callers) {
-                caller.Run();
-                caller.Dispose();
+            DisplayFileList(Files);
+            foreach (var arg in args) {
+                using(var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata)) {
+                    context.Display.Send("Converting file: ");
+                    context.Display.Send("\t" + converter.InputFile);
+                    context.Display.Send("Output file name:\n\t" + converter.OutputFile);
+                    Logging.Debug("Output file name:\n\t" + converter.OutputFile);
+                    converter.Convert();
+                }
             }
         }
 
         public void ConvertAudio(EndpointOptions options) {
-            options.ValidateAudio();
+            Options = options;
+            Options.ValidateAudio();
+            Files = new List<FileOption>();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
-            List<FileOption> files = new List<FileOption>();
-            switch (options.InputOption) {
+            switch (Options.InputOption) {
                 case InputOptions.FILE:
-                    args.Add(FfmpegArgs.Get(options));
+                    Files.Add(new FileOption(options));
                     break;
                 case InputOptions.DIRECTORY:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetAudioExtensions(true));
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true));
                     break;
                 case InputOptions.RECURSIVE:
-                    files = FileOption.GetFileOptionsFromDirectory(options.Input, options.Output, FileExtensions.GetAudioExtensions(true), true);
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true), true);
                     break;
             }
-            foreach (var arg in args) {
+            foreach (var file in Files) {
+                var arg = FfmpegArgs.Get(Options, file.Input, file.Output);
                 arg.GenerateOutputFileName();
-                var caller = new FfmpegCaller(arg, UpdateProgress, UpdateMetadata);
-                callers.Add(caller);
+                file.Output = arg.Files.Output;
+                args.Add(arg);
             }
-            foreach (var caller in callers) {
-                caller.Run();
-                caller.Dispose();
+            DisplayFileList(Files);
+            foreach (var arg in args) {
+                using (var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata)) {
+                    context.Display.Send("Converting file: ");
+                    context.Display.Send("\t" + converter.InputFile);
+                    context.Display.Send("Output file name:\n\t" + converter.OutputFile);
+                    Logging.Debug("Output file name:\n\t" + converter.OutputFile);
+                    converter.Convert();
+                }
             }
         }
 
         public void ConvertImage(EndpointOptions options) {
-
+            Options = options;
+            Options.ValidateImage();
         }
 
         public void Dispose() {
-            foreach(var caller in callers) {
-                caller.Dispose();
-            }
+
         }
 
         private void UpdateMetadata(FfmpegMetadata metadata) {
-            TotalFrames += metadata.TotalNumberOfFrames;
+            if (Options?.AudioOnly ?? false) {
+                TotalSteps += metadata.Duration.TotalMiliseconds;
+            } else {
+                TotalSteps += metadata.TotalNumberOfFrames;
+            }
         }
 
-        private void UpdateProgress(int lastframe) {
+        private void UpdateProgress(int lastStep) {
             double progress = 0;
-            progress = Math.Round((((double)lastframe / TotalFrames) * 100), 1);
-            if(context.Config.Environment == EnvironmentType.Development) {
-                context.Display.Send(progress.ToString());
-            }
+            progress = Math.Round((((double)lastStep / TotalSteps) * 100), 1);
+            Logging.Debug(progress.ToString());
             context.Display.UpdateProgress(progress);
+        }
+
+        private void DisplayFileList(List<FileOption>? files) {
+            if(files != null) {
+                foreach (var file in files) {
+                    context.Display.Send(file.ToString());
+                }
+            }
         }
 
         #region Test
