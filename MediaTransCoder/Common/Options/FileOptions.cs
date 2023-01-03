@@ -8,6 +8,16 @@
             Output = string.Empty;
         }
 
+        public FileOption(string input, string output) {
+            Input = input;
+            Output = output;
+        }
+
+        public FileOption(EndpointOptions options) {
+            Input = options.Input;
+            Output = options.Output;
+        }
+
         /// <summary>
         /// Genrate list of FileOption for multiple input files with single directory output
         /// </summary>

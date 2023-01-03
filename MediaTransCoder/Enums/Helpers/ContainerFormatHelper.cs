@@ -27,17 +27,24 @@ namespace MediaTransCoder.Backend {
             }
         }
 
-        public static bool IsAudioOnly(ContainerFormat val) {
+        public static bool IsAudioFormat(ContainerFormat val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
                 .GetCustomAttribute<ContainerFormatAttribute>()?
-                .AudioOnly ?? false;
+                .IsAudioFormat ?? false;
+        }
+
+        public static bool IsVideoFormat(ContainerFormat val) {
+            return val.GetType().GetMember(val.ToString())
+                .FirstOrDefault()?
+                .GetCustomAttribute<ContainerFormatAttribute>()?
+                .IsVideoFormat ?? false;
         }
 
         public static List<ContainerFormat> GetVideoFormats() {
             var result = new List<ContainerFormat>();
             foreach(ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
-                if(!IsAudioOnly(format)) {
+                if(IsVideoFormat(format)) {
                     result.Add(format);
                 }
             }
@@ -47,7 +54,7 @@ namespace MediaTransCoder.Backend {
         public static List<ContainerFormat> GetAudioFormats() {
             var result = new List<ContainerFormat>();
             foreach (ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
-                if (IsAudioOnly(format)) {
+                if (IsAudioFormat(format)) {
                     result.Add(format);
                 }
             }

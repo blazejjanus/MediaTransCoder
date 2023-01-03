@@ -12,6 +12,7 @@
                 }
             }
         }
+        public List<FileOption> Files = new List<FileOption>();
         private int TotalSteps { get; set; }
         private EndpointOptions? Options { get; set; }
         private Context context;
@@ -35,28 +36,27 @@
         public void ConvertVideo(EndpointOptions options) {
             Options = options;
             Options.ValidateVideo();
+            Files = new List<FileOption>();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
-            List<FileOption> files = new List<FileOption>();
             switch (Options.InputOption) {
                 case InputOptions.FILE:
-                    args.Add(FfmpegArgs.Get(Options));
+                    Files.Add(new FileOption(options));
                     break;
                 case InputOptions.DIRECTORY:
-                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true));
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true));
                     break;
                 case InputOptions.RECURSIVE:
-                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true), true);
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetVideoExtensions(true), true);
                     break;
             }
-            DisplayFileList(files);
-            foreach (var arg in args) {
+            foreach(var file in Files) {
+                var arg = FfmpegArgs.Get(Options, file.Input, file.Output);
                 arg.GenerateOutputFileName();
+                file.Output = arg.Files.Output;
+                args.Add(arg);
+            }
+            DisplayFileList(Files);
+            foreach (var arg in args) {
                 using(var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata)) {
                     context.Display.Send("Converting file: ");
                     context.Display.Send("\t" + converter.InputFile);
@@ -70,28 +70,27 @@
         public void ConvertAudio(EndpointOptions options) {
             Options = options;
             Options.ValidateAudio();
+            Files = new List<FileOption>();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
-            List<FileOption> files = new List<FileOption>();
             switch (Options.InputOption) {
                 case InputOptions.FILE:
-                    args.Add(FfmpegArgs.Get(Options));
+                    Files.Add(new FileOption(options));
                     break;
                 case InputOptions.DIRECTORY:
-                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true));
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true));
                     break;
                 case InputOptions.RECURSIVE:
-                    files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true), true);
-                    foreach (var file in files) {
-                        args.Add(FfmpegArgs.Get(Options, file.Input, file.Output));
-                    }
+                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetAudioExtensions(true), true);
                     break;
             }
-            DisplayFileList(files);
-            foreach (var arg in args) {
+            foreach (var file in Files) {
+                var arg = FfmpegArgs.Get(Options, file.Input, file.Output);
                 arg.GenerateOutputFileName();
+                file.Output = arg.Files.Output;
+                args.Add(arg);
+            }
+            DisplayFileList(Files);
+            foreach (var arg in args) {
                 using (var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata)) {
                     context.Display.Send("Converting file: ");
                     context.Display.Send("\t" + converter.InputFile);

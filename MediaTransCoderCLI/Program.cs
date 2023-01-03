@@ -5,19 +5,22 @@ namespace MediaTransCoder.CLI {
         private static Endpoint? Backend;
         private static CLIConfig? Config;
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
+        private static ConversionValidator Validator = new ConversionValidator(GUI);
         private static string input = @"E:\TEMP\mtc\input\video\";
         private static string output = @"E:\TEMP\mtc\output\video\";
         private static string rootDir = string.Empty;
+        private static string logDir = string.Empty;
         static void Main(string[] args) {
+            Setup();
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
-            rootDir = Directory.GetCurrentDirectory();
-            rootDir = rootDir.Split(".build").First();
             Config = CLIConfig.ReadConfig();
             if(Config == null) {
                 throw new Exception("Obtained config was null!");
             }
             GUI.Progress = new ProgressBar();
             Backend = new Endpoint(Config.Backend, GUI);
+            TestExtensionsGeneration();
+            Console.ReadKey();
             //GetCompatibilityLists(true);
             //GetExtensions();
             //Console.ReadLine();
@@ -112,7 +115,13 @@ namespace MediaTransCoder.CLI {
             string outputPath = @"E:\TEMP\mtc\output\compatibility\";
             string audioInput = @"E:\TEMP\mtc\input\compatibility\sample.mp3";
             string videoInput = @"E:\TEMP\mtc\input\compatibility\sample.mp4";
-
+            GUI.LogFile = logDir + "\\compatibility.log";
+            if (File.Exists(GUI.LogFile)) {
+                if(File.Exists(GUI.LogFile + ".old")) {
+                    File.Delete(GUI.LogFile + ".old");
+                }
+                File.Move(GUI.LogFile, GUI.LogFile + ".old");
+            }
             if(Backend != null) {
                 Backend.IsDebug = false;
             }
@@ -122,7 +131,9 @@ namespace MediaTransCoder.CLI {
             Resolutions dvResolution = Resolutions.r720p;
             Resolutions resolution = defaultResolution;
             //Test video
+            GUI.Log("Video tests:\n\n", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
+                GUI.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
                 foreach(var vcodec in videoCodecs) {
@@ -151,23 +162,29 @@ namespace MediaTransCoder.CLI {
                                 SamplingRate = 48000
                             }
                         };
+                        GUI.Log(vcodec + "_" + acodec + ": ");
                         try {
                             Backend?.ConvertVideo(options);
+                            foreach(var file in Backend?.Files ?? new List<FileOption>()) {
+                                Validator.Validate(file.Output);
+                            }
+                            GUI.Log("OK\n", MessageType.SUCCESS);
                         } catch(Exception exc) {
                             string errorMessage = "Error while processing: " + format + " " + vcodec + " " + acodec;
-                            errorMessage += "Exception:\n" + exc.Message;
+                            errorMessage += "\nException:\n" + exc.Message;
                             if (exc.InnerException != null) {
-                                errorMessage += "Inner:\n" + exc.InnerException.Message;
+                                errorMessage += "\nInner:\n" + exc.InnerException.Message;
                             }
                             errorMessage += "\n\n";
-                            GUI.Send(errorMessage, MessageType.ERROR);
-                            File.AppendAllText(rootDir + "compatibility.log", errorMessage);
+                            GUI.Log(errorMessage, MessageType.ERROR);
                         }
                     }
                 }
             }
             //Test audio
+            GUI.Log("Audio tests:\n\n", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
+                GUI.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
                     var options = new EndpointOptions() {
@@ -184,16 +201,57 @@ namespace MediaTransCoder.CLI {
                     };
                     try {
                         Backend?.ConvertAudio(options);
+                        foreach (var file in Backend?.Files ?? new List<FileOption>()) {
+                            Validator.Validate(file.Output);
+                        }
+                        GUI.Log("OK\n", MessageType.SUCCESS);
                     } catch (Exception exc) {
                         string errorMessage = "Error while processing: " + format + " " + acodec;
-                        errorMessage += "Exception:\n" + exc.Message;
+                        errorMessage += "\nException:\n" + exc.Message;
                         if (exc.InnerException != null) {
-                            errorMessage += "Inner:\n" + exc.InnerException.Message;
+                            errorMessage += "\nInner:\n" + exc.InnerException.Message;
                         }
                         errorMessage += "\n\n";
-                        GUI.Send(errorMessage, MessageType.ERROR);
-                        File.AppendAllText(rootDir + "compatibility.log", errorMessage);
+                        GUI.Log(errorMessage, MessageType.ERROR);
                     }
+                }
+            }
+            //Cleanup
+            Validator.RemoveEmptyDirs(outputPath);
+        }
+
+        private static void TestExtensionsGeneration() {
+            GUI.LogFile = logDir + "\\extensions.log";
+            List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
+            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
+            if (File.Exists(GUI.LogFile)) {
+                if (File.Exists(GUI.LogFile + ".old")) {
+                    File.Delete(GUI.LogFile + ".old");
+                }
+                File.Move(GUI.LogFile, GUI.LogFile + ".old");
+            }
+            //Test video
+            GUI.Log("\nVideo:", MessageType.SUCCESS);
+            foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
+                GUI.Log("\t" + format + ":", MessageType.SUCCESS);
+                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                foreach (var vcodec in videoCodecs) {
+                    foreach (var acodec in audioCodecs) {
+                        string exc = FfmpegArgs.GenerateOutputFileExtension(format, vcodec, acodec);
+                        GUI.Log("\t\t" + format + "_" + vcodec + "_" + acodec + ": " + exc);
+                    }
+                }
+            }
+            //Test audio
+            GUI.Log("\nAudio:", MessageType.SUCCESS);
+            var formats = EnumHelper.GetAudioFormats();
+            foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
+                GUI.Log("\t" + format + ":", MessageType.SUCCESS);
+                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                foreach (var acodec in audioCodecs) {
+                    string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, acodec, true);
+                    GUI.Log("\t\t" + format + "_" + acodec + ": " + exc);
                 }
             }
         }
@@ -216,6 +274,12 @@ namespace MediaTransCoder.CLI {
             cfg.Backend.Environment = EnvironmentType.Development;
             cfg.Backend.TempDirPath = env.RootPath + ".temp//";
             cfg.SaveConfig(env.ConfigPath + "config.json");
+            rootDir = Directory.GetCurrentDirectory();
+            rootDir = rootDir.Split(".build").First();
+            logDir = Path.Combine(rootDir, ".logs");
+            if(!Directory.Exists(logDir)) { 
+                Directory.CreateDirectory(logDir);
+            }
         }
 
         private static void OnExit(object sender, ConsoleCancelEventArgs e) {
