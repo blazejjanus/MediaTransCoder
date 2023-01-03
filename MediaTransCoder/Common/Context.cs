@@ -4,7 +4,7 @@
 namespace MediaTransCoder.Backend {
     internal class Context {
         internal BackendConfig Config { get; set; }
-        internal bool? IsDebug { get; private set; } = null;
+        public bool? IsDebug { get; set; } = null;
         internal IDisplay Display { get; set; }
         private static Context? instance;
 

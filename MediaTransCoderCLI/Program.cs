@@ -7,17 +7,22 @@ namespace MediaTransCoder.CLI {
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
         private static string input = @"E:\TEMP\mtc\input\video\";
         private static string output = @"E:\TEMP\mtc\output\video\";
+        private static string rootDir = string.Empty;
         static void Main(string[] args) {
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
+            rootDir = Directory.GetCurrentDirectory();
+            rootDir = rootDir.Split(".build").First();
             Config = CLIConfig.ReadConfig();
             if(Config == null) {
                 throw new Exception("Obtained config was null!");
             }
             GUI.Progress = new ProgressBar();
             Backend = new Endpoint(Config.Backend, GUI);
-            GetExtensions();
-            Console.ReadLine();
-            ConvertVideo();
+            //GetCompatibilityLists(true);
+            //GetExtensions();
+            //Console.ReadLine();
+            //ConvertVideo();
+            TestCompatibilityInfo();
         }
 
         #region Tests
@@ -77,6 +82,120 @@ namespace MediaTransCoder.CLI {
                 Console.WriteLine("\t" + extension);
             }
             Console.WriteLine("##############################");
+        }
+
+        private static void GetCompatibilityLists(bool file = false) {
+            List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
+            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
+            string content = string.Empty;
+            foreach(ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
+                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                content += EnumHelper.GetName(format) + ":\n";
+                content += "\tAudio:\n";
+                foreach (var codec in audioCodecs) {
+                    content += "\t\t" + EnumHelper.GetName(codec) + "\n";
+                }
+                content += "\tVideo:\n";
+                foreach (var codec in videoCodecs) {
+                    content += "\t\t" + EnumHelper.GetName(codec) + "\n";
+                }
+                content += "##############################\n\n";
+            }
+            Console.Write(content);
+            if(file) {
+                File.WriteAllText(rootDir + "\\compatibility_info.txt", content);
+            }
+        }
+
+        private static void TestCompatibilityInfo() {
+            string outputPath = @"E:\TEMP\mtc\output\compatibility\";
+            string audioInput = @"E:\TEMP\mtc\input\compatibility\sample.mp3";
+            string videoInput = @"E:\TEMP\mtc\input\compatibility\sample.mp4";
+
+            if(Backend != null) {
+                Backend.IsDebug = false;
+            }
+            List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
+            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
+            Resolutions defaultResolution = Resolutions.r1080p;
+            Resolutions dvResolution = Resolutions.r720p;
+            Resolutions resolution = defaultResolution;
+            //Test video
+            foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
+                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                foreach(var vcodec in videoCodecs) {
+                    //Workaround for DV
+                    if(vcodec == VideoCodecs.dvvideo) {
+                        resolution = dvResolution;
+                    } else {
+                        resolution = defaultResolution;
+                    }
+                    foreach (var acodec in audioCodecs) {
+                        var options = new EndpointOptions() {
+                            Input = videoInput,
+                            Output = outputPath + format + "\\" + vcodec + "_" + acodec,
+                            InputOption = InputOptions.FILE,
+                            Format = ContainerFormat.matroska,
+                            Video = new VideoOptions() {
+                                Codec = vcodec,
+                                Resolution = resolution,
+                                FPS = 60,
+                                BitRate = 35000
+                            },
+                            Audio = new AudioOptions() {
+                                Codec = acodec,
+                                BitRate = 128,
+                                AudioChannels = 2,
+                                SamplingRate = 48000
+                            }
+                        };
+                        try {
+                            Backend?.ConvertVideo(options);
+                        } catch(Exception exc) {
+                            string errorMessage = "Error while processing: " + format + " " + vcodec + " " + acodec;
+                            errorMessage += "Exception:\n" + exc.Message;
+                            if (exc.InnerException != null) {
+                                errorMessage += "Inner:\n" + exc.InnerException.Message;
+                            }
+                            errorMessage += "\n\n";
+                            GUI.Send(errorMessage, MessageType.ERROR);
+                            File.AppendAllText(rootDir + "compatibility.log", errorMessage);
+                        }
+                    }
+                }
+            }
+            //Test audio
+            foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
+                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                foreach (var acodec in audioCodecs) {
+                    var options = new EndpointOptions() {
+                        Input = audioInput,
+                        Output = outputPath + format + "\\",
+                        InputOption = InputOptions.FILE,
+                        Format = format,
+                        Audio = new AudioOptions() {
+                            Codec = acodec,
+                            BitRate = 128,
+                            AudioChannels = 2,
+                            SamplingRate = 48000
+                        }
+                    };
+                    try {
+                        Backend?.ConvertAudio(options);
+                    } catch (Exception exc) {
+                        string errorMessage = "Error while processing: " + format + " " + acodec;
+                        errorMessage += "Exception:\n" + exc.Message;
+                        if (exc.InnerException != null) {
+                            errorMessage += "Inner:\n" + exc.InnerException.Message;
+                        }
+                        errorMessage += "\n\n";
+                        GUI.Send(errorMessage, MessageType.ERROR);
+                        File.AppendAllText(rootDir + "compatibility.log", errorMessage);
+                    }
+                }
+            }
         }
 
         private void Test() {

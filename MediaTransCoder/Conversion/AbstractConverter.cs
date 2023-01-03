@@ -16,6 +16,7 @@ namespace MediaTransCoder.Backend {
         protected FfmpegMetadata metadata;
         protected OnProgressCallback? ProgressCallback;
         protected OnMetadataUpdateCallback? MetadataCallback;
+        protected string errorString = string.Empty;
 
         public string OutputFile {
             get {
@@ -41,6 +42,9 @@ namespace MediaTransCoder.Backend {
         public abstract int Convert();
 
         protected abstract void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine);
+        protected void FfmpegErrorHandler(object sendingProcess, DataReceivedEventArgs outLine) {
+            errorString += outLine.Data;
+        }
 
         internal bool Test() {
             try {
@@ -81,7 +85,7 @@ namespace MediaTransCoder.Backend {
                 if (File.Exists(args.Files.Output)) {
                     File.Delete(args.Files.Output); //Remove uncompleted conversion file
                 }
-                throw new Exception("Fmmpeg exited with status code: " + process.ExitCode);
+                throw new Exception("Fmmpeg exited with status code: " + process.ExitCode, new Exception(errorString));
             }
         }
 
@@ -140,6 +144,7 @@ namespace MediaTransCoder.Backend {
             proc.Exited += new EventHandler(OnProcessExit);
             proc.OutputDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
             proc.ErrorDataReceived += new DataReceivedEventHandler(FfmpegOutputHandler);
+            proc.ErrorDataReceived += new DataReceivedEventHandler(FfmpegErrorHandler);
             return proc;
         }
     }

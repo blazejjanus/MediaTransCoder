@@ -33,5 +33,25 @@ namespace MediaTransCoder.Backend {
                 .GetCustomAttribute<ContainerFormatAttribute>()?
                 .AudioOnly ?? false;
         }
+
+        public static List<ContainerFormat> GetVideoFormats() {
+            var result = new List<ContainerFormat>();
+            foreach(ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
+                if(!IsAudioOnly(format)) {
+                    result.Add(format);
+                }
+            }
+            return result;
+        }
+
+        public static List<ContainerFormat> GetAudioFormats() {
+            var result = new List<ContainerFormat>();
+            foreach (ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
+                if (IsAudioOnly(format)) {
+                    result.Add(format);
+                }
+            }
+            return result;
+        }
     }
 }

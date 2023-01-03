@@ -1,0 +1,113 @@
+webm:
+	Audio:
+		libvorbis
+		libopus
+		flac
+	Video:
+		vp8
+		dvvideo
+		webp
+
+wav:
+	Audio:
+		pcm
+	Video:
+
+3gp:
+	Audio:
+		aac
+	Video:
+		h263
+		h263p
+		h264
+
+flv:
+	Audio:
+		mp3
+		aac
+	Video:
+		h263
+		h263p
+		h264
+
+matroska:
+	Audio:
+		pcm
+		mp3
+		libvorbis
+		libopus
+		flac
+		ac3
+		eac3
+	Video:
+		dvvideo
+		ffv1
+		gif
+		h263
+		h263p
+		h264
+		libx265
+		mpeg4
+		msmpeg4v3
+		prores
+		rawvideo
+		rv20
+		vp8
+		dvvideo
+		webp
+		wmv1
+		wmv2
+		zmbv
+		zlib
+
+ogg:
+	Audio:
+		libvorbis
+		libopus
+	Video:
+
+avi:
+	Audio:
+		pcm
+		mp3
+		ac3
+		wmav1
+		wmav2
+	Video:
+		h263
+		h263p
+		h264
+		mpeg4
+		msmpeg4v3
+		msvideo1
+		rawvideo
+		wmv1
+		wmv2
+
+mpeg4:
+	Audio:
+		mp3
+		aac
+		libvorbis
+	Video:
+		h263
+		h263p
+		h264
+		libx265
+		mpeg4
+		msmpeg4v3
+		prores
+		rv20
+		wmv1
+		wmv2
+		zmbv
+		zlib
+
+asf:
+	Audio:
+		wmav1
+		wmav2
+		pcm
+	Video:
+		msvideo1
+		rv20
