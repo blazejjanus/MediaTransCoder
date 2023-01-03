@@ -2,10 +2,19 @@
 {
     public class Endpoint : IDisposable {
         #region Fields
-        private Context context;
+        public bool IsDebug {
+            get {
+                return context.IsDebug ?? false;
+            }
+            set {
+                if (Context.IsSet) {
+                    context.IsDebug = value;
+                }
+            }
+        }
         private int TotalSteps { get; set; }
-        private List<AbstractConverter> Converters { get; set; }
         private EndpointOptions? Options { get; set; }
+        private Context context;
         #endregion
         #region Constructor
         public Endpoint(BackendConfig config, IDisplay gui, bool? debug = null) {
@@ -18,7 +27,6 @@
             Context.Init(config, gui, debug);
             context = Context.Get();
             context.Display = gui;
-            Converters = new List<AbstractConverter>();
             Options = null;
         }
         #endregion
@@ -46,24 +54,22 @@
                     }
                     break;
             }
-            foreach(var arg in args) {
-                arg.GenerateOutputFileName();
-                var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata);
-                Converters.Add(converter);
-            }
             DisplayFileList(files);
-            foreach(var converter in Converters) {
-                context.Display.Send("Converting file: ", MessageType.SUCCESS);
-                context.Display.Send("\t" + converter.InputFile, MessageType.SUCCESS);
-                Logging.Debug("Output file name:\n\t" + converter.OutputFile);
-                converter.Convert();
-                converter.Dispose();
+            foreach (var arg in args) {
+                arg.GenerateOutputFileName();
+                using(var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata)) {
+                    context.Display.Send("Converting file: ");
+                    context.Display.Send("\t" + converter.InputFile);
+                    context.Display.Send("Output file name:\n\t" + converter.OutputFile);
+                    Logging.Debug("Output file name:\n\t" + converter.OutputFile);
+                    converter.Convert();
+                }
             }
         }
 
         public void ConvertAudio(EndpointOptions options) {
             Options = options;
-            Options.ValidateVideo();
+            Options.ValidateAudio();
             List<FfmpegArgs> args = new List<FfmpegArgs>();
             List<FileOption> files = new List<FileOption>();
             switch (Options.InputOption) {
@@ -83,18 +89,16 @@
                     }
                     break;
             }
+            DisplayFileList(files);
             foreach (var arg in args) {
                 arg.GenerateOutputFileName();
-                var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata);
-                Converters.Add(converter);
-            }
-            DisplayFileList(files);
-            foreach (var converter in Converters) {
-                context.Display.Send("Converting file: ", MessageType.SUCCESS);
-                context.Display.Send("\t" + converter.InputFile, MessageType.SUCCESS);
-                Logging.Debug("Output file name:\n\t" + converter.OutputFile);
-                converter.Convert();
-                converter.Dispose();
+                using (var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata)) {
+                    context.Display.Send("Converting file: ");
+                    context.Display.Send("\t" + converter.InputFile);
+                    context.Display.Send("Output file name:\n\t" + converter.OutputFile);
+                    Logging.Debug("Output file name:\n\t" + converter.OutputFile);
+                    converter.Convert();
+                }
             }
         }
 
@@ -104,9 +108,7 @@
         }
 
         public void Dispose() {
-            foreach(var converter in Converters) {
-                converter.Dispose();
-            }
+
         }
 
         private void UpdateMetadata(FfmpegMetadata metadata) {

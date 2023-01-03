@@ -1,5 +1,4 @@
 ﻿using MediaTransCoder.Backend;
-using System;
 using System.Timers;
 using Timer = System.Timers.Timer;
 
@@ -29,7 +28,7 @@ namespace MediaTransCoder.CLI {
         }
 
         public void UpdateProgress(double progress) {
-            Progress?.Update(progress, true);
+            //Progress?.Update(progress, true);
         }
 
         public string Read(string message, string defaultValue = "") {

@@ -6,6 +6,7 @@ namespace MediaTransCoder.Backend
         public string FfmpegPath { get; set; }
         public FileOption Files { get; set; }
         public bool OverrideExistingFiles { get; set; }
+        public bool SkipExistingFiles { get; set; }
         public bool AudioOnly { get; set; }
         public HardwareAcceleration Acceleration { get; set; }
         public ContainerFormat? Format { get; set; }
@@ -17,6 +18,7 @@ namespace MediaTransCoder.Backend
             Files = new FileOption();
             OverrideExistingFiles = true;
             AudioOnly = false;
+            SkipExistingFiles = true;
             Acceleration = HardwareAcceleration.NONE;
         }
 
@@ -26,6 +28,7 @@ namespace MediaTransCoder.Backend
             result.Files.Output = output;
             result.AudioOnly = options.AudioOnly;
             result.OverrideExistingFiles = options.OverrideExistingFiles;
+            result.SkipExistingFiles = options.SkipExistingFiles;
             result.Format = options.Format;
             result.Acceleration = options.Acceleration;
             result.Audio = options.Audio;

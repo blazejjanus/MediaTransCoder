@@ -8,6 +8,21 @@ namespace MediaTransCoder.Backend {
         }
 
         public override int Convert() {
+            if (File.Exists(args.Files.Output)) { //Skip already processed file?
+                if (args.SkipExistingFiles) {
+                    context.Display.Send("Skipping converted file!", MessageType.WARNING);
+                    Progress = 100.0;
+                    return 0;
+                } else {
+                    if (Logging.IsDebug) {
+                        if (context.Display.GetBool("Shall remove existing file?")) {
+                            context.Display.Send("Skipping converted file!", MessageType.WARNING);
+                            Progress = 100.0;
+                            return 0;
+                        }
+                    }
+                }
+            }
             throw new NotImplementedException();
         }
 

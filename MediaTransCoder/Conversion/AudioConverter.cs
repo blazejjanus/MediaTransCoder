@@ -10,12 +10,18 @@ namespace MediaTransCoder.Backend {
 
         public override int Convert() {
             Logging.Debug("FFmpeg command:\n" + process.StartInfo.FileName + " " + process.StartInfo.Arguments + "\n");
-            if (Logging.IsDebug) {
-                if (File.Exists(args.Files.Output)) { //Skip already processed file?
-                    if (context.Display.GetBool("Shall remove existing file?")) {
-                        context.Display.Send("Skipping converted file!", MessageType.WARNING);
-                        Progress = 100.0;
-                        return 0;
+            if (File.Exists(args.Files.Output)) { //Skip already processed file?
+                if (args.SkipExistingFiles) {
+                    context.Display.Send("Skipping converted file!", MessageType.WARNING);
+                    Progress = 100.0;
+                    return 0;
+                } else {
+                    if (Logging.IsDebug) {
+                        if (context.Display.GetBool("Shall remove existing file?")) {
+                            context.Display.Send("Skipping converted file!", MessageType.WARNING);
+                            Progress = 100.0;
+                            return 0;
+                        }
                     }
                 }
             }
