@@ -12,7 +12,7 @@
                 }
             }
         }
-        public List<FileOption> Files = new List<FileOption>();
+        public List<FileOption> Files { get; private set; } = new List<FileOption>();
         private int TotalSteps { get; set; }
         private EndpointOptions? Options { get; set; }
         private Context context;
