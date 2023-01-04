@@ -111,6 +111,34 @@ namespace MediaTransCoder.Backend {
             return GetSampleAudioOptions(testEnv.Audio.Input, testEnv.Audio.Output);
         }
 
+        public static EndpointOptions GetSampleImageOptions(string input, string output) {
+            return new EndpointOptions() {
+                Input = input,
+                Output = output,
+                InputOption = InputOptions.FILE,
+                AudioOnly = false,
+                Format = null,
+                Video = null,
+                Audio = null,
+                Image = new ImageOptions() {
+                    //Format = ImageFormat.JPG,
+                    Format = ImageFormat.PNG,
+                    Size = new System.Numerics.Vector2(1920, 1080),
+                    //CompressionLevel = 5,
+                    PixelFormat = PixelFormats.RGB24,
+                    Brightness = null,
+                    Contrast = null,
+                    Saturation = null,
+                    Effect = null,
+                }
+            };
+        }
+
+        public static EndpointOptions GetSampleImageOptions() {
+            var testEnv = TestingEnvironment.Get();
+            return GetSampleImageOptions(testEnv.Image.Input, testEnv.Image.Output);
+        }
+
         private void Validate() {
             switch (InputOption) {
                 case InputOptions.FILE:
