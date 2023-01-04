@@ -10,21 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Enums\Audio\**" />
-    <Compile Remove="Enums\Video\**" />
-    <EmbeddedResource Remove="Enums\Audio\**" />
-    <EmbeddedResource Remove="Enums\Video\**" />
-    <None Remove="Enums\Audio\**" />
-    <None Remove="Enums\Video\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="System.Management" Version="7.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Enums\Image\" />
   </ItemGroup>
 
 </Project>

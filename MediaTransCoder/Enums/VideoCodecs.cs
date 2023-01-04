@@ -1,14 +1,17 @@
-﻿namespace MediaTransCoder.Backend {
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MediaTransCoder.Backend {
     /// <summary>
     /// Supported video codecs. Use Name to get command, use Description to get dispalyed name.
     /// </summary>
     public enum VideoCodecs {
         [VideoCodec("ffv1", "FFV1", ".avi")]
         ffv1,
-        [VideoCodec("gif", "GIF", ".gifv")]
+        [VideoCodec("gif", "GIF", ".gif")]
         gif,
         [VideoCodec("h263p", "h263p")]
         h263p,
+        [Display(Name = "h264", Description = "h264")]
         [VideoCodec("h264", "h264")]
         h264,
         [VideoCodec("libx265", "HEVC")] 
