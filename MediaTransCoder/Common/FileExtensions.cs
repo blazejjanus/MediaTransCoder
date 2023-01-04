@@ -57,5 +57,22 @@
             }
             return result;
         }
+
+        public static List<string> GetImageExtensions(bool searchCriteria = false) {
+            var result = new List<string>();
+            foreach (ImageFormat format in Enum.GetValues(typeof(ImageFormat))) {
+                var extensions = EnumHelper.GetFileExtensions(format);
+                if (extensions != null) {
+                    foreach (var extension in extensions) {
+                        if (searchCriteria) {
+                            result.Add("*" + extension);
+                        } else {
+                            result.Add(extension);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
     }
 }
