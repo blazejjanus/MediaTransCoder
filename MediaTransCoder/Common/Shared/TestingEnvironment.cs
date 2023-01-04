@@ -2,6 +2,11 @@
     public class TestingEnvironment {
         private static TestingEnvironment? instance;
         public static string? RootPath { get; set; }
+        public string CurrentRootPath {
+            get {
+                return RootPath ?? Path.GetDirectoryName(Video.Input) ?? string.Empty;
+            }
+        }
         public PathInfo Video { get; private set; }
         public PathInfo Audio { get; private set; }
         public PathInfo Image { get; private set; }

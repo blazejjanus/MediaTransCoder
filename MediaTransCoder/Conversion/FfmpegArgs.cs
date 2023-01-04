@@ -35,6 +35,18 @@ namespace MediaTransCoder.Backend {
             return result;
         }
 
+        internal static FfmpegArgs Get(EndpointOptions options, FileOption files) {
+            var result = new FfmpegArgs();
+            result.Files = files;
+            result.AudioOnly = options.AudioOnly;
+            result.OverrideExistingFiles = options.OverrideExistingFiles;
+            result.Format = options.Format;
+            result.Acceleration = options.Acceleration;
+            result.Audio = options.Audio;
+            result.Video = options.Video;
+            return result;
+        }
+
         internal static FfmpegArgs Get(EndpointOptions options) {
             if (options.InputOption != InputOptions.FILE) {
                 throw new Exception("Cannot convert Endpoint Options to FfmpegArgs!");
@@ -84,12 +96,14 @@ namespace MediaTransCoder.Backend {
         }
 
         public void GenerateOutputFileName() {
-            string name = Path.GetFileNameWithoutExtension(Files.Input);
-            name += GenerateOutputFileExtension(Format, Video?.Codec, Audio?.Codec, AudioOnly);
+            if (Files.OutputFileName == null) {
+                Files.OutputFileName = Path.GetFileNameWithoutExtension(Files.Input);
+            }
+            Files.OutputFileName += GenerateOutputFileExtension(Format, Video?.Codec, Audio?.Codec, AudioOnly);
             if (Files.Output.EndsWith("..")) {
                 Files.Output = Files.Output.Split("..").First();
             }
-            Files.Output = Path.Combine(Files.Output, name);
+            Files.Output = Path.Combine(Files.Output, Files.OutputFileName);
         }
 
         public static string GenerateOutputFileExtension(ContainerFormat? format, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {

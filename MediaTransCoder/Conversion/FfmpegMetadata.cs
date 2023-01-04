@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
+[assembly: InternalsVisibleTo("MediaTransCoder.UnitTests")]
 namespace MediaTransCoder.Backend {
     internal class FfmpegMetadata: IDisposable {
         public TimeParser Duration { get; private set; }

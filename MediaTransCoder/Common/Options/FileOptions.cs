@@ -2,6 +2,7 @@
     public class FileOption {
         public string Input { get; set; }
         public string Output { get; set; }
+        public string? OutputFileName { get; set; }
 
         public FileOption() {
             Input = string.Empty;
@@ -16,6 +17,9 @@
         public FileOption(EndpointOptions options) {
             Input = options.Input;
             Output = options.Output;
+            if(options.InputOption == InputOptions.FILE) {
+                OutputFileName = options.OutputFileName;
+            }
         }
 
         /// <summary>

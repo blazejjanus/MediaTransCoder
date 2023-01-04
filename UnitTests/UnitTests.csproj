@@ -7,9 +7,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <RootNamespace>MediaTransCoder.Tests</RootNamespace>
+    <RootNamespace>MediaTransCoder.UnitTests</RootNamespace>
 
-    <AssemblyName>MediaTransCoder.Tests</AssemblyName>
+    <AssemblyName>MediaTransCoder.UnitTests</AssemblyName>
 
     <BaseOutputPath>..\.build\bin\</BaseOutputPath>
   </PropertyGroup>
@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutomaticTests\AutomaticTests.csproj" />
     <ProjectReference Include="..\MediaTransCoderCLI\MediaTransCoderCLI.csproj" />
     <ProjectReference Include="..\MediaTransCoder\MediaTransCoder.csproj" />
   </ItemGroup>

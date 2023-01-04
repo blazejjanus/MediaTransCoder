@@ -1,7 +1,6 @@
-using MediaTransCoder.Shared;
 using System.Diagnostics;
 
-namespace MediaTransCoder.Tests {
+namespace MediaTransCoder.UnitTests {
     [TestClass]
     public class FfmpegMetadataTests {
         TestingEnvironment env = TestingEnvironment.Get();

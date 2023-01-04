@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
+[assembly: InternalsVisibleTo("MediaTransCoder.UnitTests")]
 namespace MediaTransCoder.Backend {
     //internal delegate void OnProgressCallback(int progress);
     //internal delegate void OnMetadataUpdateCallback(FfmpegMetadata metadata);
@@ -137,7 +138,7 @@ namespace MediaTransCoder.Backend {
             proc.StartInfo.RedirectStandardInput = true;
             proc.StartInfo.FileName = args.FfmpegPath;
             proc.StartInfo.Arguments = args.GetArgs();
-            process.Exited += new EventHandler(OnProcessExit);
+            proc.Exited += new EventHandler(OnProcessExit);
             return proc;
         }
 
