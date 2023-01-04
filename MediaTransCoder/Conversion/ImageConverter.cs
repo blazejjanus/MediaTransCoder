@@ -24,11 +24,19 @@ namespace MediaTransCoder.Backend {
                     }
                 }
             }
-            throw new NotImplementedException();
+            ReadMetadata();
+            CheckOutputDirectory();
+            return StartProcess();
         }
 
         protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
-            throw new NotImplementedException();
+            if(ProgressCallback != null) {
+                if (IsRunning) {
+                    ProgressCallback(0);
+                } else {
+                    ProgressCallback(1);
+                }
+            }
         } 
     }
 }

@@ -18,6 +18,10 @@
             Time = TimeSpan.Zero;
         }
 
+        internal TimeParser(int seconds) {
+            Time = new TimeSpan(0, 0, seconds);
+        }
+
         internal TimeParser(string time) {
             Time = Parse(time);
         }
