@@ -30,11 +30,6 @@ namespace MediaTransCoder.Backend {
             ParseDuration(processOutput);
         }
 
-        public void ReadImage(string filePath) {
-            FPS = 1;
-            Duration = new TimeParser(1);
-        }
-
         private string RunProcess(string filePath) {
             string processOutput = string.Empty;
             var process = new Process {
@@ -125,6 +120,8 @@ namespace MediaTransCoder.Backend {
             } else {
                 FPS = 1;
             }
+            //Calc needed data
+            //TotalNumberOfFrames = parser.TotalSeconds * FPS;
         }
 
         public void Dispose() {

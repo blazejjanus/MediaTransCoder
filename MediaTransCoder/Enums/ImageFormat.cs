@@ -6,8 +6,8 @@
         DPX,
         [ImageFormat("gif")]
         GIF,
-        [ImageFormat("jpg", new[] { ".jpeg", ".jpg"} )]
-        JPG,
+        [ImageFormat("jpeg", new[] { ".jpeg", ".jpg"} )]
+        JPEG,
         [ImageFormat("pcx")]
         PCX,
         [ImageFormat("png")]

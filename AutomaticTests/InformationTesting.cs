@@ -60,7 +60,7 @@ namespace MediaTransCoder.Tests {
                 videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
                 foreach (var vcodec in videoCodecs) {
                     foreach (var acodec in audioCodecs) {
-                        string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, vcodec, acodec);
+                        string exc = FfmpegArgs.GenerateOutputFileExtension(format, vcodec, acodec);
                         Display.Log("\t\t" + format + "_" + vcodec + "_" + acodec + ": " + exc);
                     }
                 }
@@ -72,7 +72,7 @@ namespace MediaTransCoder.Tests {
                 Display.Log("\t" + format + ":", MessageType.SUCCESS);
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
-                    string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, null, acodec, true);
+                    string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, acodec, true);
                     Display.Log("\t\t" + format + "_" + acodec + ": " + exc);
                 }
             }

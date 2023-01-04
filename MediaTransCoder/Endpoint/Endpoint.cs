@@ -100,32 +100,6 @@
         public void ConvertImage(EndpointOptions options) {
             Options = options;
             Options.ValidateImage();
-            Files = new List<FileOption>();
-            List<FfmpegArgs> args = new List<FfmpegArgs>();
-            switch (Options.InputOption) {
-                case InputOptions.FILE:
-                    Files.Add(new FileOption(options));
-                    break;
-                case InputOptions.DIRECTORY:
-                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetImageExtensions(true));
-                    break;
-                case InputOptions.RECURSIVE:
-                    Files = FileOption.GetFileOptionsFromDirectory(Options.Input, Options.Output, FileExtensions.GetImageExtensions(true), true);
-                    break;
-            }
-            foreach (var file in Files) {
-                var arg = FfmpegArgs.Get(Options, file);
-                arg.GenerateOutputFileName();
-                file.Output = arg.Files.Output;
-                args.Add(arg);
-            }
-            DisplayFileList(Files);
-            foreach (var arg in args) {
-                using (var converter = new ImageConverter(arg, UpdateProgress, UpdateMetadata)) {
-                    context.Display.Send("Converting file: \n\t" + arg.Files.ToString());
-                    converter.Convert();
-                }
-            }
         }
 
         public void Dispose() {
@@ -133,12 +107,8 @@
         }
 
         private void UpdateMetadata(FfmpegMetadata metadata) {
-            if(Options?.Image == null) {
-                if (Options?.AudioOnly ?? false) {
-                    TotalSteps += metadata.Duration.TotalMiliseconds;
-                } else {
-                    TotalSteps += metadata.TotalNumberOfFrames;
-                }
+            if (Options?.AudioOnly ?? false) {
+                TotalSteps += metadata.Duration.TotalMiliseconds;
             } else {
                 TotalSteps += metadata.TotalNumberOfFrames;
             }

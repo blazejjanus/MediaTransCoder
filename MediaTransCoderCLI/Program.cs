@@ -29,7 +29,6 @@ namespace MediaTransCoder.CLI {
             //CompatibilityTests.TestCompatiblityCharts();
             //ConvertVideo();
             //ConvertAudio();
-            ConvertImage();
         }
 
         #region Conversion
@@ -44,8 +43,7 @@ namespace MediaTransCoder.CLI {
         }
 
         private static void ConvertImage() {
-            var options = EndpointOptions.GetSampleImageOptions();
-            Backend?.ConvertImage(options);
+
         }
         #endregion
 

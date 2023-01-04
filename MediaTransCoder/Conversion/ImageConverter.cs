@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
-using System.Runtime.CompilerServices;
 
 namespace MediaTransCoder.Backend {
     internal class ImageConverter : AbstractConverter {
@@ -24,19 +23,11 @@ namespace MediaTransCoder.Backend {
                     }
                 }
             }
-            ReadMetadata();
-            CheckOutputDirectory();
-            return StartProcess();
+            throw new NotImplementedException();
         }
 
         protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
-            if(ProgressCallback != null) {
-                if (IsRunning) {
-                    ProgressCallback(0);
-                } else {
-                    ProgressCallback(1);
-                }
-            }
-        } 
+            throw new NotImplementedException();
+        }
     }
 }

@@ -91,15 +91,10 @@ namespace MediaTransCoder.Backend {
         }
 
         protected void ReadMetadata() {
-            //REFACTOR: One method to check if it's audio video or image
-            if (args.Image != null) {
-                metadata.ReadImage(args.Files.Input);
+            if (args.AudioOnly) {
+                metadata.ReadAudio(args.Files.Input);
             } else {
-                if (args.AudioOnly) {
-                    metadata.ReadAudio(args.Files.Input);
-                } else {
-                    metadata.ReadVideo(args.Files.Input);
-                }
+                metadata.ReadVideo(args.Files.Input);
             }
             if (MetadataCallback != null) {
                 MetadataCallback(metadata);

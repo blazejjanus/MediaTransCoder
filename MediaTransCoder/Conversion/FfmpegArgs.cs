@@ -11,7 +11,6 @@ namespace MediaTransCoder.Backend {
         public ContainerFormat? Format { get; set; }
         public AudioOptions? Audio { get; set; }
         public VideoOptions? Video { get; set; }
-        public ImageOptions? Image { get; set; }
 
         public FfmpegArgs() {
             FfmpegPath = Context.Get().Config.FfmpegPath ?? "ffmpeg";
@@ -33,7 +32,6 @@ namespace MediaTransCoder.Backend {
             result.Acceleration = options.Acceleration;
             result.Audio = options.Audio;
             result.Video = options.Video;
-            result.Image = options.Image;
             return result;
         }
 
@@ -46,7 +44,6 @@ namespace MediaTransCoder.Backend {
             result.Acceleration = options.Acceleration;
             result.Audio = options.Audio;
             result.Video = options.Video;
-            result.Image = options.Image;
             return result;
         }
 
@@ -63,7 +60,6 @@ namespace MediaTransCoder.Backend {
             result.Acceleration = options.Acceleration;
             result.Audio = options.Audio;
             result.Video = options.Video;
-            result.Image = options.Image;
             return result;
         }
 
@@ -92,17 +88,8 @@ namespace MediaTransCoder.Backend {
                 sb.Append(" -ar " + Audio.SamplingRate);
                 sb.Append(" -ac " + Audio.AudioChannels);
             }
-            if(Image != null) {
-                if(Image.CompressionLevel != null) {
-                    sb.Append(" -qscale:v " + Image.CompressionLevel);
-                }
-                sb.Append(" -pix_fmt " + EnumHelper.GetName(Image.PixelFormat));
-                sb.Append(Image.GetVF());
-                sb.Append(" -c " + EnumHelper.GetName(Image.Format));
-            } else {
-                if (Format != null) {
-                    sb.Append(" -f " + EnumHelper.GetName(Format.Value));
-                }
+            if(Format != null) {
+                sb.Append(" -f " + EnumHelper.GetName(Format.Value));
             }
             sb.Append(" \"" + Files.Output + "\"");
             return sb.ToString();
@@ -112,27 +99,14 @@ namespace MediaTransCoder.Backend {
             if (Files.OutputFileName == null) {
                 Files.OutputFileName = Path.GetFileNameWithoutExtension(Files.Input);
             }
-            Files.OutputFileName += GenerateOutputFileExtension(Format, Image?.Format, Video?.Codec, Audio?.Codec, AudioOnly);
+            Files.OutputFileName += GenerateOutputFileExtension(Format, Video?.Codec, Audio?.Codec, AudioOnly);
             if (Files.Output.EndsWith("..")) {
                 Files.Output = Files.Output.Split("..").First();
             }
             Files.Output = Path.Combine(Files.Output, Files.OutputFileName);
         }
 
-        public static string GenerateOutputFileExtension(ContainerFormat? containerFormat, ImageFormat? imageFormat, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
-            string name = string.Empty;
-            if(imageFormat != null) {
-                name = GetImageExtension(imageFormat.Value);
-            } else {
-                if(containerFormat == null) {
-                    throw new ArgumentNullException(nameof(containerFormat));
-                }
-                name = GetAudioVideoExtension(containerFormat.Value, vcodec, acodec, audioOnly);
-            }
-            return name;
-        }
-
-        private static string GetAudioVideoExtension(ContainerFormat? format, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
+        public static string GenerateOutputFileExtension(ContainerFormat? format, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
             string name = string.Empty;
             string? containerExtension = null;
             string? codecExtension = null;
@@ -152,15 +126,6 @@ namespace MediaTransCoder.Backend {
                 if (containerExtension != null) {
                     name += containerExtension;
                 }
-            }
-            return name;
-        }
-
-        private static string GetImageExtension(ImageFormat format) {
-            string? name = string.Empty;
-            name = EnumHelper.GetFileExtension(format);
-            if(name == null) {
-                name = format.ToString();
             }
             return name;
         }
