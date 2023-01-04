@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace MediaTransCoder.Backend {
     internal class ImageConverter : AbstractConverter {
@@ -28,6 +29,6 @@ namespace MediaTransCoder.Backend {
 
         protected override void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine) {
             throw new NotImplementedException();
-        }
+        } 
     }
 }

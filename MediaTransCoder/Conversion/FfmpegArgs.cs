@@ -11,6 +11,7 @@ namespace MediaTransCoder.Backend {
         public ContainerFormat? Format { get; set; }
         public AudioOptions? Audio { get; set; }
         public VideoOptions? Video { get; set; }
+        public ImageOptions? Image { get; set; }
 
         public FfmpegArgs() {
             FfmpegPath = Context.Get().Config.FfmpegPath ?? "ffmpeg";
@@ -88,8 +89,18 @@ namespace MediaTransCoder.Backend {
                 sb.Append(" -ar " + Audio.SamplingRate);
                 sb.Append(" -ac " + Audio.AudioChannels);
             }
-            if(Format != null) {
-                sb.Append(" -f " + EnumHelper.GetName(Format.Value));
+            if(Image != null) {
+                if(Image.CompressionLevel != null) {
+                    sb.Append(" -qscale:v " + Image.CompressionLevel);
+                }
+                sb.Append(" -pix_fmt " + Image.PixelFormat);
+                sb.Append(" -vf scale=" + Image.Size.X + ":" + Image.Size.Y);
+                sb.Append(Image.FfmpegEq);
+                sb.Append(" -c " + EnumHelper.GetName(Image.Format));
+            } else {
+                if (Format != null) {
+                    sb.Append(" -f " + EnumHelper.GetName(Format.Value));
+                }
             }
             sb.Append(" \"" + Files.Output + "\"");
             return sb.ToString();
