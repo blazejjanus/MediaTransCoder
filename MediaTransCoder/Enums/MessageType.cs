@@ -1,6 +1,5 @@
 ﻿namespace MediaTransCoder.Backend {
-    public enum MessageType
-    {
+    public enum MessageType {
         INFO,
         WARNING,
         ERROR,

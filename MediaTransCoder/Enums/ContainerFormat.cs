@@ -17,8 +17,6 @@
         ogg,
         [ContainerFormat("avi", "AVI", ".avi", ".avi")]
         avi,
-        [ContainerFormat("mpeg4", "MPEG-4", ".mp4", ".m4a")]
-        mpeg4,
         [ContainerFormat("asf", "ASF", ".asf", ".asf")]
         asf,
     }

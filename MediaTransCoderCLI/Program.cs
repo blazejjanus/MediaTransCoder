@@ -1,4 +1,5 @@
 ﻿using MediaTransCoder.Backend;
+using MediaTransCoder.Shared;
 
 namespace MediaTransCoder.CLI {
     internal class Program {
@@ -6,10 +7,10 @@ namespace MediaTransCoder.CLI {
         private static CLIConfig? Config;
         private static CLIDisplay GUI = CLIDisplay.GetInstance();
         private static ConversionValidator Validator = new ConversionValidator(GUI);
+        private static EnvironmentPathes Pathes = EnvironmentPathes.Get();
         private static string input = @"E:\TEMP\mtc\input\video\";
         private static string output = @"E:\TEMP\mtc\output\video\";
-        private static string rootDir = string.Empty;
-        private static string logDir = string.Empty;
+
         static void Main(string[] args) {
             Setup();
             Console.CancelKeyPress += new ConsoleCancelEventHandler(OnExit);
@@ -19,51 +20,23 @@ namespace MediaTransCoder.CLI {
             }
             GUI.Progress = new ProgressBar();
             Backend = new Endpoint(Config.Backend, GUI);
-            TestExtensionsGeneration();
-            Console.ReadKey();
+            //TestExtensionsGeneration();
             //GetCompatibilityLists(true);
             //GetExtensions();
-            //Console.ReadLine();
             //ConvertVideo();
-            TestCompatibilityInfo();
+            //ConvertAudio();
+            TestCompatibilityInfo(true);
+            //TestCodecResolutionCompatibility();
         }
 
         #region Tests
         private static void ConvertVideo() {
-            var options = new EndpointOptions() {
-                Input = input,
-                Output = output,
-                InputOption = InputOptions.RECURSIVE,
-                Format = ContainerFormat.matroska,
-                Video = new VideoOptions() {
-                    Codec = VideoCodecs.hevc,
-                    Resolution = Resolutions.r1080p,
-                    FPS = 60,
-                    BitRate = 35000
-                },
-                Audio = new AudioOptions() {
-                    Codec = AudioCodecs.mp3,
-                    BitRate = 128,
-                    AudioChannels = 1,
-                    SamplingRate = 44100
-                }
-            };
+            var options = EndpointOptions.GetSampleVideoOptions();
             Backend?.ConvertVideo(options);
         }
 
         private static void ConvertAudio() {
-            var options = new EndpointOptions() {
-                Input = input,
-                Output = output,
-                InputOption = InputOptions.RECURSIVE,
-                Format = ContainerFormat.ogg,
-                Audio = new AudioOptions() {
-                    Codec = AudioCodecs.libvorbis,
-                    BitRate = 192,
-                    AudioChannels = 2,
-                    SamplingRate = 48000
-                }
-            };
+            var options = EndpointOptions.GetSampleAudioOptions();
             Backend?.ConvertAudio(options);
         }
 
@@ -71,65 +44,23 @@ namespace MediaTransCoder.CLI {
 
         }
 
-        private static void GetExtensions(bool searchCriteria = false) {
-            var audio = FileExtensions.GetAudioExtensions(searchCriteria);
-            Console.WriteLine("##############################");
-            Console.WriteLine("Audio Extensions:");
-            foreach(var extension in audio) {
-                Console.WriteLine("\t" + extension);
-            }
-            Console.WriteLine("##############################");
-            var video = FileExtensions.GetVideoExtensions(searchCriteria);
-            Console.WriteLine("Video Extensions:");
-            foreach (var extension in video) {
-                Console.WriteLine("\t" + extension);
-            }
-            Console.WriteLine("##############################");
-        }
-
-        private static void GetCompatibilityLists(bool file = false) {
-            List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
-            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
-            string content = string.Empty;
-            foreach(ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
-                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
-                content += EnumHelper.GetName(format) + ":\n";
-                content += "\tAudio:\n";
-                foreach (var codec in audioCodecs) {
-                    content += "\t\t" + EnumHelper.GetName(codec) + "\n";
-                }
-                content += "\tVideo:\n";
-                foreach (var codec in videoCodecs) {
-                    content += "\t\t" + EnumHelper.GetName(codec) + "\n";
-                }
-                content += "##############################\n\n";
-            }
-            Console.Write(content);
-            if(file) {
-                File.WriteAllText(rootDir + "\\compatibility_info.txt", content);
-            }
-        }
-
-        private static void TestCompatibilityInfo() {
-            string outputPath = @"E:\TEMP\mtc\output\compatibility\";
-            string audioInput = @"E:\TEMP\mtc\input\compatibility\sample.mp3";
-            string videoInput = @"E:\TEMP\mtc\input\compatibility\sample.mp4";
-            GUI.LogFile = logDir + "\\compatibility.log";
+        private static void TestCompatibilityInfo(bool useOneAcodecForVideo = true) {
+            var testEnv = TestingEnvironment.Get();
+            GUI.LogFile = Pathes.LogDirectory + "\\compatibility.log";
             if (File.Exists(GUI.LogFile)) {
                 if(File.Exists(GUI.LogFile + ".old")) {
                     File.Delete(GUI.LogFile + ".old");
                 }
                 File.Move(GUI.LogFile, GUI.LogFile + ".old");
             }
-            if(Backend != null) {
+            TryFfmpeg? caller = null;
+            Validator.RemoveEmptyDirs(testEnv.Video.Output);
+            if (Backend != null) {
                 Backend.IsDebug = false;
+                caller = new TryFfmpeg(Backend);
             }
             List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
             List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
-            Resolutions defaultResolution = Resolutions.r1080p;
-            Resolutions dvResolution = Resolutions.r720p;
-            Resolutions resolution = defaultResolution;
             //Test video
             GUI.Log("Video tests:\n\n", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
@@ -137,46 +68,38 @@ namespace MediaTransCoder.CLI {
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
                 foreach(var vcodec in videoCodecs) {
-                    //Workaround for DV
-                    if(vcodec == VideoCodecs.dvvideo) {
-                        resolution = dvResolution;
+                    var options = new EndpointOptions() {
+                        Input = testEnv.Video.Input,
+                        Output = testEnv.Video.Output + format + "\\" + vcodec,
+                        InputOption = InputOptions.FILE,
+                        Format = format,
+                        Video = new VideoOptions() {
+                            Codec = vcodec,
+                            Resolution = Resolutions.r1080p,
+                            FPS = 60,
+                            BitRate = 35000
+                        }
+                    };
+                    if (useOneAcodecForVideo) {
+                        GUI.Log(vcodec + ": ");
+                        options.Audio = new AudioOptions() {
+                            Codec = AudioCodecs.mp3,
+                            BitRate = 128,
+                            AudioChannels = 2,
+                            SamplingRate = 48000
+                        };
+                        caller?.Audio(options);
                     } else {
-                        resolution = defaultResolution;
-                    }
-                    foreach (var acodec in audioCodecs) {
-                        var options = new EndpointOptions() {
-                            Input = videoInput,
-                            Output = outputPath + format + "\\" + vcodec + "_" + acodec,
-                            InputOption = InputOptions.FILE,
-                            Format = ContainerFormat.matroska,
-                            Video = new VideoOptions() {
-                                Codec = vcodec,
-                                Resolution = resolution,
-                                FPS = 60,
-                                BitRate = 35000
-                            },
-                            Audio = new AudioOptions() {
+                        foreach (var acodec in audioCodecs) {
+                            options.Output += "_" + acodec;
+                            options.Audio = new AudioOptions() {
                                 Codec = acodec,
                                 BitRate = 128,
                                 AudioChannels = 2,
                                 SamplingRate = 48000
-                            }
-                        };
-                        GUI.Log(vcodec + "_" + acodec + ": ");
-                        try {
-                            Backend?.ConvertVideo(options);
-                            foreach(var file in Backend?.Files ?? new List<FileOption>()) {
-                                Validator.Validate(file.Output);
-                            }
-                            GUI.Log("OK\n", MessageType.SUCCESS);
-                        } catch(Exception exc) {
-                            string errorMessage = "Error while processing: " + format + " " + vcodec + " " + acodec;
-                            errorMessage += "\nException:\n" + exc.Message;
-                            if (exc.InnerException != null) {
-                                errorMessage += "\nInner:\n" + exc.InnerException.Message;
-                            }
-                            errorMessage += "\n\n";
-                            GUI.Log(errorMessage, MessageType.ERROR);
+                            };
+                            GUI.Log(vcodec + "_" + acodec + ": ");
+                            caller?.Audio(options);
                         }
                     }
                 }
@@ -188,8 +111,8 @@ namespace MediaTransCoder.CLI {
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
                     var options = new EndpointOptions() {
-                        Input = audioInput,
-                        Output = outputPath + format + "\\",
+                        Input = testEnv.Audio.Input,
+                        Output = testEnv.Video.Output + format + "\\",
                         InputOption = InputOptions.FILE,
                         Format = format,
                         Audio = new AudioOptions() {
@@ -199,59 +122,39 @@ namespace MediaTransCoder.CLI {
                             SamplingRate = 48000
                         }
                     };
-                    try {
-                        Backend?.ConvertAudio(options);
-                        foreach (var file in Backend?.Files ?? new List<FileOption>()) {
-                            Validator.Validate(file.Output);
-                        }
-                        GUI.Log("OK\n", MessageType.SUCCESS);
-                    } catch (Exception exc) {
-                        string errorMessage = "Error while processing: " + format + " " + acodec;
-                        errorMessage += "\nException:\n" + exc.Message;
-                        if (exc.InnerException != null) {
-                            errorMessage += "\nInner:\n" + exc.InnerException.Message;
-                        }
-                        errorMessage += "\n\n";
-                        GUI.Log(errorMessage, MessageType.ERROR);
-                    }
+                    caller?.Audio(options);
                 }
             }
             //Cleanup
-            Validator.RemoveEmptyDirs(outputPath);
+            Validator.RemoveEmptyDirs(testEnv.Video.Output);
         }
 
-        private static void TestExtensionsGeneration() {
-            GUI.LogFile = logDir + "\\extensions.log";
-            List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
-            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
+        private static void TestCodecResolutionCompatibility() {
+            GUI.LogFile = Pathes.LogDirectory + "\\resolutions.log";
             if (File.Exists(GUI.LogFile)) {
                 if (File.Exists(GUI.LogFile + ".old")) {
                     File.Delete(GUI.LogFile + ".old");
                 }
                 File.Move(GUI.LogFile, GUI.LogFile + ".old");
             }
-            //Test video
-            GUI.Log("\nVideo:", MessageType.SUCCESS);
-            foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
-                GUI.Log("\t" + format + ":", MessageType.SUCCESS);
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
-                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
-                foreach (var vcodec in videoCodecs) {
-                    foreach (var acodec in audioCodecs) {
-                        string exc = FfmpegArgs.GenerateOutputFileExtension(format, vcodec, acodec);
-                        GUI.Log("\t\t" + format + "_" + vcodec + "_" + acodec + ": " + exc);
-                    }
-                }
+            TryFfmpeg? caller = null;
+            if (Backend != null) {
+                Backend.IsDebug = false;
+                caller = new TryFfmpeg(Backend);
             }
-            //Test audio
-            GUI.Log("\nAudio:", MessageType.SUCCESS);
-            var formats = EnumHelper.GetAudioFormats();
-            foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
-                GUI.Log("\t" + format + ":", MessageType.SUCCESS);
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
-                foreach (var acodec in audioCodecs) {
-                    string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, acodec, true);
-                    GUI.Log("\t\t" + format + "_" + acodec + ": " + exc);
+            var options = EndpointOptions.GetSampleVideoOptions();
+            if(options.Video == null) {
+                throw new Exception("Cannot get valid video options!");
+            }
+            string originalOutput = options.Output;
+            foreach (VideoCodecs codec in Enum.GetValues(typeof(VideoCodecs))) {
+                GUI.Log("\n" + codec + ":", MessageType.SUCCESS);
+                options.Video.Codec = codec;
+                options.Output = originalOutput + "\\" + codec;
+                foreach (Resolutions resolution in Enum.GetValues(typeof(Resolutions))) {
+                    GUI.Log("\t" + resolution + ":", MessageType.SUCCESS);
+                    options.Video.Resolution = resolution;
+                    caller?.Video(options, resolution.ToString());
                 }
             }
         }
@@ -274,12 +177,7 @@ namespace MediaTransCoder.CLI {
             cfg.Backend.Environment = EnvironmentType.Development;
             cfg.Backend.TempDirPath = env.RootPath + ".temp//";
             cfg.SaveConfig(env.ConfigPath + "config.json");
-            rootDir = Directory.GetCurrentDirectory();
-            rootDir = rootDir.Split(".build").First();
-            logDir = Path.Combine(rootDir, ".logs");
-            if(!Directory.Exists(logDir)) { 
-                Directory.CreateDirectory(logDir);
-            }
+            TestingEnvironment.RootPath = @"E:\TEMP\mtc";
         }
 
         private static void OnExit(object sender, ConsoleCancelEventArgs e) {

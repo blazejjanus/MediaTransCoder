@@ -1,9 +1,13 @@
+using MediaTransCoder.Shared;
 using System.Diagnostics;
 
 namespace MediaTransCoder.Tests {
     [TestClass]
     public class FfmpegMetadataTests {
-        UnitTestsEnvironment env = UnitTestsEnvironment.Get();
+        TestingEnvironment env = TestingEnvironment.Get();
+        public FfmpegMetadataTests() {
+            Mocker.MockContext();
+        }
 
         [TestMethod]
         public void ReadVideoMetadata() {

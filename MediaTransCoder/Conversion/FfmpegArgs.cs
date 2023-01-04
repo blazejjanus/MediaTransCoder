@@ -85,25 +85,7 @@ namespace MediaTransCoder.Backend {
 
         public void GenerateOutputFileName() {
             string name = Path.GetFileNameWithoutExtension(Files.Input);
-            string? containerExtension = null;
-            string? codecExtension = null;
-            if(Format != null) {
-                containerExtension = EnumHelper.GetFileExtension(Format.Value, AudioOnly);
-            }
-            if(Video != null) {
-                codecExtension = EnumHelper.GetFileExtension(Video.Codec);
-            } else {
-                if(Audio != null) {
-                    codecExtension = EnumHelper.GetFileExtension(Audio.Codec);
-                }
-            }
-            if(codecExtension != null) {
-                name += codecExtension;
-            } else {
-                if(containerExtension != null) {
-                    name += containerExtension;
-                }
-            }
+            name += GenerateOutputFileExtension(Format, Video?.Codec, Audio?.Codec, AudioOnly);
             if (Files.Output.EndsWith("..")) {
                 Files.Output = Files.Output.Split("..").First();
             }

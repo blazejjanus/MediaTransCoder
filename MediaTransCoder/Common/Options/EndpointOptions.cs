@@ -1,4 +1,6 @@
-﻿namespace MediaTransCoder.Backend {
+﻿using MediaTransCoder.Shared;
+
+namespace MediaTransCoder.Backend {
     public class EndpointOptions {
         public bool OverrideExistingFiles { get; set; }
         public bool AllowDirectoryCreation { get; set; }
@@ -47,6 +49,54 @@
                     throw new Exception("Output directory cannot be accessed!");
                 }
             }
+        }
+
+        public static EndpointOptions GetSampleVideoOptions(string input, string output) {
+            return new EndpointOptions() {
+                Input = input,
+                Output = output,
+                InputOption = InputOptions.FILE,
+                AudioOnly = false,
+                Format = ContainerFormat.matroska,
+                Video = new VideoOptions() {
+                    Codec = VideoCodecs.hevc,
+                    Resolution = Resolutions.r1080p,
+                    FPS = 60,
+                    BitRate = 35000
+                },
+                Audio = new AudioOptions() {
+                    Codec = AudioCodecs.mp3,
+                    BitRate = 128,
+                    AudioChannels = 1,
+                    SamplingRate = 44100
+                }
+            };
+        }
+
+        public static EndpointOptions GetSampleVideoOptions() {
+            var testEnv = TestingEnvironment.Get();
+            return GetSampleVideoOptions(testEnv.Video.Input, testEnv.Video.Output);
+        }
+
+        public static EndpointOptions GetSampleAudioOptions(string input, string output) {
+            return new EndpointOptions() {
+                Input = input,
+                Output = output,
+                InputOption = InputOptions.FILE,
+                AudioOnly = true,
+                Format = ContainerFormat.avi,
+                Audio = new AudioOptions() {
+                    Codec = AudioCodecs.mp3,
+                    BitRate = 128,
+                    AudioChannels = 2,
+                    SamplingRate = 44100
+                }
+            };
+        }
+
+        public static EndpointOptions GetSampleAudioOptions() {
+            var testEnv = TestingEnvironment.Get();
+            return GetSampleAudioOptions(testEnv.Audio.Input, testEnv.Audio.Output);
         }
 
         internal void ValidateVideo() {
