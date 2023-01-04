@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using System.Text;
 
 namespace MediaTransCoder.Backend {
     public class ImageOptions {
@@ -13,5 +14,11 @@ namespace MediaTransCoder.Backend {
         public int? Contrast { get; set; }
         public int? Saturation { get; set; }
 
+        public override string ToString() {
+            var sb = new StringBuilder();
+            sb.AppendLine("Audio:");
+            sb.AppendLine("\t:");
+            return sb.ToString();
+        }
     }
 }

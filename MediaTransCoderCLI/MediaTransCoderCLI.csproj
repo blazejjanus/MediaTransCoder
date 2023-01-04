@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutomaticTests\AutomaticTests.csproj" />
     <ProjectReference Include="..\MediaTransCoder\MediaTransCoder.csproj" />
   </ItemGroup>
 

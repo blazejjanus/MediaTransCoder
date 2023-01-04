@@ -1,4 +1,5 @@
 ﻿using MediaTransCoder.Shared;
+using System.Text;
 
 namespace MediaTransCoder.Backend {
     public class EndpointOptions {
@@ -8,6 +9,7 @@ namespace MediaTransCoder.Backend {
         public bool AudioOnly { get; set; }
         public string Input { get; set; }
         public string Output { get; set; }
+        public string? OutputFileName { get; set; }
         public InputOptions InputOption { get; set; }
         public HardwareAcceleration Acceleration { get; set; }
         public ContainerFormat? Format { get; set; }
@@ -26,29 +28,39 @@ namespace MediaTransCoder.Backend {
             InputOption = InputOptions.FILE;
         }
 
-        private void Validate() {
-            switch (InputOption) {
-                case InputOptions.FILE:
-                    break;
-                case InputOptions.DIRECTORY:
-                    if (!Directory.Exists(Input)) {
-                        throw new Exception("Input directory cannot be accessed!");
-                    }
-                    break;
-                case InputOptions.RECURSIVE:
-                    if (!Directory.Exists(Input)) {
-                        throw new Exception("Input directory cannot be accessed!");
-                    }
-                    break;
+        public override string ToString() {
+            var sb = new StringBuilder();
+            sb.AppendLine("Endpoint options:");
+            sb.AppendLine("\tInput:           " + InputOption);
+            sb.AppendLine("\tInputPath:       " + Input);
+            sb.AppendLine("\tOutputPath:      " + Output);
+            sb.AppendLine("\tAcceleration:    " + Acceleration);
+            if (Format != null) {
+                sb.AppendLine("\tContainer:       " + Format);
             }
-            if (!Directory.Exists(Output)) {
-                if(AllowDirectoryCreation) {
-                    Logging.Debug("Creating directory: " + Output);
-                    Directory.CreateDirectory(Output);
-                } else {
-                    throw new Exception("Output directory cannot be accessed!");
-                }
+            if(Audio != null) {
+                sb.AppendLine(AddTabulation(Audio.ToString()));
             }
+            if (Video != null) {
+                sb.AppendLine(AddTabulation(Video.ToString()));
+            }
+            if (Image != null) {
+                sb.AppendLine(AddTabulation(Image.ToString()));
+            }
+            sb.AppendLine("\tAudioOnly:       " + AudioOnly);
+            sb.AppendLine("\tOverrideFiles:   " + OverrideExistingFiles);
+            sb.AppendLine("\tSkipExisting:    " + SkipExistingFiles);
+            sb.AppendLine("\tDirCreation:     " + AllowDirectoryCreation);
+            return sb.ToString();
+        }
+
+        private string AddTabulation(string str) {
+            var sb = new StringBuilder();
+            var lines = str.Split('\n');
+            foreach(var line in lines) {
+                sb.AppendLine("\t" + line);
+            }
+            return sb.ToString().TrimEnd();
         }
 
         public static EndpointOptions GetSampleVideoOptions(string input, string output) {
@@ -68,7 +80,7 @@ namespace MediaTransCoder.Backend {
                     Codec = AudioCodecs.mp3,
                     BitRate = 128,
                     AudioChannels = 1,
-                    SamplingRate = 44100
+                    SamplingRate = 48000
                 }
             };
         }
@@ -89,7 +101,7 @@ namespace MediaTransCoder.Backend {
                     Codec = AudioCodecs.mp3,
                     BitRate = 128,
                     AudioChannels = 2,
-                    SamplingRate = 44100
+                    SamplingRate = 48000
                 }
             };
         }
@@ -97,6 +109,31 @@ namespace MediaTransCoder.Backend {
         public static EndpointOptions GetSampleAudioOptions() {
             var testEnv = TestingEnvironment.Get();
             return GetSampleAudioOptions(testEnv.Audio.Input, testEnv.Audio.Output);
+        }
+
+        private void Validate() {
+            switch (InputOption) {
+                case InputOptions.FILE:
+                    break;
+                case InputOptions.DIRECTORY:
+                    if (!Directory.Exists(Input)) {
+                        throw new Exception("Input directory cannot be accessed!");
+                    }
+                    break;
+                case InputOptions.RECURSIVE:
+                    if (!Directory.Exists(Input)) {
+                        throw new Exception("Input directory cannot be accessed!");
+                    }
+                    break;
+            }
+            if (!Directory.Exists(Output)) {
+                if (AllowDirectoryCreation) {
+                    Logging.Debug("Creating directory: " + Output);
+                    Directory.CreateDirectory(Output);
+                } else {
+                    throw new Exception("Output directory cannot be accessed!");
+                }
+            }
         }
 
         internal void ValidateVideo() {

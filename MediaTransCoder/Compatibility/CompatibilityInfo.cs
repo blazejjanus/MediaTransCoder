@@ -6,7 +6,6 @@
                 case ContainerFormat.webm:
                     result.Add(AudioCodecs.libvorbis);
                     result.Add(AudioCodecs.libopus);
-                    result.Add(AudioCodecs.flac);
                     break;
                 case ContainerFormat.wav:
                     result.Add(AudioCodecs.pcm);

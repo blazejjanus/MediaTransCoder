@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
+[assembly: InternalsVisibleTo("MediaTransCoder.UnitTests")]
 namespace MediaTransCoder.Backend
 {
     /// <summary>

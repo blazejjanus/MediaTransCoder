@@ -1,5 +1,5 @@
-﻿namespace MediaTransCoder.CLI {
-    internal class EnvironmentPathes {
+﻿namespace MediaTransCoder.Shared {
+    public class EnvironmentPathes {
         public string RootDirectory { get; private set; }
         public string LogDirectory { get; private set; }
         private static EnvironmentPathes? instance;
@@ -13,7 +13,7 @@
             }
         }
 
-        internal static EnvironmentPathes Get() {
+        public static EnvironmentPathes Get() {
             return instance ?? (instance = new EnvironmentPathes());
         }
     }

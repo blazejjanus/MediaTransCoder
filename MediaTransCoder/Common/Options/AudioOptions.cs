@@ -1,4 +1,6 @@
-﻿namespace MediaTransCoder.Backend {
+﻿using System.Text;
+
+namespace MediaTransCoder.Backend {
     //TODO: Get propper values by codec
     public class AudioOptions {
         public AudioCodecs Codec { get; set; }
@@ -44,6 +46,16 @@
             Codec = AudioCodecs.mp3;
             BitRate = 192;
             AudioChannels = 2;
+        }
+
+        public override string ToString() {
+            var sb = new StringBuilder();
+            sb.AppendLine("Audio:");
+            sb.AppendLine("\tCodec:      " + Codec);
+            sb.AppendLine("\tBitRate:    " + BitRate);
+            sb.AppendLine("\tSampling:   " + SamplingRate);
+            sb.AppendLine("\tChannels:   " + AudioChannels);
+            return sb.ToString();
         }
     }
 }

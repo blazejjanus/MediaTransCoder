@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("MediaTransCoder.Tests")]
+[assembly: InternalsVisibleTo("MediaTransCoder.UnitTests")]
 namespace MediaTransCoder.Backend {
     internal delegate void OnProgressCallback(int progress);
     internal delegate void OnMetadataUpdateCallback(FfmpegMetadata metadata);

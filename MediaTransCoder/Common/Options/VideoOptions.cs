@@ -1,4 +1,6 @@
-﻿namespace MediaTransCoder.Backend {
+﻿using System.Text;
+
+namespace MediaTransCoder.Backend {
     public class VideoOptions {
         //TODO: Get propper values by codec
         public VideoCodecs Codec { get; set; }
@@ -39,6 +41,17 @@
             BitRate = 1000;
             FPS = 30;
             RemoveAudio = false;
+        }
+
+        public override string ToString() {
+            var sb = new StringBuilder();
+            sb.AppendLine("Video:");
+            sb.AppendLine("\tCodec:          " + Codec);
+            sb.AppendLine("\tFPS:            " + FPS);
+            sb.AppendLine("\tResolution:     " + EnumHelper.GetResolution(Resolution));
+            sb.AppendLine("\tBitRate:        " + BitRate);
+            sb.AppendLine("\tRemove Audio:   " + RemoveAudio);
+            return sb.ToString();
         }
     }
 }

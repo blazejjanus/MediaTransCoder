@@ -25,7 +25,9 @@
             if (gui == null) {
                 throw new ArgumentNullException("Provided gui was null!");
             }
-            Context.Init(config, gui, debug);
+            if(!Context.IsSet) {
+                Context.Init(config, gui, debug);
+            }
             context = Context.Get();
             context.Display = gui;
             Options = null;
@@ -50,7 +52,7 @@
                     break;
             }
             foreach(var file in Files) {
-                var arg = FfmpegArgs.Get(Options, file.Input, file.Output);
+                var arg = FfmpegArgs.Get(Options, file);
                 arg.GenerateOutputFileName();
                 file.Output = arg.Files.Output;
                 args.Add(arg);
@@ -58,10 +60,7 @@
             DisplayFileList(Files);
             foreach (var arg in args) {
                 using(var converter = new VideoConverter(arg, UpdateProgress, UpdateMetadata)) {
-                    context.Display.Send("Converting file: ");
-                    context.Display.Send("\t" + converter.InputFile);
-                    context.Display.Send("Output file name:\n\t" + converter.OutputFile);
-                    Logging.Debug("Output file name:\n\t" + converter.OutputFile);
+                    context.Display.Send("Converting file: \n\t" + arg.Files.ToString());
                     converter.Convert();
                 }
             }
@@ -84,7 +83,7 @@
                     break;
             }
             foreach (var file in Files) {
-                var arg = FfmpegArgs.Get(Options, file.Input, file.Output);
+                var arg = FfmpegArgs.Get(Options, file);
                 arg.GenerateOutputFileName();
                 file.Output = arg.Files.Output;
                 args.Add(arg);
@@ -92,10 +91,7 @@
             DisplayFileList(Files);
             foreach (var arg in args) {
                 using (var converter = new AudioConverter(arg, UpdateProgress, UpdateMetadata)) {
-                    context.Display.Send("Converting file: ");
-                    context.Display.Send("\t" + converter.InputFile);
-                    context.Display.Send("Output file name:\n\t" + converter.OutputFile);
-                    Logging.Debug("Output file name:\n\t" + converter.OutputFile);
+                    context.Display.Send("Converting file: \n\t" + arg.Files.ToString());
                     converter.Convert();
                 }
             }
@@ -126,7 +122,7 @@
         }
 
         private void DisplayFileList(List<FileOption>? files) {
-            if(files != null) {
+            if(files != null && files.Count > 1) {
                 foreach (var file in files) {
                     context.Display.Send(file.ToString());
                 }
