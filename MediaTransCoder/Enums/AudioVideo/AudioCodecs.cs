@@ -2,7 +2,7 @@
 
 namespace MediaTransCoder.Backend {
     /// <summary>
-    /// Supported audio codecs. Use Name to get command, use Description to get dispalyed name.
+    /// Supported audio codecs. Use Name to get command, use Command to get dispalyed name.
     /// </summary>
     public enum AudioCodecs {
         [AudioCodec("libvorbis", "vorbis")]

@@ -23,6 +23,12 @@ namespace MediaTransCoder.Tests {
                 sb.AppendLine("\t" + extension);
             }
             sb.AppendLine("##############################");
+            var image = FileExtensions.GetImageExtensions(searchCriteria);
+            sb.AppendLine("Image Extensions:");
+            foreach (var extension in image) {
+                sb.AppendLine("\t" + extension);
+            }
+            sb.AppendLine("##############################");
             Display.Log(sb.ToString());
         }
 

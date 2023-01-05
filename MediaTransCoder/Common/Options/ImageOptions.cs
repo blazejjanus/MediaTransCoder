@@ -24,7 +24,7 @@ namespace MediaTransCoder.Backend {
                 return cl;
             }
             set {
-                if(value < 1 || value > 31) {
+                if(value < 1 || value > 310) {
                     throw new ArgumentOutOfRangeException();
                 }
                 cl = value;
@@ -69,7 +69,7 @@ namespace MediaTransCoder.Backend {
         private string? FormattedBrightness {
             get {
                 if (brightness.HasValue) {
-                    return "brightness=" + ((double)brightness / 100).ToString();
+                    return "brightness=" + ((double)brightness / 100).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture);
                 }
                 return null;
             }
@@ -77,7 +77,7 @@ namespace MediaTransCoder.Backend {
         private string? FormattedContrast {
             get {
                 if (contrast.HasValue) {
-                    return "contrast=" + ((double)contrast / 100).ToString();
+                    return "contrast=" + ((double)contrast / 100).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture);
                 }
                 return null;
             }
@@ -85,7 +85,7 @@ namespace MediaTransCoder.Backend {
         private string? FormattedSaturation {
             get {
                 if (saturation.HasValue) {
-                    return "saturation=" + ((double)saturation / 100);
+                    return "saturation=" + ((double)saturation / 100).ToString("0.0", System.Globalization.CultureInfo.InvariantCulture);
                 }
                 return null;
             }

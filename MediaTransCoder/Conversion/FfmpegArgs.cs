@@ -98,7 +98,7 @@ namespace MediaTransCoder.Backend {
                 }
                 sb.Append(" -pix_fmt " + EnumHelper.GetName(Image.PixelFormat));
                 sb.Append(Image.GetVF());
-                sb.Append(" -c " + EnumHelper.GetName(Image.Format));
+                sb.Append(" -c " + EnumHelper.GetCommand(Image.Format));
             } else {
                 if (Format != null) {
                     sb.Append(" -f " + EnumHelper.GetName(Format.Value));

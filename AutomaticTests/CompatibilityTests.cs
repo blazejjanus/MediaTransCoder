@@ -15,6 +15,7 @@ namespace MediaTransCoder.Tests {
             Config.Hardware.CPUCores = 16;
             Config.Environment = EnvironmentType.Test;
             Backend = new Endpoint(Config, Display);
+            Display.ShowProgress = false;
         }
 
         public static void TestCompatibilityInfo(bool verbose = false) {
@@ -24,7 +25,7 @@ namespace MediaTransCoder.Tests {
             TryFfmpeg? caller = null;
             Validator.RemoveEmptyDirs(testEnv.Video.Output);
             if (Backend != null) {
-                Backend.IsDebug = false;
+                Backend.IsDebug = verbose;
                 caller = new TryFfmpeg(Backend);
                 caller.Verbose = verbose;
             }
