@@ -24,12 +24,22 @@ namespace MediaTransCoder.CLI {
             //InformationTesting.TestExtensionsGeneration();
             //InformationTesting.GetCompatibilityLists();
             //InformationTesting.GetExtensions();
+            DateTime startTime = DateTime.Now;
+            DateTime? endTime = null;
+            GUI.Send("Starting tests:\n\t" + startTime.ToString("HH:mm:ss"), MessageType.DEBUG);
             //CompatibilityTests.TestCompatibilityInfo();
             //CompatibilityTests.TestCodecResolutionCompatibility();
+            endTime = DateTime.Now;
+            if(endTime.HasValue && endTime != null) {
+                GUI.Send("\nTests finished:\n\t" + endTime?.ToString("HH:mm:ss"), MessageType.DEBUG);
+                TimeSpan ts = (endTime ?? DateTime.Now) - startTime;
+                GUI.Send("Duration:\t" + ts.ToString(), MessageType.DEBUG);
+                GUI.Send("(" + startTime.ToString("HH:mm:ss") + " - " + endTime?.ToString("hh:mm:ss"), MessageType.DEBUG);
+            }
             //CompatibilityTests.TestCompatiblityCharts();
             //ImageTests.TestJPGCompression();
             //ImageTests.TestFormats();
-            ImageTests.TestEffects(true);
+            //ImageTests.TestEffects(true);
             //ConvertVideo();
             //ConvertAudio();
             //ConvertImage();
