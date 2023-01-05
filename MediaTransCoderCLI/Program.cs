@@ -27,9 +27,12 @@ namespace MediaTransCoder.CLI {
             //CompatibilityTests.TestCompatibilityInfo();
             //CompatibilityTests.TestCodecResolutionCompatibility();
             //CompatibilityTests.TestCompatiblityCharts();
+            //ImageTests.TestJPGCompression();
+            //ImageTests.TestFormats();
+            ImageTests.TestEffects(true);
             //ConvertVideo();
             //ConvertAudio();
-            ConvertImage();
+            //ConvertImage();
         }
 
         #region Conversion

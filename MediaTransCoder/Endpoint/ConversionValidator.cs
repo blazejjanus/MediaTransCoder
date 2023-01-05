@@ -1,5 +1,6 @@
 ﻿namespace MediaTransCoder.Backend {
     public class ConversionValidator {
+        public int MinimalLength { get; set; } = 512;
         private IDisplay? Display { get; set; }
 
         public ConversionValidator(IDisplay? display = null) {
@@ -28,7 +29,7 @@
                 throw new Exception("File doesn't have a valid extension!", new Exception(ext + " is not a valid extension."));
             }
             var info = new FileInfo(path);
-            if(info.Length < 512) {
+            if(info.Length < MinimalLength) {
                 if (deleteInvalid) {
                     File.Delete(path);
                 }

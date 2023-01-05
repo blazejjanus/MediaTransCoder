@@ -32,7 +32,7 @@
 
         internal static void Debug(string message) {
             if (IsDebug) {
-                context.Display.Send(message);
+                context.Display.Send(message, MessageType.DEBUG);
             }
         }
     }

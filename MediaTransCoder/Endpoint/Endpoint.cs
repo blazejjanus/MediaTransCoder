@@ -147,7 +147,6 @@
         private void UpdateProgress(int lastStep) {
             double progress = 0;
             progress = Math.Round((((double)lastStep / TotalSteps) * 100), 1);
-            Logging.Debug(progress.ToString());
             context.Display.UpdateProgress(progress);
         }
 

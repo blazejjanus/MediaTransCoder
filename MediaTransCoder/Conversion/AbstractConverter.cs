@@ -42,6 +42,12 @@ namespace MediaTransCoder.Backend {
 
         public abstract int Convert();
 
+        protected void DebugInfo() {
+            if (context.IsDebug ?? false) {
+                Logging.Debug("FFMPEG args: " + process.StartInfo.Arguments);
+            }
+        }
+
         protected abstract void FfmpegOutputHandler(object sendingProcess, DataReceivedEventArgs outLine);
         protected void FfmpegErrorHandler(object sendingProcess, DataReceivedEventArgs outLine) {
             errorString += outLine.Data;
@@ -117,6 +123,7 @@ namespace MediaTransCoder.Backend {
         }
 
         protected int StartProcess() {
+            DebugInfo();
             WasStarted = true;
             IsRunning = true;
             process.Start();
