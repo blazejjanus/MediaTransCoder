@@ -96,21 +96,5 @@ namespace MediaTransCoder.Tests {
                 }
             }
         }
-
-        public static void TestCompatiblityCharts() {
-            var testEnv = TestingEnvironment.Get();
-            string input = testEnv.CurrentRootPath + "\\charts";
-            if(!Directory.Exists(input)) {
-                Directory.CreateDirectory(input);
-            }
-            Display.LogFile = Pathes.LogDirectory + "\\charts.log";
-            var charts = Backend?.TestAudioVideo(input);
-            if (charts != null) {
-                Display.Log("Compatibility charts:\n");
-                foreach (var chart in charts) {
-                    Display.Log(chart.ToString());
-                }
-            }
-        }
     }
 }

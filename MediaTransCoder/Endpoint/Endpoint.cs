@@ -175,38 +175,6 @@
                 }
             }
         }
-
-        #region Test
-        /// <summary>
-        /// Audio test method (LEGACY)
-        /// </summary>
-        /// <param name="input">input path</param>
-        /// <param name="output">output path</param>
-        /// <returns>list of compatibility charts</returns>
-        public List<CompatibilityChart> TestAudio(string input, string? output = null) {
-            return CompatibilityTest.Audio(input, output);
-        }
-
-        /// <summary>
-        /// Video test method (LEGACY)
-        /// </summary>
-        /// <param name="input">input path</param>
-        /// <param name="output">output path</param>
-        /// <returns>list of compatibility charts</returns>
-        public List<CompatibilityChart> TestVideo(string input, string? output = null) {
-            return CompatibilityTest.Video(input, output);
-        }
-
-        /// <summary>
-        /// Video and Audio test method (LEGACY)
-        /// </summary>
-        /// <param name="input">input path</param>
-        /// <param name="output">output path</param>
-        /// <returns>list of compatibility charts</returns>
-        public List<CompatibilityChart> TestAudioVideo(string input, string? output = null) {
-            return CompatibilityTest.AudioVideo(input, output);
-        }
-        #endregion
         #endregion
     }
 }
