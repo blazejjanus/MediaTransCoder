@@ -7,7 +7,7 @@
         BMP,
         [ImageFormat("dpx")]
         DPX,
-        [ImageFormat("gif")]
+        [ImageFormat("gifv")]
         GIF,
         [ImageFormat("jpeg", "mjpeg", new[] { ".jpg", ".jpeg"} )]
         JPG,

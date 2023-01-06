@@ -61,11 +61,10 @@
                     break;
                 case ContainerFormat.flv:
                     result.Add(VideoCodecs.h264);
-                    result.Add(VideoCodecs.hevc);
                     break;
                 case ContainerFormat.matroska:
                     result.Add(VideoCodecs.ffv1);
-                    result.Add(VideoCodecs.gif);
+                    result.Add(VideoCodecs.gifv);
                     result.Add(VideoCodecs.h263p);
                     result.Add(VideoCodecs.h264);
                     result.Add(VideoCodecs.hevc);

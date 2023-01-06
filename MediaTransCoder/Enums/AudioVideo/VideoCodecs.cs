@@ -5,8 +5,8 @@
     public enum VideoCodecs {
         [VideoCodec("ffv1", "FFV1", ".avi")]
         ffv1,
-        [VideoCodec("gif", "GIF", ".gifv")]
-        gif,
+        [VideoCodec("gifv", "GIF", ".gifv")]
+        gifv,
         [VideoCodec("h263p", "h263p")]
         h263p,
         [VideoCodec("h264", "h264")]

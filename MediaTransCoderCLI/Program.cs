@@ -30,9 +30,9 @@ namespace MediaTransCoder.CLI {
             //CompatibilityTests.TestCompatibilityInfo();
             //CompatibilityTests.TestCodecResolutionCompatibility();
             //CompatibilityTests.TestCompatiblityCharts();
-            ImageTests.TestJPGCompression();
+            //ImageTests.TestJPGCompression();
             //ImageTests.TestFormats();
-            //ImageTests.TestEffects(true);
+            //ImageTests.TestEffects();
             //ConvertVideo();
             //ConvertAudio();
             //ConvertImage();
@@ -46,19 +46,31 @@ namespace MediaTransCoder.CLI {
         }
 
         #region Conversion
-        private static void ConvertVideo() {
+        private static void ConvertVideo(bool verbose = false) {
             var options = EndpointOptions.GetSampleVideoOptions();
-            Backend?.ConvertVideo(options);
+            if (Backend != null) {
+                Backend.IsDebug = verbose;
+                Backend.ConvertVideo(options);
+                Backend.IsDebug ^= verbose;
+            } 
         }
 
-        private static void ConvertAudio() {
+        private static void ConvertAudio(bool verbose = false) {
             var options = EndpointOptions.GetSampleAudioOptions();
-            Backend?.ConvertAudio(options);
+            if (Backend != null) {
+                Backend.IsDebug = verbose;
+                Backend.ConvertAudio(options);
+                Backend.IsDebug ^= verbose;
+            }
         }
 
-        private static void ConvertImage() {
+        private static void ConvertImage(bool verbose = false) {
             var options = EndpointOptions.GetSampleImageOptions();
-            Backend?.ConvertImage(options);
+            if(Backend != null) {
+                Backend.IsDebug = verbose;
+                Backend.ConvertImage(options);
+                Backend.IsDebug ^= verbose;
+            }
         }
         #endregion
 
