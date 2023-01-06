@@ -11,6 +11,7 @@ namespace MediaTransCoder.Backend {
         public double Progress { get; protected set; }
         public bool WasStarted { get; protected set; } = false;
         public bool IsRunning { get; protected set; } = false;
+        public Measurer Measures { get; protected set; }
         protected readonly Context context;
         protected readonly FfmpegArgs args;
         protected readonly Process process;
@@ -38,6 +39,7 @@ namespace MediaTransCoder.Backend {
             ProgressCallback = progressCallback;
             MetadataCallback = metadataCallback;
             metadata = new FfmpegMetadata();
+            Measures = new Measurer(args.Files);
         }
 
         public abstract int Convert();
@@ -126,10 +128,15 @@ namespace MediaTransCoder.Backend {
             DebugInfo();
             WasStarted = true;
             IsRunning = true;
+            Measures.StartMeasure();
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             process.WaitForExit();
+            if(process.ExitCode == 0) {
+                Measures.EndMeasure();
+                context.Display.ShowResults(Measures);
+            }
             return process.ExitCode;
         }
 

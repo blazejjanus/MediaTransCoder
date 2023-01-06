@@ -61,7 +61,8 @@ namespace MediaTransCoder.Tests {
                 options.Format = format;
                 audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
-                    if(options.Audio != null) {
+                    if (options.Audio != null) {
+                        options.Output = testEnv.Video.Output + format + "\\" + acodec;
                         options.Audio.Codec = acodec;
                         caller?.Audio(options);
                     }

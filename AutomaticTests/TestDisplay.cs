@@ -63,6 +63,10 @@ namespace MediaTransCoder.Tests {
             }
         }
 
+        public void ShowResults(Measurer results) {
+            Log(results.GetStats());
+        }
+
         public void Log(string message, MessageType type = MessageType.INFO) {
             Display(message, type);
             if (LogFile != null) {
