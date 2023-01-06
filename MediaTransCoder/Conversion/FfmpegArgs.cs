@@ -81,9 +81,16 @@ namespace MediaTransCoder.Backend {
             }
             sb.Append(" -i \"" + Files.Input + "\""); //Single file path
             if(Video != null) {
-                sb.Append(" -vcodec " + EnumHelper.GetName(Video.Codec));
+                if(Video.Codec != VideoCodecs.gifv) {
+                    sb.Append(" -vcodec " + EnumHelper.GetName(Video.Codec));
+                }
                 sb.Append(" -r " + Video.FPS);
-                sb.Append(" -vf \"scale=" + EnumHelper.GetResolution(Video.Resolution) + "\"");
+                sb.Append(" -vf \"scale=" + EnumHelper.GetResolution(Video.Resolution));
+                if(Video.Codec == VideoCodecs.gifv) {
+                    sb.Append(":flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"");
+                } else {
+                    sb.Append("\"");
+                }
                 sb.Append(" -b:v " + Video.BitRate + "k");
             }
             if(Audio != null) {
@@ -103,6 +110,9 @@ namespace MediaTransCoder.Backend {
                 if (Format != null) {
                     sb.Append(" -f " + EnumHelper.GetName(Format.Value));
                 }
+            }
+            if(Video != null && Video.Codec == VideoCodecs.gifv) {
+                sb.Append(" -loop 0");
             }
             sb.Append(" \"" + Files.Output + "\"");
             return sb.ToString();
