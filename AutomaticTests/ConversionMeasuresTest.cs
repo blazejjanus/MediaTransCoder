@@ -53,7 +53,7 @@ namespace MediaTransCoder.Tests {
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
                 Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 options.Format = format;
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
                     if (options.Audio != null) {
                         options.Output = testEnv.Audio.Output + format;
@@ -84,13 +84,13 @@ namespace MediaTransCoder.Tests {
             options = EndpointOptions.GetSampleVideoOptions();
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
                 Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
-                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                videoCodecs = Compatibility.GetCompatibleVideoCodecs(format);
                 options.Format = format;
                 foreach (var vcodec in videoCodecs) {
                     if (options.Video != null && options.Audio != null) {
                         options.Video.Codec = vcodec;
                         options.Output = testEnv.Video.Output + format;
-                        options.Audio.Codec = CompatibilityInfo.GetDefaultAudioCodec(format);
+                        options.Audio.Codec = Compatibility.GetDefaultAudioCodec(format);
                         options.Audio.SamplingRate = 48000;
                         options.OutputFileName = vcodec.ToString();
                         Display.Log(vcodec + ": ");

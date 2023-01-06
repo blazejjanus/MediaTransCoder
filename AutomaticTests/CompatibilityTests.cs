@@ -37,8 +37,8 @@ namespace MediaTransCoder.Tests {
             options = EndpointOptions.GetSampleVideoOptions();
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
                 Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
-                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
+                videoCodecs = Compatibility.GetCompatibleVideoCodecs(format);
                 options.Format = format;
                 foreach (var vcodec in videoCodecs) {
                     if(options.Video != null && options.Audio != null) {
@@ -59,7 +59,7 @@ namespace MediaTransCoder.Tests {
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
                 Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 options.Format = format;
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
                     if (options.Audio != null) {
                         options.Output = testEnv.Video.Output + format + "\\" + acodec;

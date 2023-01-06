@@ -38,8 +38,8 @@ namespace MediaTransCoder.Tests {
             List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
             string content = string.Empty;
             foreach (ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
-                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
+                videoCodecs = Compatibility.GetCompatibleVideoCodecs(format);
                 content += EnumHelper.GetName(format) + ":\n";
                 content += "\tAudio:\n";
                 foreach (var codec in audioCodecs) {
@@ -62,8 +62,8 @@ namespace MediaTransCoder.Tests {
             Display.Log("\nVideo:", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
                 Display.Log("\t" + format + ":", MessageType.SUCCESS);
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
-                videoCodecs = CompatibilityInfo.GetCompatibleVideoCodecs(format);
+                audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
+                videoCodecs = Compatibility.GetCompatibleVideoCodecs(format);
                 foreach (var vcodec in videoCodecs) {
                     foreach (var acodec in audioCodecs) {
                         string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, vcodec, acodec);
@@ -76,7 +76,7 @@ namespace MediaTransCoder.Tests {
             var formats = EnumHelper.GetAudioFormats();
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
                 Display.Log("\t" + format + ":", MessageType.SUCCESS);
-                audioCodecs = CompatibilityInfo.GetCompatibleAudioCodecs(format);
+                audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
                 foreach (var acodec in audioCodecs) {
                     string exc = FfmpegArgs.GenerateOutputFileExtension(format, null, null, acodec, true);
                     Display.Log("\t\t" + format + "_" + acodec + ": " + exc);
