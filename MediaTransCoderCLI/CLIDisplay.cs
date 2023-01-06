@@ -28,6 +28,10 @@ namespace MediaTransCoder.CLI {
             //Progress?.Update(progress, true);
         }
 
+        public void ShowResults(Measurer results) {
+            Send(results.GetStats(), MessageType.SUCCESS);
+        }
+
         public string Read(string message, string defaultValue = "") {
             Console.WriteLine(message);
             string? result = null;

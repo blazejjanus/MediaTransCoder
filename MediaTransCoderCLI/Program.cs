@@ -33,6 +33,7 @@ namespace MediaTransCoder.CLI {
             //ImageTests.TestJPGCompression();
             //ImageTests.TestFormats();
             //ImageTests.TestEffects();
+            ConversionMeasuresTest.Measure();
             //ConvertVideo();
             //ConvertAudio();
             //ConvertImage();

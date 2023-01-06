@@ -1,6 +1,5 @@
 ﻿using MediaTransCoder.Backend;
 using MediaTransCoder.Shared;
-using System.IO;
 
 namespace MediaTransCoder.Tests {
     public static class ImageTests {
@@ -8,7 +7,6 @@ namespace MediaTransCoder.Tests {
         private static BackendConfig? Config;
         private static EnvironmentPathes Pathes = EnvironmentPathes.Get();
         private static TestDisplay Display = TestDisplay.GetInstance();
-        private static ConversionValidator Validator = new ConversionValidator(Display);
 
         static ImageTests() {
             Config = new BackendConfig();
@@ -34,6 +32,7 @@ namespace MediaTransCoder.Tests {
                 caller.Verbose = verbose;
             }
             foreach(ImageFormat format in Enum.GetValues(typeof(ImageFormat))) {
+                Display.Log(format + ": ");
                 options.Image.Format = format;
                 options.OutputFileName = format.ToString();
                 caller?.Image(options);
