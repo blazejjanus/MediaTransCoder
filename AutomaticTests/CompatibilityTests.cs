@@ -8,6 +8,7 @@ namespace MediaTransCoder.Tests {
         private static EnvironmentPathes Pathes = EnvironmentPathes.Get();
         private static TestDisplay Display = TestDisplay.GetInstance();
         private static ConversionValidator Validator = new ConversionValidator(Display);
+        private static string? LogPath = null;
 
         static CompatibilityTests() {
             Config = new BackendConfig();
@@ -94,6 +95,94 @@ namespace MediaTransCoder.Tests {
                     options.OutputFileName = resolution.ToString();
                     caller?.Video(options);
                 }
+            }
+        }
+
+        public static void TestAudioSamplingFrequency(bool verbose = false) {
+            var testEnv = TestingEnvironment.Get();
+            if (LogPath == null) {
+                LogPath = Pathes.LogDirectory + "\\audio_sampling_frequency.log";
+            }
+            Display.LogFile = LogPath;
+            TryFfmpeg? caller = null;
+            var result = new Dictionary<AudioCodecs, List<SamplingFrequency>>();
+            Validator.RemoveEmptyDirs(testEnv.Audio.Output);
+            if (Backend != null) {
+                Backend.IsDebug = verbose;
+                caller = new TryFfmpeg(Backend);
+                caller.Verbose = verbose;
+            }
+            EndpointOptions options = new EndpointOptions();
+            Display.Log("Audio meassuring tests:\n\n", MessageType.SUCCESS);
+            options = EndpointOptions.GetSampleAudioOptions();
+            options.Output = testEnv.Audio.Output;
+            foreach (AudioCodecs codec in Enum.GetValues(typeof(AudioCodecs))) {
+                var compat = new List<SamplingFrequency>();
+                Display.Log("Testing " + codec + ":\n", MessageType.SUCCESS);
+                options.Format = Compatibility.GetDefaultFormat(codec);
+                options.Output = testEnv.Audio.Output + codec;
+                foreach (SamplingFrequency sf in Enum.GetValues(typeof(SamplingFrequency))) {
+                    if (options.Audio != null) {
+                        options.OutputFileName = sf.ToString();
+                        options.Audio.Codec = codec;
+                        if (caller?.Audio(options) ?? false) {
+                            compat.Add(sf);
+                        }
+                    }
+                }
+                result.Add(codec, compat);
+            }
+            //Dispaly summary
+            foreach(var entry in result) {
+                Display.Log(entry.Key + ":");
+                foreach(var sf in entry.Value) {
+                    Display.Log("\t" + sf);
+                }
+                Display.Log("");
+            }
+        }
+
+        public static void TestAudioBitRate(bool verbose = false) {
+            var testEnv = TestingEnvironment.Get();
+            if (LogPath == null) {
+                LogPath = Pathes.LogDirectory + "\\audio_bitrate.log";
+            }
+            Display.LogFile = LogPath;
+            TryFfmpeg? caller = null;
+            var result = new Dictionary<AudioCodecs, List<AudioBitRate>>();
+            Validator.RemoveEmptyDirs(testEnv.Audio.Output);
+            if (Backend != null) {
+                Backend.IsDebug = verbose;
+                caller = new TryFfmpeg(Backend);
+                caller.Verbose = verbose;
+            }
+            EndpointOptions options = new EndpointOptions();
+            Display.Log("Audio meassuring tests:\n\n", MessageType.SUCCESS);
+            options = EndpointOptions.GetSampleAudioOptions();
+            options.Output = testEnv.Audio.Output;
+            foreach (AudioCodecs codec in Enum.GetValues(typeof(AudioCodecs))) {
+                var compat = new List<AudioBitRate>();
+                Display.Log("Testing " + codec + ":\n", MessageType.SUCCESS);
+                options.Format = Compatibility.GetDefaultFormat(codec);
+                options.Output = testEnv.Audio.Output + codec;
+                foreach (AudioBitRate abr in Enum.GetValues(typeof(AudioBitRate))) {
+                    if (options.Audio != null) {
+                        options.OutputFileName = abr.ToString();
+                        options.Audio.Codec = codec;
+                        if (caller?.Audio(options) ?? false) {
+                            compat.Add(abr);
+                        }
+                    }
+                }
+                result.Add(codec, compat);
+            }
+            //Dispaly summary
+            foreach (var entry in result) {
+                Display.Log(entry.Key + ":");
+                foreach (var abr in entry.Value) {
+                    Display.Log("\t" + abr);
+                }
+                Display.Log("");
             }
         }
     }

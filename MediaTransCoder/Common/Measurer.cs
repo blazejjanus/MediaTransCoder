@@ -44,7 +44,7 @@ namespace MediaTransCoder.Backend {
         public string GetSizeStats(string prefix = "") {
             var sb = new StringBuilder();
             sb.Append(prefix + "Compression rate: " + CompressionRate.ToString("0.00") + "%\n");
-            sb.Append(prefix + "(" + InputSize + " -> " + OutputSize + ")");
+            sb.Append(prefix + "\t(" + InputSize + " -> " + OutputSize + ")");
             return sb.ToString();
         }
 
