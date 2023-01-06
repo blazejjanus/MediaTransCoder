@@ -1,7 +1,6 @@
 ﻿using System.Text;
 
 namespace MediaTransCoder.Backend {
-    //TODO: Get propper values by codec
     /// <summary>
     /// Options used for audio conversion.
     /// </summary>
@@ -13,17 +12,7 @@ namespace MediaTransCoder.Backend {
         /// <summary>
         /// Audio BitRate
         /// </summary>
-        public uint BitRate {
-            get {
-                return br;
-            }
-            set {
-                if(value < 6 || value > 640) {
-                    throw new ArgumentOutOfRangeException("BitRate");
-                }
-                br = value;
-            }
-        }
+        public AudioBitRate BitRate { get; set; }
         /// <summary>
         /// Number of audio channels
         /// </summary>
@@ -41,26 +30,14 @@ namespace MediaTransCoder.Backend {
         /// <summary>
         /// Audio sampling frequency
         /// </summary>
-        public uint SamplingRate {
-            get {
-                return ar;
-            }
-            set {
-                if(value < 8000 || value > 192000) {
-                    throw new ArgumentOutOfRangeException("SamplingRate");
-                }
-                ar = value;
-            }
-        }
-
+        public SamplingFrequency SamplingRate { get; set; }
         private uint ac;
-        private uint br;
-        private uint ar;
 
         public AudioOptions() {
             Codec = AudioCodecs.mp3;
-            BitRate = 192;
+            BitRate = AudioBitRate.abr192;
             AudioChannels = 2;
+            SamplingRate = SamplingFrequency.ar48k;
         }
 
         public override string ToString() {
@@ -68,7 +45,7 @@ namespace MediaTransCoder.Backend {
             sb.AppendLine("Audio:");
             sb.AppendLine("\tCodec:      " + Codec);
             sb.AppendLine("\tBitRate:    " + BitRate);
-            sb.AppendLine("\tSampling:   " + SamplingRate);
+            sb.AppendLine("\tSampling:   " + EnumHelper.GetName(SamplingRate));
             sb.AppendLine("\tChannels:   " + AudioChannels);
             return sb.ToString();
         }

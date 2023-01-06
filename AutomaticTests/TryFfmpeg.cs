@@ -11,7 +11,7 @@ namespace MediaTransCoder.Tests {
             Backend = backend;
         }
 
-        public void Audio(EndpointOptions options) {
+        public bool Audio(EndpointOptions options) {
             if(Verbose) {
                 Display.Log(options.ToString(), MessageType.WARNING);
             }
@@ -21,6 +21,7 @@ namespace MediaTransCoder.Tests {
                     Validator.Validate(file.Output);
                 }
                 Display.Log("OK\n", MessageType.SUCCESS);
+                return true;
             } catch (Exception exc) {
                 string errorMessage = "Error while processing: " + options.Format + " " + options.Audio?.Codec;
                 errorMessage += "\nException:\n" + exc.Message;
@@ -29,10 +30,11 @@ namespace MediaTransCoder.Tests {
                 }
                 errorMessage += "\n\n";
                 Display.Log(errorMessage, MessageType.ERROR);
+                return false;
             }
         }
 
-        public void Video(EndpointOptions options) {
+        public bool Video(EndpointOptions options) {
             if (Verbose) {
                 Display.Log(options.ToString(), MessageType.WARNING);
             }
@@ -42,6 +44,7 @@ namespace MediaTransCoder.Tests {
                     Validator.Validate(file.Output);
                 }
                 Display.Log("OK\n", MessageType.SUCCESS);
+                return true;
             } catch (Exception exc) {
                 string errorMessage = "Error while processing: " + options.Format + " " + options.Video?.Codec + " " + options.Audio?.Codec;
                 errorMessage += "\nException:\n" + exc.Message;
@@ -50,10 +53,11 @@ namespace MediaTransCoder.Tests {
                 }
                 errorMessage += "\n\n";
                 Display.Log(errorMessage, MessageType.ERROR);
+                return false;
             }
         }
 
-        public void Image(EndpointOptions options) {
+        public bool Image(EndpointOptions options) {
             if (Verbose) {
                 Display.Log(options.ToString(), MessageType.WARNING);
             }
@@ -63,6 +67,7 @@ namespace MediaTransCoder.Tests {
                     Validator.Validate(file.Output);
                 }
                 Display.Log("OK\n", MessageType.SUCCESS);
+                return true;
             } catch (Exception exc) {
                 string errorMessage = "Error while processing: " + options.Format + " " + options.Video?.Codec + " " + options.Audio?.Codec;
                 errorMessage += "\nException:\n" + exc.Message;
@@ -71,6 +76,7 @@ namespace MediaTransCoder.Tests {
                 }
                 errorMessage += "\n\n";
                 Display.Log(errorMessage, MessageType.ERROR);
+                return false;
             }
         }
     }

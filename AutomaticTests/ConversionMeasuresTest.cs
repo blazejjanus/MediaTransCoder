@@ -54,9 +54,9 @@ namespace MediaTransCoder.Tests {
                 Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 options.Format = format;
                 audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
+                options.Output = testEnv.Audio.Output + format;
                 foreach (var acodec in audioCodecs) {
                     if (options.Audio != null) {
-                        options.Output = testEnv.Audio.Output + format;
                         options.OutputFileName = acodec.ToString();
                         options.Audio.Codec = acodec;
                         caller?.Audio(options);
@@ -91,7 +91,7 @@ namespace MediaTransCoder.Tests {
                         options.Video.Codec = vcodec;
                         options.Output = testEnv.Video.Output + format;
                         options.Audio.Codec = Compatibility.GetDefaultAudioCodec(format);
-                        options.Audio.SamplingRate = 48000;
+                        options.Audio.SamplingRate = SamplingFrequency.ar48k;
                         options.OutputFileName = vcodec.ToString();
                         Display.Log(vcodec + ": ");
                         caller?.Audio(options);

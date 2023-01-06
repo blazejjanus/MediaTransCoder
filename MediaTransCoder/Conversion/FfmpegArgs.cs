@@ -95,8 +95,8 @@ namespace MediaTransCoder.Backend {
             }
             if(Audio != null) {
                 sb.Append(" -acodec " + EnumHelper.GetName(Audio.Codec));
-                sb.Append(" -b:a " + Audio.BitRate + "k");
-                sb.Append(" -ar " + Audio.SamplingRate);
+                sb.Append(" -b:a " + (int)Audio.BitRate + "k");
+                sb.Append(" -ar " + (int)Audio.SamplingRate);
                 sb.Append(" -ac " + Audio.AudioChannels);
             }
             if(Image != null) {

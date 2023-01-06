@@ -126,9 +126,9 @@ namespace MediaTransCoder.Backend {
                 },
                 Audio = new AudioOptions() {
                     Codec = AudioCodecs.mp3,
-                    BitRate = 128,
+                    BitRate = AudioBitRate.abr192,
                     AudioChannels = 1,
-                    SamplingRate = 48000
+                    SamplingRate = SamplingFrequency.ar48k
                 }
             };
         }
@@ -157,9 +157,9 @@ namespace MediaTransCoder.Backend {
                 Format = ContainerFormat.avi,
                 Audio = new AudioOptions() {
                     Codec = AudioCodecs.mp3,
-                    BitRate = 128,
+                    BitRate = AudioBitRate.abr192,
                     AudioChannels = 2,
-                    SamplingRate = 48000
+                    SamplingRate = SamplingFrequency.ar48k
                 }
             };
         }
