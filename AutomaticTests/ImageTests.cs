@@ -54,9 +54,16 @@ namespace MediaTransCoder.Tests {
             }
             options.Image.Format = ImageFormat.JPG;
             Display.Log("Testing JPG conversion:");
-            for(int i = 1; i <= 310; i++) {
+            for(int i = 1; i <= 31; i++) {
                 options.Image.CompressionLevel = i;
                 options.OutputFileName = "jpg_" + i;
+                caller?.Image(options);
+            }
+            options.Image.Format = ImageFormat.JPG2000;
+            Display.Log("Testing JPG-2000 conversion:");
+            for (int i = 1; i <= 31; i++) {
+                options.Image.CompressionLevel = i;
+                options.OutputFileName = "jpg2000_" + i;
                 caller?.Image(options);
             }
         }
