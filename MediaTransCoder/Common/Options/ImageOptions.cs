@@ -24,7 +24,7 @@ namespace MediaTransCoder.Backend {
                 return cl;
             }
             set {
-                if(value < 1 || value > 310) {
+                if(value < 1 || value > 31) {
                     throw new ArgumentOutOfRangeException();
                 }
                 cl = value;
