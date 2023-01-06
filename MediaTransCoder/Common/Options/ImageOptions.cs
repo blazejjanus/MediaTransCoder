@@ -3,6 +3,9 @@ using System.Text;
 
 namespace MediaTransCoder.Backend {
     public class ImageOptions {
+        /// <summary>
+        /// Image format
+        /// </summary>
         public ImageFormat Format {
             get {
                 return format;
@@ -30,9 +33,21 @@ namespace MediaTransCoder.Backend {
                 cl = value;
             }
         }
+        /// <summary>
+        /// Image resolution
+        /// </summary>
         public Vector2 Size { get; set; }
+        /// <summary>
+        /// Image pixel format
+        /// </summary>
         public PixelFormats PixelFormat { get; set; }
+        /// <summary>
+        /// Used image effect, null if no effect
+        /// </summary>
         public ImageEffects? Effect { get; set; } = null;
+        /// <summary>
+        /// Image brightness, null if no change
+        /// </summary>
         public int? Brightness {
             get {
                 return brightness;
@@ -44,6 +59,10 @@ namespace MediaTransCoder.Backend {
                 brightness = value;
             }
         }
+
+        /// <summary>
+        /// Image contrast, null if no change
+        /// </summary>
         public int? Contrast {
             get {
                 return contrast;
@@ -55,6 +74,10 @@ namespace MediaTransCoder.Backend {
                 contrast = value;
             }
         }
+
+        /// <summary>
+        /// Image saturation, null if no change
+        /// </summary>
         public int? Saturation {
             get {
                 return contrast;
@@ -66,6 +89,7 @@ namespace MediaTransCoder.Backend {
                 contrast = value;
             }
         }
+
         private string? FormattedBrightness {
             get {
                 if (brightness.HasValue) {
@@ -74,6 +98,7 @@ namespace MediaTransCoder.Backend {
                 return null;
             }
         }
+
         private string? FormattedContrast {
             get {
                 if (contrast.HasValue) {
@@ -82,6 +107,7 @@ namespace MediaTransCoder.Backend {
                 return null;
             }
         }
+
         private string? FormattedSaturation {
             get {
                 if (saturation.HasValue) {
@@ -90,12 +116,17 @@ namespace MediaTransCoder.Backend {
                 return null;
             }
         }
+
         private ImageFormat format;
         private int? cl = null;
         private int? brightness = null;
         private int? contrast = null;
         private int? saturation = null;
 
+        /// <summary>
+        /// Get formatted -vf section
+        /// </summary>
+        /// <returns>Ffmpeg arguments -vf section based on selected options</returns>
         public string GetVF() {
             var eq = GetEq();
             string result = string.Empty;

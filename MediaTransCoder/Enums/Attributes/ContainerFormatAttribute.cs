@@ -1,9 +1,24 @@
 ﻿namespace MediaTransCoder.Backend {
     public class ContainerFormatAttribute : Attribute {
+        /// <summary>
+        /// Container name - for ffmpeg
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Container displayed name
+        /// </summary>
         public string Description { get; set; }
+        /// <summary>
+        /// File extension associated with container for video files, null if no extension associated
+        /// </summary>
         public string? VideoExtension { get; set; }
+        /// <summary>
+        /// File extension associated with container for audio files, null if no extension associated
+        /// </summary>
         public string? AudioExtension { get; set; }
+        /// <summary>
+        /// Determines if container supports video
+        /// </summary>
         public bool IsVideoFormat {
             get {
                 if (VideoExtension != null) {
@@ -13,6 +28,9 @@
                 }
             }
         }
+        /// <summary>
+        /// Determines if container supports audio
+        /// </summary>
         public bool IsAudioFormat {
             get {
                 if (AudioExtension != null) {

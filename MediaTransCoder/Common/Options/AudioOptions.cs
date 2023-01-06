@@ -2,8 +2,17 @@
 
 namespace MediaTransCoder.Backend {
     //TODO: Get propper values by codec
+    /// <summary>
+    /// Options used for audio conversion.
+    /// </summary>
     public class AudioOptions {
+        /// <summary>
+        /// Audio codec used in conversion.
+        /// </summary>
         public AudioCodecs Codec { get; set; }
+        /// <summary>
+        /// Audio BitRate
+        /// </summary>
         public uint BitRate {
             get {
                 return br;
@@ -15,6 +24,9 @@ namespace MediaTransCoder.Backend {
                 br = value;
             }
         }
+        /// <summary>
+        /// Number of audio channels
+        /// </summary>
         public uint AudioChannels {
             get {
                 return ac;
@@ -26,6 +38,9 @@ namespace MediaTransCoder.Backend {
                 ac = value;
             }
         }
+        /// <summary>
+        /// Audio sampling frequency
+        /// </summary>
         public uint SamplingRate {
             get {
                 return ar;

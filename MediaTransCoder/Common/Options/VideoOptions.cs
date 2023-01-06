@@ -3,8 +3,17 @@
 namespace MediaTransCoder.Backend {
     public class VideoOptions {
         //TODO: Get propper values by codec
+        /// <summary>
+        /// Video codec
+        /// </summary>
         public VideoCodecs Codec { get; set; }
+        /// <summary>
+        /// Video resolution
+        /// </summary>
         public Resolutions Resolution { get; set; }
+        /// <summary>
+        /// Video bitrate
+        /// </summary>
         public int BitRate {
             get {
                 return br;
@@ -18,6 +27,9 @@ namespace MediaTransCoder.Backend {
             }
         }
 
+        /// <summary>
+        /// Video frames per second
+        /// </summary>
         public int FPS {
             get {
                 return fps;
@@ -30,6 +42,9 @@ namespace MediaTransCoder.Backend {
             } 
         }
         
+        /// <summary>
+        /// If true audio will be removed
+        /// </summary>
         public bool RemoveAudio { get; set; }
 
         private int fps;

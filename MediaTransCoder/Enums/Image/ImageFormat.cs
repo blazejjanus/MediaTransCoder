@@ -1,4 +1,7 @@
 ﻿namespace MediaTransCoder.Backend {
+    /// <summary>
+    /// Supported image formats
+    /// </summary>
     public enum ImageFormat {
         [ImageFormat("bmp")]
         BMP,

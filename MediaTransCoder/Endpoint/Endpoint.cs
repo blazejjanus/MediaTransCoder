@@ -2,6 +2,9 @@
 {
     public class Endpoint : IDisposable {
         #region Fields
+        /// <summary>
+        /// Determines if Backend is launched in debug mode (additional info will be provided)
+        /// </summary>
         public bool IsDebug {
             get {
                 return context.IsDebug ?? false;
@@ -12,6 +15,9 @@
                 }
             }
         }
+        /// <summary>
+        /// List of files being processed
+        /// </summary>
         public List<FileOption> Files { get; private set; } = new List<FileOption>();
         private int TotalSteps { get; set; }
         private EndpointOptions? Options { get; set; }
@@ -34,6 +40,10 @@
         }
         #endregion
 
+        /// <summary>
+        /// Video conversion endpoint
+        /// </summary>
+        /// <param name="options">Video conversion options, Format, Video and Audio (if not Video.RemoveAudio is false) must be provided</param>
         #region Methods
         public void ConvertVideo(EndpointOptions options) {
             Options = options;
@@ -66,6 +76,10 @@
             }
         }
 
+        /// <summary>
+        /// Audio conversion endpoint
+        /// </summary>
+        /// <param name="options">Audio conversion options, Format, and Audio must be provided</param>
         public void ConvertAudio(EndpointOptions options) {
             Options = options;
             Options.ValidateAudio();
@@ -97,6 +111,10 @@
             }
         }
 
+        /// <summary>
+        /// Image conversion endpoint
+        /// </summary>
+        /// <param name="options">Image conversion options, Image must be provided, either Format or Video must be null</param>
         public void ConvertImage(EndpointOptions options) {
             Options = options;
             Options.ValidateImage();
@@ -159,14 +177,32 @@
         }
 
         #region Test
+        /// <summary>
+        /// Audio test method (LEGACY)
+        /// </summary>
+        /// <param name="input">input path</param>
+        /// <param name="output">output path</param>
+        /// <returns>list of compatibility charts</returns>
         public List<CompatibilityChart> TestAudio(string input, string? output = null) {
             return CompatibilityTest.Audio(input, output);
         }
 
+        /// <summary>
+        /// Video test method (LEGACY)
+        /// </summary>
+        /// <param name="input">input path</param>
+        /// <param name="output">output path</param>
+        /// <returns>list of compatibility charts</returns>
         public List<CompatibilityChart> TestVideo(string input, string? output = null) {
             return CompatibilityTest.Video(input, output);
         }
 
+        /// <summary>
+        /// Video and Audio test method (LEGACY)
+        /// </summary>
+        /// <param name="input">input path</param>
+        /// <param name="output">output path</param>
+        /// <returns>list of compatibility charts</returns>
         public List<CompatibilityChart> TestAudioVideo(string input, string? output = null) {
             return CompatibilityTest.AudioVideo(input, output);
         }

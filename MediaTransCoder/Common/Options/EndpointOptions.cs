@@ -2,19 +2,61 @@
 using System.Text;
 
 namespace MediaTransCoder.Backend {
+    /// <summary>
+    /// Options passed to Endpoint from frontend
+    /// </summary>
     public class EndpointOptions {
+        /// <summary>
+        /// Determines if ffmpeg will override result files that already exists
+        /// </summary>
         public bool OverrideExistingFiles { get; set; }
+        /// <summary>
+        /// Determines if ffmpeg will create subdirectories
+        /// </summary>
         public bool AllowDirectoryCreation { get; set; }
+        /// <summary>
+        /// Determines if ffmpeg should skip result files with same names
+        /// </summary>
         public bool SkipExistingFiles { get; set; }
+        /// <summary>
+        /// Determines if the current conversion applies only to audio
+        /// </summary>
         public bool AudioOnly { get; set; }
+        /// <summary>
+        /// Input path, may refer to file or directory
+        /// </summary>
         public string Input { get; set; }
+        /// <summary>
+        /// Output directory
+        /// </summary>
         public string Output { get; set; }
+        /// <summary>
+        /// Output file name, if null input file name with proper extension will be used
+        /// </summary>
         public string? OutputFileName { get; set; }
+        /// <summary>
+        /// Determines what type of input will be procesed, may be file, directory or recursive (directory and all subdirectories)
+        /// </summary>
         public InputOptions InputOption { get; set; }
+        /// <summary>
+        /// Hardware acceleration settings, can use no acceleration, specified number of CPU cores or GPU
+        /// </summary>
         public HardwareAcceleration Acceleration { get; set; }
+        /// <summary>
+        /// Audio-Video container format, doesn't apply to image conversion
+        /// </summary>
         public ContainerFormat? Format { get; set; }
+        /// <summary>
+        /// Audio settings
+        /// </summary>
         public AudioOptions? Audio { get; set; }
+        /// <summary>
+        /// Video settings
+        /// </summary>
         public VideoOptions? Video { get; set; }
+        /// <summary>
+        /// Image settings
+        /// </summary>
         public ImageOptions? Image { get; set; }
 
         public EndpointOptions() {
@@ -63,6 +105,12 @@ namespace MediaTransCoder.Backend {
             return sb.ToString().TrimEnd();
         }
 
+        /// <summary>
+        /// Returns a sample (default) options for video conversion
+        /// </summary>
+        /// <param name="input">Input file path</param>
+        /// <param name="output">Output directory path</param>
+        /// <returns>EndpointOptions for video conversion</returns>
         public static EndpointOptions GetSampleVideoOptions(string input, string output) {
             return new EndpointOptions() {
                 Input = input,
@@ -85,11 +133,21 @@ namespace MediaTransCoder.Backend {
             };
         }
 
+        /// <summary>
+        /// Returns a sample (default) options for video conversion
+        /// </summary>
+        /// <returns>EndpointOptions for video conversion</returns>
         public static EndpointOptions GetSampleVideoOptions() {
             var testEnv = TestingEnvironment.Get();
             return GetSampleVideoOptions(testEnv.Video.Input, testEnv.Video.Output);
         }
 
+        /// <summary>
+        /// Returns a sample (default) options for audio conversion
+        /// </summary>
+        /// <param name="input">Input file path</param>
+        /// <param name="output">Output directory path</param>
+        /// <returns>EndpointOptions for audio conversion</returns>
         public static EndpointOptions GetSampleAudioOptions(string input, string output) {
             return new EndpointOptions() {
                 Input = input,
@@ -106,11 +164,21 @@ namespace MediaTransCoder.Backend {
             };
         }
 
+        /// <summary>
+        /// Returns a sample (default) options for audio conversion
+        /// </summary>
+        /// <returns>EndpointOptions for audio conversion</returns>
         public static EndpointOptions GetSampleAudioOptions() {
             var testEnv = TestingEnvironment.Get();
             return GetSampleAudioOptions(testEnv.Audio.Input, testEnv.Audio.Output);
         }
 
+        /// <summary>
+        /// Returns a sample (default) options for image conversion
+        /// </summary>
+        /// <param name="input">Input file path</param>
+        /// <param name="output">Output directory path</param>
+        /// <returns>EndpointOptions for image conversion</returns>
         public static EndpointOptions GetSampleImageOptions(string input, string output) {
             return new EndpointOptions() {
                 Input = input,
@@ -134,6 +202,10 @@ namespace MediaTransCoder.Backend {
             };
         }
 
+        /// <summary>
+        /// Returns a sample (default) options for image conversion
+        /// </summary>
+        /// <returns>EndpointOptions for image conversion</returns>
         public static EndpointOptions GetSampleImageOptions() {
             var testEnv = TestingEnvironment.Get();
             return GetSampleImageOptions(testEnv.Image.Input, testEnv.Image.Output);

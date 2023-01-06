@@ -1,7 +1,16 @@
 ﻿namespace MediaTransCoder.Backend {
     public class FileOption {
+        /// <summary>
+        /// Input file path
+        /// </summary>
         public string Input { get; set; }
+        /// <summary>
+        /// Output directory
+        /// </summary>
         public string Output { get; set; }
+        /// <summary>
+        /// Output file name, if null input file name with proper extension will be used
+        /// </summary>
         public string? OutputFileName { get; set; }
 
         public FileOption() {
@@ -67,6 +76,14 @@
             return result;
         }
 
+        /// <summary>
+        /// Genrate list of FileOption for all files matching specified criteria in input directory and all subdirectories
+        /// </summary>
+        /// <param name="inputDirectory">Input directory</param>
+        /// <param name="outputDirectory">Output directory</param>
+        /// <param name="searchCriteria">VideoExtension to search</param>
+        /// <param name="recursive">Determines if recursive mode is enabled</param>
+        /// <returns>List of prepared FileOption entries</returns>
         public static List<FileOption> GetFileOptionsFromDirectory(string inputDirectory, string outputDirectory, List<string> searchCriteria, bool recursive = false) {
             var result = new List<FileOption>();
             var inputRoot = new DirectoryInfo(inputDirectory);
@@ -88,6 +105,10 @@
             return result;
         }
 
+        /// <summary>
+        /// Returns input file path and output file path
+        /// </summary>
+        /// <returns>Formatted input and output file path</returns>
         public override string ToString() {
             return Input + " -> " + Output;
         }

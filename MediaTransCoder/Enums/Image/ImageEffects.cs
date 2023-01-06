@@ -1,4 +1,7 @@
 ﻿namespace MediaTransCoder.Backend {
+    /// <summary>
+    /// Preseted supported video effects
+    /// </summary>
     public enum ImageEffects {
         [ImageEffects("BlackWhite", "colorchannelmixer = .3:.3:.3:0:.3:.3:.3:0:.3:.3:.3:0")]
         BlackWhite,
