@@ -2,7 +2,13 @@
 
 namespace MediaTransCoder.Backend {
     public class ResolutionAttribute : Attribute {
+        /// <summary>
+        /// Vector representing resolution in px
+        /// </summary>
         public Vector2 Size { get; set; }
+        /// <summary>
+        /// Displayed resolution name if there is such a name (e.g. 4K UHD)
+        /// </summary>
         public string? Name { get; set; }
 
         public ResolutionAttribute(uint wigth, uint height, string? name = null) { 
@@ -10,6 +16,10 @@ namespace MediaTransCoder.Backend {
             Name = name;
         }
 
+        /// <summary>
+        /// Returns Ffmpeg formated resolution value
+        /// </summary>
+        /// <returns></returns>
         public string GetResolution() {
             return Size.X + ":" + Size.Y;
         }

@@ -16,6 +16,11 @@ namespace MediaTransCoder.Backend {
                 .Command ?? val.ToString();
         }
 
+        /// <summary>
+        /// Returns default image format extension
+        /// </summary>
+        /// <param name="val">Image format</param>
+        /// <returns>Default extension for provided format</returns>
         public static string? GetFileExtension(ImageFormat val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?
@@ -23,6 +28,11 @@ namespace MediaTransCoder.Backend {
                 .Extensions.First();
         }
 
+        /// <summary>
+        /// Returns list of image format extensions
+        /// </summary>
+        /// <param name="val">Image format</param>
+        /// <returns>File extensions for provided format</returns>
         public static List<string>? GetFileExtensions(ImageFormat val) {
             return val.GetType().GetMember(val.ToString())
                 .FirstOrDefault()?

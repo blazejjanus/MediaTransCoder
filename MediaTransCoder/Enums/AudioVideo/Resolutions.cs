@@ -1,4 +1,7 @@
 ﻿namespace MediaTransCoder.Backend {
+    /// <summary>
+    /// Suported video resolutions
+    /// </summary>
     public enum Resolutions {
         //TODO: Check resolution and rethink if they should not be restricted to 16:9
         [Resolution(256, 144)]
