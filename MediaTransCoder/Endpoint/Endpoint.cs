@@ -1,5 +1,6 @@
-﻿namespace MediaTransCoder.Backend
-{
+﻿using MediaTransCoder.Backend.Common;
+
+namespace MediaTransCoder.Backend {
     public class Endpoint : IDisposable {
         #region Fields
         /// <summary>
@@ -144,6 +145,37 @@
                     converter.Convert();
                 }
             }
+        }
+
+        public static BackendConfig FirstTimeSetup() {
+            var config = new BackendConfig();
+            if (DependencySetup.CheckEnvironmentalPaths()) {
+                config.FfmpegPath = "ffmpeg";
+            } else {
+                config.FfmpegPath = null;
+            }
+            config.Hardware = HardwareDetection.GetConfig();
+            return config;
+        }
+
+        public bool CheckFfmpegPath() {
+            return DependencySetup.CheckFfmpegPath(context.Config?.FfmpegPath ?? "ffmpeg");
+        }
+
+        public Preset GetPreset(PresetType type, PresetTarget target, PresetQuality quality) {
+            return PresetsService.Get(type, target, quality);
+        }
+
+        public Preset GetAudioPreset(PresetTarget target, PresetQuality quality) {
+            return PresetsService.GetAudio(target, quality);
+        }
+
+        public Preset GetVideoPreset(PresetTarget target, PresetQuality quality) {
+            return PresetsService.GetVideo(target, quality);
+        }
+
+        public Preset GetImagePreset(PresetTarget target, PresetQuality quality) {
+            return PresetsService.GetImage(target, quality);
         }
 
         public void Dispose() {

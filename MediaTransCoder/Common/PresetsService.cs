@@ -1,4 +1,4 @@
-﻿namespace MediaTransCoder.Backend {
+﻿namespace MediaTransCoder.Backend.Common {
     public static class PresetsService {
         public static Preset Get(PresetType type, PresetTarget target, PresetQuality quality) {
             switch (type) {
@@ -13,7 +13,7 @@
             }
         }
 
-        public static Preset GetAudio(PresetTarget target, PresetQuality quality) { 
+        public static Preset GetAudio(PresetTarget target, PresetQuality quality) {
             var result = new Preset(PresetType.AUDIO);
             switch (target) {
                 case PresetTarget.SIZE:

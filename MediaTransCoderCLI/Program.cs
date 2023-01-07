@@ -80,7 +80,6 @@ namespace MediaTransCoder.CLI {
             var cfg = CLIConfig.Defaults();
             var env = EnvironmentalSettings.Get();
             cfg.Backend.Environment = EnvironmentType.Development;
-            cfg.Backend.TempDirPath = env.RootPath + ".temp//";
             cfg.SaveConfig(env.ConfigPath + "config.json");
             TestingEnvironment.RootPath = @"E:\TEMP\mtc";
         }

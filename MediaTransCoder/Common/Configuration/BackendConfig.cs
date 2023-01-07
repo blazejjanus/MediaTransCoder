@@ -26,19 +26,11 @@ namespace MediaTransCoder.Backend {
         [JsonPropertyName("FfmpegPath")]
         public string? FfmpegPath { get; set; }
 
-        /// <summary>
-        /// Temp directory path, if none specified system temp will be used
-        /// </summary>
-        [JsonPropertyName("TempDirPath")]
-        public string? TempDirPath { get; set; }
-
         public BackendConfig() {
             Interface = new InterfaceConfig();
             Hardware = new HardwareConfig();
             Environment = EnvironmentType.Production;
             FfmpegPath = "ffmpeg";
-            if(TempDirPath == null)
-                TempDirPath = Path.GetTempPath();
         }
     }
 }

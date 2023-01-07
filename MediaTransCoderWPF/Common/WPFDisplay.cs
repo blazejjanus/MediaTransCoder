@@ -3,6 +3,14 @@ using System.Windows;
 
 namespace MediaTransCoder.WPF {
     internal class WPFDisplay : IDisplay {
+        private static WPFDisplay? instance;
+
+        private CLIDisplay() { }
+
+        public static WPFDisplay GetInstance() {
+            return instance ?? (instance = new WPFDisplay());
+        }
+
         public bool GetBool(string message) {
             string caption = "MediaTransCoder";
             MessageBoxButton button = MessageBoxButton.YesNo;
