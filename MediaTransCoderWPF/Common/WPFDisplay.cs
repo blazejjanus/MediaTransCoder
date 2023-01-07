@@ -8,13 +8,13 @@ namespace MediaTransCoder.WPF {
             MessageBoxButton button = MessageBoxButton.YesNo;
             MessageBoxImage icon = MessageBoxImage.Information;
             MessageBoxResult result = MessageBox.Show(message, caption, button, icon, MessageBoxResult.Yes);
-            switch(result) {
+            switch (result) {
                 case MessageBoxResult.Yes:
                     return true;
                 case MessageBoxResult.No:
                     return false;
-                    default:
-                return false;
+                default:
+                    return false;
             }
         }
 

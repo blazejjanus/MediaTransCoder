@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 
-namespace MediaTransCoder.WPF {
+namespace MediaTransCoder.WPF
+{
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
