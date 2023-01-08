@@ -12,17 +12,17 @@
         <TextBlock x:Name="detectedHardwareText" HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" Text="Wykryta konfiguracja sprzętowa:" VerticalAlignment="Top" Width="250" Height="20" FontSize="15"/>
         <TextBlock x:Name="detectedCPUCoresText" HorizontalAlignment="Left" Margin="10,75,0,0" TextWrapping="Wrap" Text="Liczba wątków CPU:" VerticalAlignment="Top" Width="150" Height="20"/>
         <TextBlock x:Name="detectedGPUText" HorizontalAlignment="Left" Margin="10,100,0,0" TextWrapping="Wrap" Text="GPU:" VerticalAlignment="Top" Width="150" Height="20"/>
-        <TextBox x:Name="detectedCPUCoresValue" HorizontalAlignment="Left" Margin="165,75,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="20"/>
-        <TextBox x:Name="detectedGPUValue" HorizontalAlignment="Left" Margin="165,100,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="20"/>
+        <TextBox x:Name="detectedCPUCoresValue" HorizontalAlignment="Left" Margin="165,75,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Height="20" PreviewTextInput="number_PreviewTextInput" TextChanged="detectedCPUCoresValue_TextChanged" />
+        <ComboBox x:Name="detectedGPUValue" HorizontalAlignment="Left" Margin="165,100,0,0" VerticalAlignment="Top" Width="120" Height="20" SelectionChanged="detectedGPUValue_SelectionChanged" />
         <TextBlock x:Name="ffmpegSettingsText" HorizontalAlignment="Left" Margin="10,130,0,0" TextWrapping="Wrap" Text="Ustawienia ffmpeg:" VerticalAlignment="Top" Width="250" Height="20" FontSize="15"/>
         <TextBlock x:Name="ffmpegPathtext" HorizontalAlignment="Left" Margin="10, 155, 0, 0" TextWrapping="Wrap" Text="Ścieżka/komenda ffmpeg:" VerticalAlignment="Top" Width="150" Height="20" />
-        <TextBox x:Name="ffmpegPathValue" HorizontalAlignment="Left" Margin="165, 155, 0, 0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="275" Height="20" />
+        <TextBox x:Name="ffmpegPathValue" HorizontalAlignment="Left" Margin="165, 155, 0, 0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="275" Height="20" TextChanged="ffmpegPathValue_TextChanged" />
         <TextBlock x:Name="ffmpegPathStatus" HorizontalAlignment="Left" Margin="450, 155, 0, 0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="50" Height="20" />
         <Button x:Name="ffmpegDownloadButton" Content="Pobierz ffmpeg" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="500, 155, 0, 0" Width="100" Height="20" Visibility="Hidden" />
         <TextBlock x:Name="hwaccelText" HorizontalAlignment="Left" Margin="10, 180, 0, 0" TextWrapping="Wrap" Text="Akceleracja sprzętowa:" VerticalAlignment="Top" Width="150" Height="20" />
-        <ComboBox x:Name="hwaccelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165, 180, 0, 0" Width="150" Height="20" />
+        <ComboBox x:Name="hwaccelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165, 180, 0, 0" Width="150" Height="20" SelectionChanged="hwaccelComboBox_SelectionChanged" />
         <TextBlock x:Name="hwaccelDetailsText" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10, 205, 0, 0" Width="150" Height="20"  Text="" TextWrapping="Wrap"/>
-        <TextBox x:Name="hwaccelDetailsCPU" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165, 205, 0, 0" Width="150" Height="20" Visibility="Hidden" />
+        <TextBox x:Name="hwaccelDetailsCPU" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165, 205, 0, 0" Width="150" Height="20" Visibility="Hidden" PreviewTextInput="number_PreviewTextInput" TextChanged="hwaccelDetailsCPU_TextChanged" />
         <ComboBox x:Name="hwaccelDetailsGPU" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165, 205, 0, 0" Width="150" Height="20" Visibility="Hidden" />
     </Grid>
 </UserControl>

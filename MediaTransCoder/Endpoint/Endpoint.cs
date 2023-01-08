@@ -162,6 +162,10 @@ namespace MediaTransCoder.Backend {
             return DependencySetup.CheckFfmpegPath(context.Config?.FfmpegPath ?? "ffmpeg");
         }
 
+        public bool CheckFfmpegPath(string path) {
+            return DependencySetup.CheckFfmpegPath(path);
+        }
+
         public Preset GetPreset(PresetType type, PresetTarget target, PresetQuality quality) {
             return PresetsService.Get(type, target, quality);
         }
