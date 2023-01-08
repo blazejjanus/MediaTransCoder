@@ -24,6 +24,9 @@ namespace MediaTransCoder.WPF.Views {
         public SettingsView(MainWindow window) {
             InitializeComponent();
             this.window = window;
+            if(window.Context.Config == null) {
+                throw new Exception("Provided config was null!");
+            }
             WindowTitle = "MediaTransCoder - Settings";
         }
 
