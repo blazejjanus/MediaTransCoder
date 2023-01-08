@@ -5,7 +5,7 @@ namespace MediaTransCoder.WPF {
     internal class WPFDisplay : IDisplay {
         private static WPFDisplay? instance;
 
-        private CLIDisplay() { }
+        private WPFDisplay() { }
 
         public static WPFDisplay GetInstance() {
             return instance ?? (instance = new WPFDisplay());

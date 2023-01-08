@@ -6,13 +6,16 @@ namespace MediaTransCoder.WPF {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        internal WPFContext Context { get; private set; }
         private readonly MenuView menuView;
         private readonly AudioView audioView;
         private readonly VideoView videoView;
         private readonly ImageView imageView;
         private readonly SettingsView settingsView;
+
         public MainWindow() {
             InitializeComponent();
+            Context = WPFContext.Get();
             audioView = new AudioView(this);
             videoView = new VideoView(this);
             imageView = new ImageView(this);
