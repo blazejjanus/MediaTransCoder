@@ -8,6 +8,7 @@
     <RootNamespace>MediaTransCoder.WPF</RootNamespace>
     <BaseOutputPath>..\.build\bin\</BaseOutputPath>
     <AssemblyName>MediaTransCoder.WPF</AssemblyName>
+	<UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
