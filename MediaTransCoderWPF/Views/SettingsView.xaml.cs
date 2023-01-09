@@ -66,7 +66,7 @@ namespace MediaTransCoder.WPF.Views {
                 hwaccelComboBox.SelectedIndex = hwaccelComboBox.Items.IndexOf(HardwareAcceleration.CPU.ToString());
                 hwaccelDetailsCPU.Text = window.Context.Config.Hardware.CPUCores.ToString();
                 hwaccelDetailsCPU.Visibility = Visibility.Visible;
-                hwaccelDetailsText.Text = "Użyana ilość wątków: ";
+                hwaccelDetailsText.Text = "Używana ilość wątków: ";
                 hwaccelDetailsText.Visibility = Visibility.Visible;
             }
         }
