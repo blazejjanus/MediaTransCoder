@@ -1,6 +1,7 @@
 ﻿using MediaTransCoder.Backend;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +23,39 @@ namespace MediaTransCoder.WPF.Controls {
     /// </summary>
     public partial class FileOptionBox : UserControl {
         public InputOptions? Input { get; set; }
-        public string? InputPath { get; set; }
-        public string? OutputPath { get; set; }
+        public string? InputPath {
+            get { return inputPath; }
+            set {
+                inputPath = value;
+                if(inputPath == null) {
+                    inputFile.ToolTip = InputPath?.ToString();
+                    inputDirectory.ToolTip = InputPath?.ToString();
+                    inputDirectory.Background = Brushes.LightGray;
+                    inputFile.Background = Brushes.LightGray;
+                } else {
+                    inputFile.ToolTip = InputPath?.ToString();
+                    inputDirectory.ToolTip = InputPath?.ToString();
+                    inputDirectory.Background = Brushes.LightGreen;
+                    inputFile.Background = Brushes.LightGreen;
+                }
+            }
+        }
+        public string? OutputPath { 
+            get { return outputPath; }
+            set {
+                outputPath = value;
+                if(outputPath == null) {
+                    outputDirectory.ToolTip = OutputPath?.ToString();
+                    outputDirectory.Background = Brushes.LightGray;
+                } else {
+                    outputDirectory.ToolTip = OutputPath?.ToString();
+                    outputDirectory.Background = Brushes.LightGreen;
+                }
+            }
+        }
+        private string? inputPath;
+        private string? outputPath;
+
         public FileOptionBox() {
             InitializeComponent();
             PrefillForm();
@@ -55,12 +87,25 @@ namespace MediaTransCoder.WPF.Controls {
                     break;
                 }
             }
-            if(Input == InputOptions.FILE) {
+            bool isInputDir = false;
+            if(InputPath != null) {
+                var attr = File.GetAttributes(InputPath);
+                if(attr.HasFlag(FileAttributes.Directory)) {
+                    isInputDir = true;
+                }
+            }
+            if (Input == InputOptions.FILE) {
                 inputFile.Visibility = Visibility.Visible;
                 inputDirectory.Visibility = Visibility.Hidden;
+                if(isInputDir) {
+                    InputPath = null;
+                }
             } else {
                 inputDirectory.Visibility = Visibility.Visible;
                 inputFile.Visibility = Visibility.Hidden;
+                if (!isInputDir) {
+                    InputPath = null;
+                }
             }
         }
 
@@ -70,8 +115,8 @@ namespace MediaTransCoder.WPF.Controls {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK) {
                     InputPath = dialog.FileName;
-                    inputFile.ToolTip = InputPath.ToString();
-                    inputDirectory.ToolTip = InputPath.ToString();
+                } else {
+                    InputPath = null;
                 }
             }
         }
@@ -81,8 +126,8 @@ namespace MediaTransCoder.WPF.Controls {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK) {
                     InputPath = dialog.SelectedPath;
-                    inputFile.ToolTip = InputPath.ToString();
-                    inputDirectory.ToolTip = InputPath.ToString();
+                } else {
+                    InputPath = null;
                 }
             }
         }
@@ -92,7 +137,8 @@ namespace MediaTransCoder.WPF.Controls {
                 DialogResult result = dialog.ShowDialog();
                 if (result == DialogResult.OK) {
                     OutputPath = dialog.SelectedPath;
-                    outputDirectory.ToolTip = OutputPath.ToString();
+                } else {
+                    OutputPath = null;
                 }
             }
         }
