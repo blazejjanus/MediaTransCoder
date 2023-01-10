@@ -6,7 +6,7 @@ namespace MediaTransCoder.Backend {
         /// <summary>
         /// Video codec
         /// </summary>
-        public VideoCodecs Codec { get; set; }
+        public ContainerFormats Codec { get; set; }
         /// <summary>
         /// Video resolution
         /// </summary>
@@ -39,7 +39,7 @@ namespace MediaTransCoder.Backend {
         private int fps;
 
         public VideoOptions() {
-            Codec = VideoCodecs.hevc;
+            Codec = ContainerFormats.hevc;
             Resolution = Resolutions.r1080p;
             BitRate = 1000;
             FPS = 30;

@@ -2,7 +2,7 @@
     /// <summary>
     /// Supported video codecs. Use Name to get command, use Command to get dispalyed name.
     /// </summary>
-    public enum VideoCodecs {
+    public enum ContainerFormats {
         [VideoCodec("ffv1", "FFV1", ".avi")]
         ffv1,
         [VideoCodec("gifv", "GIF", ".gifv")]

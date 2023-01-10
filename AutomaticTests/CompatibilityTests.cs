@@ -31,7 +31,7 @@ namespace MediaTransCoder.Tests {
                 caller.Verbose = verbose;
             }
             List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
-            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
+            List<ContainerFormats> videoCodecs = new List<ContainerFormats>();
             EndpointOptions options = new EndpointOptions();
             //TestCompatiblityCharts video
             Display.Log("Video tests:\n\n", MessageType.SUCCESS);
@@ -85,7 +85,7 @@ namespace MediaTransCoder.Tests {
                 throw new Exception("Cannot get valid video options!");
             }
             string originalOutput = options.Output;
-            foreach (VideoCodecs codec in Enum.GetValues(typeof(VideoCodecs))) {
+            foreach (ContainerFormats codec in Enum.GetValues(typeof(ContainerFormats))) {
                 Display.Log("\n" + codec + ":", MessageType.SUCCESS);
                 options.Video.Codec = codec;
                 options.Output = originalOutput + "\\" + codec;

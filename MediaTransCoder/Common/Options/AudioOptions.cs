@@ -16,7 +16,7 @@ namespace MediaTransCoder.Backend {
         /// <summary>
         /// Number of audio channels
         /// </summary>
-        public uint AudioChannels {
+        public int AudioChannels {
             get {
                 return ac;
             }
@@ -31,7 +31,7 @@ namespace MediaTransCoder.Backend {
         /// Audio sampling frequency
         /// </summary>
         public SamplingFrequency SamplingRate { get; set; }
-        private uint ac;
+        private int ac;
 
         public AudioOptions() {
             Codec = AudioCodecs.mp3;
