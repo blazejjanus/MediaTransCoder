@@ -9,5 +9,6 @@
     <Grid Background="White">
         <Button x:Name="backButton" Content="Wróć" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="35" Height="20" Click="backButton_Click"/>
         <controls:FileOptionBox x:Name="inputBox" Margin="60, 10, 0, 0"/>
+        <controls:VideoOptionBox x:Name="videoBox" Margin="10, 40, 0, 0" />
     </Grid>
 </UserControl>

@@ -1,0 +1,34 @@
+﻿using MediaTransCoder.Backend;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace MediaTransCoder.WPF.Controls {
+    /// <summary>
+    /// Interaction logic for AudioOptionBox.xaml
+    /// </summary>
+    public partial class AudioOptionBox : UserControl {
+        public AudioOptions Audio { get; set; }
+        public VideoCodecs? CompatibleVCodec { get; set; }
+        public AudioOptionBox() {
+            InitializeComponent();
+            Audio = new AudioOptions();
+        }
+
+        private void PreFillForm() {
+
+        }
+    }
+}
