@@ -78,7 +78,7 @@ namespace MediaTransCoder.Tests {
                 caller = new TryFfmpeg(Backend);
                 caller.Verbose = verbose;
             }
-            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
+            List<ContainerFormats> videoCodecs = new List<ContainerFormats>();
             EndpointOptions options = new EndpointOptions();
             Display.Log("Video meassuring tests:\n\n", MessageType.SUCCESS);
             options = EndpointOptions.GetSampleVideoOptions();

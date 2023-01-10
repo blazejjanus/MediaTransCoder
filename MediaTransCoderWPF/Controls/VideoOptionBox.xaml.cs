@@ -30,7 +30,7 @@ namespace MediaTransCoder.WPF.Controls {
 
         private void PreFillForm() {
             //Vcodec selection
-            var vcodecs = Enum.GetValues(typeof(VideoCodecs));
+            var vcodecs = Enum.GetValues(typeof(ContainerFormats));
             foreach (var vcodec in vcodecs) {
                 vcodecInput.Items.Add(vcodec.ToString());
             }
@@ -54,8 +54,8 @@ namespace MediaTransCoder.WPF.Controls {
         }
 
         private void vcodecInput_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var vcodecs = Enum.GetValues(typeof(VideoCodecs));
-            foreach (VideoCodecs vcodec in vcodecs) {
+            var vcodecs = Enum.GetValues(typeof(ContainerFormats));
+            foreach (ContainerFormats vcodec in vcodecs) {
                 if(vcodec.ToString() == vcodecInput.SelectedItem.ToString()) {
                     Video.Codec = vcodec;
                     break;

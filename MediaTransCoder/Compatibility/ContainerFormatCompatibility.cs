@@ -52,68 +52,68 @@
             return GetCompatibleFormats(acodec).First();
         }
 
-        public static List<ContainerFormat> GetCompatibleFormats(VideoCodecs vcodec) {
+        public static List<ContainerFormat> GetCompatibleFormats(ContainerFormats vcodec) {
             var result = new List<ContainerFormat>();
             switch (vcodec) {
-                case VideoCodecs.vp9:
+                case ContainerFormats.vp9:
                     result.Add(ContainerFormat.webm);
                     break;
-                case VideoCodecs.vp8:
+                case ContainerFormats.vp8:
                     result.Add(ContainerFormat.webm);
                     result.Add(ContainerFormat.matroska);
                     break;
-                case VideoCodecs.h264:
+                case ContainerFormats.h264:
                     result.Add(ContainerFormat.c3gp);
                     result.Add(ContainerFormat.flv);
                     result.Add(ContainerFormat.matroska);
                     result.Add(ContainerFormat.avi);
                     break;
-                case VideoCodecs.mpeg4:
+                case ContainerFormats.mpeg4:
                     result.Add(ContainerFormat.matroska);
                     result.Add(ContainerFormat.avi);
                     break;
-                case VideoCodecs.ffv1:
+                case ContainerFormats.ffv1:
                     result.Add(ContainerFormat.matroska);
                     break;
-                case VideoCodecs.gifv:
+                case ContainerFormats.gifv:
                     result.Add(ContainerFormat.matroska);
                     break;
-                case VideoCodecs.h263p:
-                    result.Add(ContainerFormat.matroska);
-                    result.Add(ContainerFormat.avi);
-                    break;
-                case VideoCodecs.hevc:
-                    result.Add(ContainerFormat.matroska);
-                    break;
-                case VideoCodecs.msmpeg4v3:
+                case ContainerFormats.h263p:
                     result.Add(ContainerFormat.matroska);
                     result.Add(ContainerFormat.avi);
                     break;
-                case VideoCodecs.prores:
+                case ContainerFormats.hevc:
                     result.Add(ContainerFormat.matroska);
                     break;
-                case VideoCodecs.rawvideo:
+                case ContainerFormats.msmpeg4v3:
+                    result.Add(ContainerFormat.matroska);
+                    result.Add(ContainerFormat.avi);
+                    break;
+                case ContainerFormats.prores:
+                    result.Add(ContainerFormat.matroska);
+                    break;
+                case ContainerFormats.rawvideo:
                     result.Add(ContainerFormat.matroska);
                     result.Add(ContainerFormat.avi);
                     break;
-                case VideoCodecs.wmv1:
-                    result.Add(ContainerFormat.matroska);
-                    result.Add(ContainerFormat.avi);
-                    result.Add(ContainerFormat.asf);
-                    break;
-                case VideoCodecs.wmv2:
+                case ContainerFormats.wmv1:
                     result.Add(ContainerFormat.matroska);
                     result.Add(ContainerFormat.avi);
                     result.Add(ContainerFormat.asf);
                     break;
-                case VideoCodecs.msvideo1:
+                case ContainerFormats.wmv2:
+                    result.Add(ContainerFormat.matroska);
+                    result.Add(ContainerFormat.avi);
+                    result.Add(ContainerFormat.asf);
+                    break;
+                case ContainerFormats.msvideo1:
                     result.Add(ContainerFormat.asf);
                     break;
             }
             return result;
         }
 
-        public static ContainerFormat GetDefaultFormat(VideoCodecs vcodec) {
+        public static ContainerFormat GetDefaultFormat(ContainerFormats vcodec) {
             return GetCompatibleFormats(vcodec).First();
         }
     }
