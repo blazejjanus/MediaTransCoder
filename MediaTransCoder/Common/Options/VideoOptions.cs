@@ -14,18 +14,7 @@ namespace MediaTransCoder.Backend {
         /// <summary>
         /// Video bitrate
         /// </summary>
-        public int BitRate {
-            get {
-                return br;
-            }
-            set {
-                if(value < 400 || value > 150000) {
-                    throw new ArgumentOutOfRangeException("FPS");
-                }
-                //TODO: Check if bitrate is compatible with resolution
-                br = value;
-            }
-        }
+        public int BitRate { get; set; }
 
         /// <summary>
         /// Video frames per second
@@ -48,7 +37,6 @@ namespace MediaTransCoder.Backend {
         public bool RemoveAudio { get; set; }
 
         private int fps;
-        private int br;
 
         public VideoOptions() {
             Codec = VideoCodecs.hevc;
@@ -56,6 +44,44 @@ namespace MediaTransCoder.Backend {
             BitRate = 1000;
             FPS = 30;
             RemoveAudio = false;
+        }
+
+        public void CalcBitRate() {
+            switch (Resolution) {
+                case Resolutions.r144p:
+                    BitRate = 100 / 30 * FPS;
+                    break;
+                case Resolutions.r180p:
+                    BitRate = 150 / 30 * FPS;
+                    break;
+                case Resolutions.r240p:
+                    BitRate = 200 / 30 * FPS;
+                    break;
+                case Resolutions.r360p:
+                    BitRate = 300 / 30 * FPS;
+                    break;
+                case Resolutions.r480p:
+                    BitRate = 400 / 30 * FPS;
+                    break;
+                case Resolutions.r540p:
+                    BitRate = 450 / 30 * FPS;
+                    break;
+                case Resolutions.r720p:
+                    BitRate = 600 / 30 * FPS;
+                    break;
+                case Resolutions.r1080p:
+                    BitRate = 1400 / 30 * FPS;
+                    break;
+                case Resolutions.r1440p:
+                    BitRate = 1800 / 30 * FPS;
+                    break;
+                case Resolutions.r2160p:
+                    BitRate = 3000 / 30 * FPS;
+                    break;
+                case Resolutions.r4320p:
+                    BitRate = 6000 / 30 * FPS;
+                    break;
+            }
         }
 
         public override string ToString() {

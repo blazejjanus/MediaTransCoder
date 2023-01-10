@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="MediaTransCoder.WPF.Controls.VideoOptionBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MediaTransCoder.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="65" d:DesignWidth="375">
+    <Grid Background="White">
+        <TextBlock x:Name="titleText" Text="Ustawienia wideo" Margin="0, 0, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="150" FontSize="15" />
+        <TextBlock x:Name="vcodecText" Text="Kodek wideo: " Margin="0, 20, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="75" />
+        <ComboBox x:Name="vcodecInput" Margin="80, 20, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="80" SelectionChanged="vcodecInput_SelectionChanged" />
+        <TextBlock x:Name="resolutionText" Text="Rozdzielczość: " Margin="165, 20, 0, 0" Height="20" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <ComboBox x:Name="resolutionInput" Margin="250, 20, 0, 0" Height="20" Width="115" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="resolutionInput_SelectionChanged" />
+        <TextBlock x:Name="fpsText" Text="FPS: " Margin="0, 40, 0, 0" Height="20" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <TextBox x:Name="fpsInput" Margin="80, 40, 0, 0" Height="20" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top" TextChanged="fpsInput_TextChanged" PreviewTextInput="number_PreviewTextInput" />
+        <TextBlock x:Name="brText" Text="BitRate: " Margin="165, 40, 0, 0" Height="20" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBox x:Name="brInput" Margin="250, 40, 0, 0" Height="20" Width="75" HorizontalAlignment="Left" VerticalAlignment="Top" PreviewTextInput="number_PreviewTextInput" TextChanged="brInput_TextChanged" />
+        <TextBlock x:Name="brUnit" Text="kbps" Margin="330, 40, 0, 0" Height="20" Width="25" HorizontalAlignment="Left" VerticalAlignment="Top" />
+    </Grid>
+</UserControl>
