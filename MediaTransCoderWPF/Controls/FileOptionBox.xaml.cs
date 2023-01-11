@@ -53,6 +53,14 @@ namespace MediaTransCoder.WPF.Controls {
                 }
             }
         }
+        public bool IsValid {
+            get {
+                if (inputPath == null || outputPath == null) {
+                    return false;
+                }
+                return true;
+            }
+        }
         private string? inputPath;
         private string? outputPath;
 

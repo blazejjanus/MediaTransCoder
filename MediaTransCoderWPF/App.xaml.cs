@@ -1,4 +1,5 @@
 ﻿using MediaTransCoder.Backend;
+using MediaTransCoder.Shared;
 using System.IO;
 using System.Windows;
 
@@ -18,6 +19,7 @@ namespace MediaTransCoder.WPF
 
         private void Setup() {
             var env = EnvironmentalSettings.Get();
+            TestingEnvironment.RootPath = env.RootPath;
             Context = WPFContext.Get();
             Context.Display = WPFDisplay.GetInstance();
             WPFConfig config = new WPFConfig();

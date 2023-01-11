@@ -8,7 +8,7 @@
              d:DesignHeight="80" d:DesignWidth="350">
     <Grid Background="White">
         <TextBlock x:Name="presetText" Text="Ustawienie presetów: " Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="150" FontSize="14" />
-        <CheckBox x:Name="presetCheck" Content="Używaj presetów" Margin="25,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="120" />
+        <CheckBox x:Name="presetCheck" Content="Używaj presetów" Margin="25,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="120" Checked="presetCheck_Checked" Unchecked="presetCheck_Unchecked" />
         <TextBlock x:Name="purposeText" Text="Nacisk na: " Margin="0, 50, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" TextAlignment="Center"/>
         <ComboBox x:Name="purposeInput" Margin="70, 50, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="100" SelectionChanged="purposeInput_SelectionChanged" />
         <TextBlock x:Name="qualityText" Text="Jakość: " Margin="180,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" />

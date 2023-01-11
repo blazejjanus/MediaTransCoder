@@ -119,7 +119,7 @@ namespace MediaTransCoder.Backend {
                 AudioOnly = false,
                 Format = ContainerFormat.matroska,
                 Video = new VideoOptions() {
-                    Codec = ContainerFormats.hevc,
+                    Codec = VideoCodecs.hevc,
                     Resolution = Resolutions.r1080p,
                     FPS = 60,
                     BitRate = 35000

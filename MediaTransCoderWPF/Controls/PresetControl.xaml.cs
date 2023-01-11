@@ -12,12 +12,18 @@ namespace MediaTransCoder.WPF.Controls {
     public partial class PresetControl : UserControl {
         public bool UsePreset {
             get {
-                return presetCheck.IsChecked ?? false;
+                return presetCheck.IsChecked ?? usePreset;
+            }
+            private set {
+                usePreset = value;
+                ParentView?.Refresh();
             }
         }
         public PresetType Type { get; set; }
+        internal IRefreshableControl? ParentView { get; set; }
         private PresetTarget target;
         private PresetQuality quality;
+        private bool usePreset;
 
         public PresetControl() {
             InitializeComponent();
@@ -73,6 +79,18 @@ namespace MediaTransCoder.WPF.Controls {
                     break;
                 }
             }
+        }
+
+        private void presetCheck_Checked(object sender, RoutedEventArgs e) {
+            UsePreset = true;
+            purposeInput.IsEnabled = true;
+            qualityInput.IsEnabled = true;
+        }
+
+        private void presetCheck_Unchecked(object sender, RoutedEventArgs e) {
+            UsePreset = false;
+            purposeInput.IsEnabled = false;
+            qualityInput.IsEnabled = false;
         }
     }
 }

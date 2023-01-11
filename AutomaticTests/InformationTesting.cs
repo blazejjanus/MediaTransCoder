@@ -35,7 +35,7 @@ namespace MediaTransCoder.Tests {
         public static void GetCompatibilityLists() {
             Display.LogFile = Pathes.LogDirectory + "\\compatibility_info.log";
             List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
-            List<ContainerFormats> videoCodecs = new List<ContainerFormats>();
+            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
             string content = string.Empty;
             foreach (ContainerFormat format in Enum.GetValues(typeof(ContainerFormat))) {
                 audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
@@ -57,7 +57,7 @@ namespace MediaTransCoder.Tests {
         public static void TestExtensionsGeneration() {
             Display.LogFile = Pathes.LogDirectory + "\\extensions.log";
             List<AudioCodecs> audioCodecs = new List<AudioCodecs>();
-            List<ContainerFormats> videoCodecs = new List<ContainerFormats>();
+            List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
             //TestCompatiblityCharts video
             Display.Log("\nVideo:", MessageType.SUCCESS);
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
