@@ -103,7 +103,7 @@ namespace MediaTransCoder.WPF.Controls {
                 }
                 Audio.AudioChannels = val;
             } else {
-                brInput.Text = Audio.AudioChannels.ToString();
+                acInput.Text = Audio.AudioChannels.ToString();
             }
         }
 

@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="MediaTransCoder.WPF.Controls.ResolutionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MediaTransCoder.WPF.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="380">
+    <Grid Background="White">
+        <TextBlock x:Name="resText" Text="Rozdzielczość: " Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="80" />
+        <TextBox x:Name="resX" Margin="80, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" PreviewTextInput="number_PreviewTextInput" TextChanged="resX_TextChanged" />
+        <TextBlock x:Name="resSeparator" Text="x" TextAlignment="Center" Margin="150,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="10" />
+        <TextBox x:Name="resY" Margin="160, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" PreviewTextInput="number_PreviewTextInput" TextChanged="resY_TextChanged" />
+        <TextBlock x:Name="propText" Text="Proporcje: " Margin="240, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" />
+        <TextBox x:Name="propValue" Margin="310, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" IsReadOnly="True"/>
+    </Grid>
+</UserControl>
