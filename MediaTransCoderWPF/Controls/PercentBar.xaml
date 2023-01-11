@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MediaTransCoder.WPF.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="450">
+             d:DesignHeight="40" d:DesignWidth="490">
     <Grid Background="White">
-        <TextBlock x:Name="barText" Text="placeholder" Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="75" />
-        <Slider x:Name="barInput" Minimum="-100" Maximum="100" Margin="80,0,0,0" Width="300" 
+        <TextBlock x:Name="barText" Text="placeholder" Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="100" />
+        <Slider x:Name="barInput" Minimum="-100" Maximum="100" Margin="105,0,0,0" Width="300" 
                 TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True"
                 HorizontalAlignment="Left" VerticalAlignment="Top" ValueChanged="barInput_ValueChanged" />
-        <TextBlock x:Name="barMinLabel" Text="-100" Margin="75, 25, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="8" Height="10" Width="20" PreviewMouseDown="barMinLabel_PreviewMouseDown"/>
-        <TextBlock x:Name="barZeroLabel" Text="0" Margin="228, 25, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="8" Height="10" Width="20" PreviewMouseDown="barZeroLabel_PreviewMouseDown"/>
-        <TextBlock x:Name="barMaxLabel" Text="100" Margin="368, 25, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="8" Height="10" Width="20" PreviewMouseDown="barMaxLabel_PreviewMouseDown"/>
-        <TextBox x:Name="barValue" Text="" Margin="380, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="50" />
-        <TextBlock x:Name="barUnit" Text="%" Margin="430, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="20" />
+        <TextBlock x:Name="barMinLabel" Text="-100" TextAlignment="Center" Margin="100,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="8" Height="10" Width="20" PreviewMouseDown="barMinLabel_PreviewMouseDown"/>
+        <TextBlock x:Name="barZeroLabel" Text="0" TextAlignment="Center" Margin="245, 25, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="8" Height="10" Width="20" PreviewMouseDown="barZeroLabel_PreviewMouseDown"/>
+        <TextBlock x:Name="barMaxLabel" Text="100" TextAlignment="Center" Margin="390, 25, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="8" Height="10" Width="20" PreviewMouseDown="barMaxLabel_PreviewMouseDown"/>
+        <TextBox x:Name="barValue" Text="" Margin="415,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="50" />
+        <TextBlock x:Name="barUnit" Text="%" TextAlignment="Center" Margin="465,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="20" />
     </Grid>
 </UserControl>
