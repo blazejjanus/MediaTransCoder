@@ -1,4 +1,4 @@
-﻿namespace MediaTransCoder.Backend.Common {
+﻿namespace MediaTransCoder.Backend {
     public static class PresetsService {
         public static Preset Get(PresetType type, PresetTarget target, PresetQuality quality) {
             switch (type) {
