@@ -27,7 +27,7 @@ namespace MediaTransCoder.WPF {
         }
 
         public string Read(string message, string defaultValue = "") {
-            throw new System.NotImplementedException();
+            return defaultValue;
         }
 
         public void Send(string message, MessageType type = MessageType.INFO) {
@@ -45,7 +45,7 @@ namespace MediaTransCoder.WPF {
         }
 
         public void UpdateProgress(double progress) {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

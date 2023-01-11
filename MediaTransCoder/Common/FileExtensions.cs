@@ -43,7 +43,7 @@
                     }
                 }
             }
-            foreach (ContainerFormats codec in Enum.GetValues(typeof(ContainerFormats))) {
+            foreach (VideoCodecs codec in Enum.GetValues(typeof(VideoCodecs))) {
                 string? extension = EnumHelper.GetFileExtension(codec);
                 if (extension != null) {
                     if (!result.Contains(extension)) {

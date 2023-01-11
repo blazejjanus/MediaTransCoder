@@ -2,37 +2,70 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MediaTransCoder.WPF.Controls {
     /// <summary>
     /// Interaction logic for VideoOptionBox.xaml
     /// </summary>
-    public partial class VideoOptionBox : UserControl {
+    public partial class VideoOptionBox : UserControl, IRefreshableControl {
         public VideoOptions Video { get; set; }
+        public ContainerFormat? SelectedFormat {
+            get {
+                return selectedFormat;
+            }
+            set {
+                selectedFormat = value;
+                Refresh();
+            }
+        }
+        private ContainerFormat? selectedFormat;
         private WPFContext context = WPFContext.Get();
+
         public VideoOptionBox() {
             InitializeComponent();
             Video = new VideoOptions();
             PreFillForm();
         }
 
-        private void PreFillForm() {
-            //Vcodec selection
-            var vcodecs = Enum.GetValues(typeof(ContainerFormats));
+        public void Refresh() {
+            vcodecInput.Items.Clear();
+            List<VideoCodecs> vcodecs = new List<VideoCodecs>();
+            if (SelectedFormat != null) {
+                vcodecs = Compatibility.GetCompatibleVideoCodecs(SelectedFormat.Value);
+            } else {
+                vcodecs = Enum.GetValues(typeof(VideoCodecs)).Cast<VideoCodecs>().ToList();
+            }
+            if (selectedFormat != null) {
+                var codec = Compatibility.GetDefaultVideoCodec(selectedFormat.Value);
+                if(codec != null) {
+                    Video.Codec = codec.Value;
+                }
+            }
             foreach (var vcodec in vcodecs) {
-                vcodecInput.Items.Add(vcodec.ToString());
+                if (!vcodecInput.Items.Contains(vcodec.ToString())) {
+                    vcodecInput.Items.Add(vcodec.ToString());
+                }
+            }
+            if (vcodecInput.Items.Contains(Video.Codec.ToString())) {
+                vcodecInput.SelectedIndex = vcodecInput.Items.IndexOf(Video.Codec.ToString());
+            }
+        }
+
+        private void PreFillForm() {
+            //Video codec
+            List<VideoCodecs> vcodecs = new List<VideoCodecs>();
+            if (SelectedFormat != null) {
+                vcodecs = Compatibility.GetCompatibleVideoCodecs(SelectedFormat.Value);
+            } else {
+                vcodecs = Enum.GetValues(typeof(VideoCodecs)).Cast<VideoCodecs>().ToList();
+            }
+            foreach (var vcodec in vcodecs) {
+                if (vcodecInput.Items.Contains(vcodec.ToString())) {
+                    vcodecInput.Items.Add(vcodec.ToString());
+                }
             }
             if (vcodecInput.Items.Contains(Video.Codec.ToString())) {
                 vcodecInput.SelectedIndex = vcodecInput.Items.IndexOf(Video.Codec.ToString());
@@ -40,7 +73,9 @@ namespace MediaTransCoder.WPF.Controls {
             //Resolution selection
             var resolutions = Enum.GetValues(typeof(Resolutions));
             foreach (Resolutions resolution in resolutions) {
-                resolutionInput.Items.Add(EnumHelper.GetName(resolution));
+                if(!resolutionInput.Items.Contains(EnumHelper.GetName(resolution))) {
+                    resolutionInput.Items.Add(EnumHelper.GetName(resolution));
+                }
             }
             if (resolutionInput.Items.Contains(EnumHelper.GetName(Video.Resolution))) {
                 resolutionInput.SelectedIndex = resolutionInput.Items.IndexOf(EnumHelper.GetName(Video.Resolution));
@@ -54,8 +89,11 @@ namespace MediaTransCoder.WPF.Controls {
         }
 
         private void vcodecInput_SelectionChanged(object sender, SelectionChangedEventArgs e) {
-            var vcodecs = Enum.GetValues(typeof(ContainerFormats));
-            foreach (ContainerFormats vcodec in vcodecs) {
+            var vcodecs = Enum.GetValues(typeof(VideoCodecs));
+            foreach (VideoCodecs vcodec in vcodecs) {
+                if(vcodecInput.SelectedItem == null) {
+                    break;
+                }
                 if(vcodec.ToString() == vcodecInput.SelectedItem.ToString()) {
                     Video.Codec = vcodec;
                     break;

@@ -1,6 +1,4 @@
-﻿using MediaTransCoder.Backend.Common;
-
-namespace MediaTransCoder.Backend {
+﻿namespace MediaTransCoder.Backend {
     public class Endpoint : IDisposable {
         #region Fields
         /// <summary>

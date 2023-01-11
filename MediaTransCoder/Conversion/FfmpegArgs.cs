@@ -81,12 +81,12 @@ namespace MediaTransCoder.Backend {
             }
             sb.Append(" -i \"" + Files.Input + "\""); //Single file path
             if(Video != null) {
-                if(Video.Codec != ContainerFormats.gifv) {
+                if(Video.Codec != VideoCodecs.gifv) {
                     sb.Append(" -vcodec " + EnumHelper.GetName(Video.Codec));
                 }
                 sb.Append(" -r " + Video.FPS);
                 sb.Append(" -vf \"scale=" + EnumHelper.GetResolution(Video.Resolution));
-                if(Video.Codec == ContainerFormats.gifv) {
+                if(Video.Codec == VideoCodecs.gifv) {
                     sb.Append(":flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\"");
                 } else {
                     sb.Append("\"");
@@ -111,7 +111,7 @@ namespace MediaTransCoder.Backend {
                     sb.Append(" -f " + EnumHelper.GetName(Format.Value));
                 }
             }
-            if(Video != null && Video.Codec == ContainerFormats.gifv) {
+            if(Video != null && Video.Codec == VideoCodecs.gifv) {
                 sb.Append(" -loop 0");
             }
             sb.Append(" \"" + Files.Output + "\"");
@@ -129,7 +129,7 @@ namespace MediaTransCoder.Backend {
             Files.Output = Path.Combine(Files.Output, Files.OutputFileName);
         }
 
-        public static string GenerateOutputFileExtension(ContainerFormat? containerFormat, ImageFormat? imageFormat, ContainerFormats? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
+        public static string GenerateOutputFileExtension(ContainerFormat? containerFormat, ImageFormat? imageFormat, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
             string name = string.Empty;
             if(imageFormat != null) {
                 name = GetImageExtension(imageFormat.Value);
@@ -142,7 +142,7 @@ namespace MediaTransCoder.Backend {
             return name;
         }
 
-        private static string GetAudioVideoExtension(ContainerFormat? format, ContainerFormats? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
+        private static string GetAudioVideoExtension(ContainerFormat? format, VideoCodecs? vcodec, AudioCodecs? acodec, bool audioOnly = false) {
             string name = string.Empty;
             string? containerExtension = null;
             string? codecExtension = null;

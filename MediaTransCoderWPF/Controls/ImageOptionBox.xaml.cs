@@ -30,6 +30,7 @@ namespace MediaTransCoder.WPF.Controls {
         private PixelFormats pixelFormat;
         private int? compressionLevel;
         private WPFContext context = WPFContext.Get();
+
         public ImageOptionBox() {
             InitializeComponent();
             PreFillForm();
