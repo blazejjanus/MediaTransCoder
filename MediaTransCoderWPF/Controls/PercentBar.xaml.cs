@@ -26,15 +26,23 @@ namespace MediaTransCoder.WPF.Controls {
                 barText.Text = value;
             }
         }
-        public int Value {
+        public int? Value {
             get {
-                return (int)barInput.Value;
+                if(barInput.Value != 0) {
+                    return (int)barInput.Value;
+                } else {
+                    return null;
+                }
             }
             set {
                 if(value < -100 || value > 100) {
                     throw new ArgumentOutOfRangeException();
                 }
-                barInput.Value = value;
+                if(value != null) {
+                    barInput.Value = value.Value;
+                } else {
+                    barInput.Value = 0;
+                }
                 barValue.Text = value.ToString();
             }
         }

@@ -29,6 +29,8 @@ namespace MediaTransCoder.WPF.Controls {
                     throw new ArgumentOutOfRangeException();
                 }
                 resolution = value;
+                resX.Text = resolution.X.ToString();
+                resY.Text = resolution.Y.ToString();
                 UpdateProportion();
             }
         }
@@ -44,40 +46,41 @@ namespace MediaTransCoder.WPF.Controls {
         }
 
         private void UpdateProportion() {
-            double ratio = Resolution.X / Resolution.Y;
-            double value = Math.Floor(ratio);
-            double delta = ratio - value;
-            long precision = 1000000000;
-            long divider = GetGreatestDivider((long)Math.Round(delta * precision), precision);
-            long numerator = (long)Math.Round(delta * precision) / divider;
-            long denominator = precision / divider;
-            propValue.Text = numerator + ":" + denominator;
+            int divider = GetGreatestDivider((int)Resolution.X, (int)Resolution.Y);
+            string ratio = string.Empty;
+            if (divider != 0) {
+                double xRatio, yRatio;
+                xRatio = Resolution.X / divider;
+                yRatio = Resolution.Y / divider;
+                ratio = Math.Round(xRatio, 2) + ":" + Math.Round(yRatio, 2);
+            }
+            propValue.Text = ratio;
         }
 
-        private long GetGreatestDivider(long val1, long val2) {
-            if(val1 == 0) {
-                return val2;
+        private int GetGreatestDivider(int val1, int val2) {
+            while (val1 != 0 && val2 != 0) {
+                if (val1 > val2)
+                    val1 %= val2;
+                else
+                    val2 %= val1;
             }
-            if(val2 == 0) {
-                return val1;
-            }
-            if (val1 < val2) {
-                return GetGreatestDivider(val1, val2 % val1);
-            } else {
-                return GetGreatestDivider(val2, val1 % val2);
-            }
+            return val1 | val2;
         }
 
         private void resX_TextChanged(object sender, TextChangedEventArgs e) {
-            int x = int.Parse(resX.Text.Trim());
-            int y = (int)resolution.Y;
-            Resolution = new Vector2(x, y);
+            if(resX.Text.Length > 0) {
+                int x = int.Parse(resX.Text.Trim());
+                int y = (int)resolution.Y;
+                Resolution = new Vector2(x, y);
+            }
         }
 
         private void resY_TextChanged(object sender, TextChangedEventArgs e) {
-            int x= (int)resolution.X;
-            int y = int.Parse(resY.Text.Trim());
-            Resolution = new Vector2(x, y);
+            if(resY.Text.Length > 0) {
+                int x = (int)resolution.X;
+                int y = int.Parse(resY.Text.Trim());
+                Resolution = new Vector2(x, y);
+            }
         }
     }
 }
