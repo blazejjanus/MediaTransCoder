@@ -49,7 +49,7 @@ namespace MediaTransCoder.WPF.Controls {
             }
         }
 
-        private void PreFillForm() {
+        public void PreFillForm() {
             //Image format
             List<ImageFormat> formats = Enum.GetValues(typeof(ImageFormat)).Cast<ImageFormat>().ToList();
             foreach(ImageFormat format in formats) {

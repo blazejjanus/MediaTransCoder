@@ -5,7 +5,7 @@ namespace MediaTransCoder.WPF {
         public HardwareAcceleration DefaultAcceleration { get; set; }
         public Endpoint? Backend { get; set; }
         public WPFDisplay? Display { get; set; }
-        public BackendConfig? Config { get; set; }
+        public WPFConfig? Config { get; set; }
         private static WPFContext? instance;
 
         private WPFContext() { }
