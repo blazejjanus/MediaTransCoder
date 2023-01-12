@@ -50,12 +50,13 @@ namespace MediaTransCoder.Tests {
             EndpointOptions options = new EndpointOptions();
             Display.Log("Audio meassuring tests:\n\n", MessageType.SUCCESS);
             options = EndpointOptions.GetSampleAudioOptions();
+            options.SkipExistingFiles = false;
             foreach (ContainerFormat format in EnumHelper.GetAudioFormats()) {
-                Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 options.Format = format;
                 audioCodecs = Compatibility.GetCompatibleAudioCodecs(format);
                 options.Output = testEnv.Audio.Output + format;
                 foreach (var acodec in audioCodecs) {
+                    Display.Log("Testing " + format + " " + acodec + ": \n", MessageType.SUCCESS);
                     if (options.Audio != null) {
                         options.OutputFileName = acodec.ToString();
                         options.Audio.Codec = acodec;
@@ -80,13 +81,14 @@ namespace MediaTransCoder.Tests {
             }
             List<VideoCodecs> videoCodecs = new List<VideoCodecs>();
             EndpointOptions options = new EndpointOptions();
+            options.SkipExistingFiles = false;
             Display.Log("Video meassuring tests:\n\n", MessageType.SUCCESS);
             options = EndpointOptions.GetSampleVideoOptions();
             foreach (ContainerFormat format in EnumHelper.GetVideoFormats()) {
-                Display.Log("Testing " + format + ":\n", MessageType.SUCCESS);
                 videoCodecs = Compatibility.GetCompatibleVideoCodecs(format);
                 options.Format = format;
                 foreach (var vcodec in videoCodecs) {
+                    Display.Log("Testing " + format + " " + vcodec + ": \n", MessageType.SUCCESS);
                     if (options.Video != null && options.Audio != null) {
                         options.Video.Codec = vcodec;
                         options.Output = testEnv.Video.Output + format;
@@ -114,6 +116,7 @@ namespace MediaTransCoder.Tests {
                 caller.Verbose = verbose;
             }
             var options = EndpointOptions.GetSampleImageOptions();
+            options.SkipExistingFiles = false;
             Display.Log("Image meassuring tests:\n\n", MessageType.SUCCESS);
             if (options.Image == null) {
                 throw new NullReferenceException();

@@ -30,11 +30,11 @@ namespace MediaTransCoder.CLI {
             //CompatibilityTests.TestCompatibilityInfo();
             //CompatibilityTests.TestCodecResolutionCompatibility();
             //CompatibilityTests.TestAudioSamplingFrequency();
-            CompatibilityTests.TestAudioBitRate();
+            //CompatibilityTests.TestAudioBitRate();
             //ImageTests.TestJPGCompression();
             //ImageTests.TestFormats();
             //ImageTests.TestEffects();
-            //ConversionMeasuresTest.Measure();
+            ConversionMeasuresTest.Measure();
             //ConvertVideo();
             //ConvertAudio();
             //ConvertImage();
