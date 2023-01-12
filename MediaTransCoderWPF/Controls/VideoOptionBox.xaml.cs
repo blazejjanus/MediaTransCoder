@@ -54,7 +54,7 @@ namespace MediaTransCoder.WPF.Controls {
             }
         }
 
-        private void PreFillForm() {
+        public void PreFillForm() {
             //Video codec
             List<VideoCodecs> vcodecs = new List<VideoCodecs>();
             if (SelectedFormat != null) {

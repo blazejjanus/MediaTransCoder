@@ -3,6 +3,8 @@ using System.Windows;
 
 namespace MediaTransCoder.WPF {
     internal class WPFDisplay : IDisplay {
+        public RedirectMessage? Target { get; set; }
+        public bool RedirectOutput { get; set; } = false;
         private static WPFDisplay? instance;
 
         private WPFDisplay() { }
@@ -31,17 +33,29 @@ namespace MediaTransCoder.WPF {
         }
 
         public void Send(string message, MessageType type = MessageType.INFO) {
-            string caption = "MediaTransCoder";
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.Information;
-            MessageBox.Show(message, caption, button, icon, MessageBoxResult.OK);
+            if (Target == null || RedirectOutput == false) {
+                string caption = "MediaTransCoder";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Information;
+                MessageBox.Show(message, caption, button, icon, MessageBoxResult.OK);
+            } else {
+                if(type == MessageType.WARNING || type == MessageType.ERROR) {
+                    Target(type.ToString() + ": " + message);
+                } else {
+                    Target(message);
+                }
+            }
         }
 
         public void ShowResults(Measurer results) {
-            string caption = "Conversion result";
-            MessageBoxButton button = MessageBoxButton.OK;
-            MessageBoxImage icon = MessageBoxImage.Information;
-            MessageBox.Show(results.GetStats(), caption, button, icon, MessageBoxResult.OK);
+            if (Target == null || RedirectOutput == false) {
+                string caption = "Conversion result";
+                MessageBoxButton button = MessageBoxButton.OK;
+                MessageBoxImage icon = MessageBoxImage.Information;
+                MessageBox.Show(results.GetStats(), caption, button, icon, MessageBoxResult.OK);
+            } else {
+                Target(results.GetStats());
+            }
         }
 
         public void UpdateProgress(double progress) {

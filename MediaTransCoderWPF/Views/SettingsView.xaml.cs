@@ -38,17 +38,17 @@ namespace MediaTransCoder.WPF.Views {
                 throw new NullReferenceException();
             }
             //Detected hardware
-            detectedCPUCoresValue.Text = window.Context.Config.Hardware.MaxCPUCores.ToString();
+            detectedCPUCoresValue.Text = window.Context.Config.Backend.Hardware.MaxCPUCores.ToString();
             List<GPUType> gpus = Enum.GetValues(typeof(GPUType)).Cast<GPUType>().ToList();
             foreach (GPUType cgpu in gpus) {
                 detectedGPUValue.Items.Add(cgpu.ToString());
             }
-            var gpu = window.Context.Config.Hardware.GPU;
+            var gpu = window.Context.Config.Backend.Hardware.GPU;
             if (detectedGPUValue.Items.Contains(gpu.ToString())) {
                 detectedGPUValue.SelectedIndex = detectedGPUValue.Items.IndexOf(gpu.ToString());
             }
             //Ffmpeg configuration
-            string? path = window.Context.Config.FfmpegPath;
+            string? path = window.Context.Config.Backend.FfmpegPath;
             if (path == null) {
                 ffmpegPathValue.Text = "";
                 ffmpegPathStatus.Text = "Błąd!";
@@ -64,7 +64,7 @@ namespace MediaTransCoder.WPF.Views {
             }
             if (hwaccelComboBox.Items.Contains(HardwareAcceleration.CPU.ToString())) {
                 hwaccelComboBox.SelectedIndex = hwaccelComboBox.Items.IndexOf(HardwareAcceleration.CPU.ToString());
-                hwaccelDetailsCPU.Text = window.Context.Config.Hardware.CPUCores.ToString();
+                hwaccelDetailsCPU.Text = window.Context.Config.Backend.Hardware.CPUCores.ToString();
                 hwaccelDetailsCPU.Visibility = Visibility.Visible;
                 hwaccelDetailsText.Text = "Używana ilość wątków: ";
                 hwaccelDetailsText.Visibility = Visibility.Visible;
@@ -75,6 +75,7 @@ namespace MediaTransCoder.WPF.Views {
             if (window.Context.Config == null) {
                 throw new NullReferenceException();
             }
+            window.Context.Config.SaveConfig();
             window.SetMenuView();
         }
 
@@ -91,16 +92,16 @@ namespace MediaTransCoder.WPF.Views {
             int cores = 0;
             if (int.TryParse(input, out cores)) {
                 if (cores > 0) {
-                    window.Context.Config.Hardware.MaxCPUCores = cores;
-                    if (window.Context.Config.Hardware.CPUCores > window.Context.Config.Hardware.MaxCPUCores) {
-                        window.Context.Config.Hardware.CPUCores = cores;
+                    window.Context.Config.Backend.Hardware.MaxCPUCores = cores;
+                    if (window.Context.Config.Backend.Hardware.CPUCores > window.Context.Config.Backend.Hardware.MaxCPUCores) {
+                        window.Context.Config.Backend.Hardware.CPUCores = cores;
                         hwaccelDetailsCPU.Text = cores.ToString();
                     }
                 } else {
                     window.Context.Display?.Send("Liczba nieujemna!", MessageType.ERROR);
                 }
             }
-            hwaccelDetailsCPU.Text = window.Context.Config?.Hardware.MaxCPUCores.ToString();
+            hwaccelDetailsCPU.Text = window.Context.Config?.Backend.Hardware.MaxCPUCores.ToString();
         }
 
         private void ffmpegPathValue_TextChanged(object sender, TextChangedEventArgs e) {
@@ -109,7 +110,7 @@ namespace MediaTransCoder.WPF.Views {
             }
             TextBox textBox = sender as TextBox;
             if (window.Context.Backend?.CheckFfmpegPath(textBox.Text) ?? false) {
-                window.Context.Config.FfmpegPath = textBox.Text;
+                window.Context.Config.Backend.FfmpegPath = textBox.Text;
                 e.Handled = true;
             } else {
                 e.Handled = false;
@@ -124,11 +125,11 @@ namespace MediaTransCoder.WPF.Views {
             int cores = 0;
             if (int.TryParse(input, out cores)) {
                 if (cores > 0) {
-                    if (cores > window.Context.Config?.Hardware.MaxCPUCores) {
+                    if (cores > window.Context.Config?.Backend.Hardware.MaxCPUCores) {
                         window.Context.Display?.Send("Nie można ustawić większej liczby rdzeni niż dostępna w systemie!", MessageType.ERROR);
                     } else {
-                        if (window.Context.Config.Hardware.CPUCores > window.Context.Config.Hardware.MaxCPUCores) {
-                            window.Context.Config.Hardware.CPUCores = cores;
+                        if (window.Context.Config.Backend.Hardware.CPUCores > window.Context.Config.Backend.Hardware.MaxCPUCores) {
+                            window.Context.Config.Backend.Hardware.CPUCores = cores;
                             hwaccelDetailsCPU.Text = cores.ToString();
                         }
                     }
@@ -136,7 +137,7 @@ namespace MediaTransCoder.WPF.Views {
                     window.Context.Display?.Send("Liczba nieujemna!", MessageType.ERROR);
                 }
             }
-            hwaccelDetailsCPU.Text = window.Context.Config.Hardware.CPUCores.ToString();
+            hwaccelDetailsCPU.Text = window.Context.Config.Backend.Hardware.CPUCores.ToString();
         }
 
         private void detectedGPUValue_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -146,7 +147,7 @@ namespace MediaTransCoder.WPF.Views {
             List<GPUType> gpus = Enum.GetValues(typeof(GPUType)).Cast<GPUType>().ToList();
             foreach (GPUType gpu in gpus) {
                 if(detectedGPUValue.SelectedItem.ToString() == gpu.ToString()) {
-                    window.Context.Config.Hardware.GPU = gpu;
+                    window.Context.Config.Backend.Hardware.GPU = gpu;
                     break;
                 }
             }

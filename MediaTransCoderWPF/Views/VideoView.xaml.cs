@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using MediaTransCoder.Backend;
@@ -24,14 +26,23 @@ namespace MediaTransCoder.WPF.Views {
         }
         private ContainerFormat format;
         private readonly MainWindow window;
-        private WPFContext context = WPFContext.Get();
 
         public VideoView(MainWindow window) {
             InitializeComponent();
             this.window = window;
             WindowTitle = "MediaTransCoder - Video";
             presetBox.ParentView = this;
+            if(window.Context.Display == null) {
+                throw new NullReferenceException();
+            }
+            window.Context.Display.Target = DisplayOutput;
             PreFillForm();
+        }
+
+        public void DisplayOutput(string message) {
+            this.Dispatcher.Invoke(() => {
+                resultText.Text += "\n" + message;
+            });
         }
 
         public void Refresh() {
@@ -58,8 +69,10 @@ namespace MediaTransCoder.WPF.Views {
             }
         }
 
-        private void PreFillForm() {
-            if(presetBox.UsePreset == true) {
+        public void PreFillForm() {
+            resultsScroll.Visibility = Visibility.Hidden;
+            resultText.Text = "";
+            if (presetBox.UsePreset == true) {
                 formatInput.IsEnabled = false;
                 videoBox.IsEnabled = false;
                 audioBox.IsEnabled = false;
@@ -79,6 +92,7 @@ namespace MediaTransCoder.WPF.Views {
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e) {
+            PreFillForm();
             window.SetMenuView();
         }
 
@@ -94,15 +108,15 @@ namespace MediaTransCoder.WPF.Views {
 
         private bool Validate() {
             if (!inputBox.IsValid) {
-                context.Display?.Send("Nieprawidłowe ustawienia plików źródłowych i docelowych!", MessageType.ERROR);
+                window.Context.Display?.Send("Nieprawidłowe ustawienia plików źródłowych i docelowych!", MessageType.ERROR);
                 return false;
             }
             if(videoBox.Video == null) {
-                context.Display?.Send("Nieprawidłowe ustawienia wideo!", MessageType.ERROR);
+                window.Context.Display?.Send("Nieprawidłowe ustawienia wideo!", MessageType.ERROR);
                 return false;
             }
             if (audioBox.Audio == null) {
-                context.Display?.Send("Nieprawidłowe ustawienia audio!", MessageType.ERROR);
+                window.Context.Display?.Send("Nieprawidłowe ustawienia audio!", MessageType.ERROR);
                 return false;
             }
             return true;
@@ -110,6 +124,7 @@ namespace MediaTransCoder.WPF.Views {
 
         private void convertButton_Click(object sender, RoutedEventArgs e) {
             if(Validate()) {
+                window.Context.Display.RedirectOutput = true;
                 EndpointOptions args = new EndpointOptions();
                 args.InputOption = inputBox.Input.Value;
                 args.Input = inputBox.InputPath;
@@ -118,12 +133,20 @@ namespace MediaTransCoder.WPF.Views {
                 args.SkipExistingFiles = false;
                 args.AudioOnly = false;
                 args.AllowDirectoryCreation = true;
-                args.Acceleration = context.DefaultAcceleration;
+                args.Acceleration = window.Context.DefaultAcceleration;
                 args.Format = format;
                 args.Video = videoBox.Video;
                 args.Audio = audioBox.Audio;
                 args.Image = null;
-                context.Backend?.ConvertVideo(args);
+                backButton.IsEnabled = false;
+                resultsScroll.Visibility = Visibility.Visible;
+                if(window.Context.Backend == null) {
+                    throw new Exception("Nie można wywołać backendu!");
+                }
+                Thread thread = new Thread(() => window.Context.Backend.ConvertVideo(args));
+                thread.Start();
+                backButton.IsEnabled = true;
+                window.Context.Display.RedirectOutput = false;
             }
         }
     }

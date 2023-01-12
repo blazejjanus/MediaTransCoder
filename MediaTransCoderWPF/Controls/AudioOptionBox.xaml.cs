@@ -52,7 +52,7 @@ namespace MediaTransCoder.WPF.Controls {
             }
         }
 
-        private void PreFillForm() {
+        public void PreFillForm() {
             //Acodec
             List<AudioCodecs> acodecs = new List<AudioCodecs>();
             if(SelectedFormat != null) {
