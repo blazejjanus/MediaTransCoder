@@ -5,16 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MediaTransCoder.WPF.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="375">
+             d:DesignHeight="100" d:DesignWidth="450">
     <Grid Background="White">
         <TextBlock x:Name="titleText" Text="Ustawienia audio" Margin="0, 0, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="150" FontSize="15" />
-        <TextBlock x:Name="acodecText" Text="Kodek audio: " Margin="0, 20, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="75" />
-        <ComboBox x:Name="acodecInput" Margin="80, 20, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="80" SelectionChanged="acodecInput_SelectionChanged" />
-        <TextBlock x:Name="brText" Text="BitRate: " Margin="165, 20, 0, 0" Height="20" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <ComboBox x:Name="brInput" Margin="265, 20, 0, 0" Height="20" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="brInput_SelectionChanged" />
+        <TextBlock x:Name="acodecText" Text="Kodek audio: " Margin="0, 20, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="90" />
+        <ComboBox x:Name="acodecInput" Margin="90,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="100" SelectionChanged="acodecInput_SelectionChanged" />
+        <TextBlock x:Name="brText" Text="BitRate: " Margin="195,20,0,0" Height="20" Width="85" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <ComboBox x:Name="brInput" Margin="280,20,0,0" Height="20" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="brInput_SelectionChanged" />
         <TextBlock x:Name="acText" Text="Liczba kanałów: " Margin="0, 50, 0, 0" Height="20" Width="90" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <TextBox x:Name="acInput" Margin="90, 50, 0, 0" Height="20" Width="70" VerticalAlignment="Top" HorizontalAlignment="Left" PreviewTextInput="number_PreviewTextInput" TextChanged="acInput_TextChanged" />
-        <TextBlock x:Name="srText" Text="Częstotliwość próbkowania:" TextWrapping="Wrap" Margin="165, 40, 0, 0" Height="40" Width="100" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <ComboBox x:Name="srInput" Margin="265, 50, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="100" SelectionChanged="srInput_SelectionChanged"  />
+        <local:NumberInput x:Name="acInput" Margin="90, 50, 0, 0" Length="50" Width="100" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="acInput_ValueChanged"  />
+        <TextBlock x:Name="srText" Text="Częstotliwość próbkowania:" TextWrapping="Wrap" Margin="195,40,0,0" Height="40" Width="85" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <ComboBox x:Name="srInput" Margin="280,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="100" SelectionChanged="srInput_SelectionChanged"  />
     </Grid>
 </UserControl>

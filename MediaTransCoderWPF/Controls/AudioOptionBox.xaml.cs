@@ -79,7 +79,9 @@ namespace MediaTransCoder.WPF.Controls {
                 brInput.SelectedIndex = brInput.Items.IndexOf(EnumHelper.GetName(Audio.BitRate));
             }
             //AudioChannels
-            acInput.Text = Audio.AudioChannels.ToString();
+            acInput.Value = Audio.AudioChannels;
+            acInput.MinValue = 2;
+            acInput.MaxValue = 255;
             acInput.ToolTip = "2 - 255";
             //SamplingRate
             var srs = Enum.GetValues(typeof(SamplingFrequency));
@@ -93,11 +95,6 @@ namespace MediaTransCoder.WPF.Controls {
             }
         }
 
-        private void number_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
         private void acodecInput_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             var acodecs = Enum.GetValues(typeof(AudioCodecs));
             foreach (AudioCodecs acodec in acodecs) {
@@ -108,24 +105,6 @@ namespace MediaTransCoder.WPF.Controls {
                     Audio.Codec = acodec;
                     break;
                 }
-            }
-        }
-
-        private void acInput_TextChanged(object sender, TextChangedEventArgs e) {
-            string input = acInput.Text.Trim();
-            int val = 0;
-            if (int.TryParse(input, out val)) {
-                if (val < 2) {
-                    context.Display?.Send("Minimalna wartość to 2!", MessageType.ERROR);
-                    acInput.Text = Audio.AudioChannels.ToString();
-                }
-                if (val > 255) {
-                    context.Display?.Send("Maksymalna wartość to 255!", MessageType.ERROR);
-                    acInput.Text = Audio.AudioChannels.ToString();
-                }
-                Audio.AudioChannels = val;
-            } else {
-                acInput.Text = Audio.AudioChannels.ToString();
             }
         }
 
@@ -147,6 +126,10 @@ namespace MediaTransCoder.WPF.Controls {
                     break;
                 }
             }
+        }
+
+        private void acInput_ValueChanged(object sender, EventArgs e) {
+            Audio.AudioChannels = acInput.Value;
         }
     }
 }

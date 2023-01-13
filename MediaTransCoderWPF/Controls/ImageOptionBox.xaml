@@ -7,16 +7,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="White">
-        <TextBlock x:Name="titleText" Text="Ustawienia obrazu" Margin="0, 0, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="150" FontSize="15" />
-        <TextBlock x:Name="formatText" Text="Format: " Margin="0, 20, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="20" Width="70" />
-        <ComboBox x:Name="formatInput" Margin="75,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="80" SelectionChanged="formatInput_SelectionChanged" />
-        <local:ResolutionControl x:Name="resControl" Margin="160, 20, 0, 0"/>
-        <TextBlock x:Name="pxfText" Text="Pixel format: " Margin="0, 40, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" />
-        <ComboBox x:Name="pxfInput" Margin="75, 40, 0, 0" Width="80" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="pxfInput_SelectionChanged" />
-        <TextBlock x:Name="jcrText" Text="Stopień kompresji JPEG: " Margin="160, 40, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="135" />
-        <TextBox x:Name="jcrInput" ToolTip="Tylko dla formatów z rodziny JPEG." Margin="320, 40, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" IsEnabled="False" PreviewTextInput="number_PreviewTextInput" TextChanged="jcrInput_TextChanged" />
-        <local:PercentBar x:Name="brightnessBar" Description="Jasność: " Margin="0, 65, 0, 0" Width="500" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <local:PercentBar x:Name="contrastBar" Description="Kontrast: " Margin="0, 100, 0, 0" Width="500" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" />
-        <local:PercentBar x:Name="saturationBar" Description="Nasycenie barw: " Margin="0, 135, 0, 0" Width="500" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <TextBlock x:Name="titleText" Text="Ustawienia obrazu" Margin="0, 0, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="150" FontSize="15" />
+        <TextBlock x:Name="formatText" Text="Format: " Margin="0, 25, 0, 0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="25" Width="70" />
+        <ComboBox x:Name="formatInput" Margin="75,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="80" SelectionChanged="formatInput_SelectionChanged" />
+        <local:ResolutionControl x:Name="resControl" Margin="160, 25, 0, 0"/>
+        <TextBlock x:Name="pxfText" Text="Pixel format: " Margin="0, 50, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" />
+        <ComboBox x:Name="pxfInput" Margin="75, 50, 0, 0" Width="80" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="pxfInput_SelectionChanged" />
+        <TextBlock x:Name="jcrText" Text="Stopień kompresji JPEG: " Margin="160, 50, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="135" />
+        <local:NumberInput x:Name="jcrInput" ToolTip="Tylko dla formatów z rodziny JPEG." Margin="320, 50, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="100" IsEnabled="False" ValueChanged="jcrInput_ValueChanged" />
+        <local:PercentBar x:Name="brightnessBar" Description="Jasność: " Margin="0, 80, 0, 0" Width="500" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <local:PercentBar x:Name="contrastBar" Description="Kontrast: " Margin="0, 125, 0, 0" Width="500" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" />
+        <local:PercentBar x:Name="saturationBar" Description="Nasycenie barw: " Margin="0, 160, 0, 0" Width="500" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" />
     </Grid>
 </UserControl>

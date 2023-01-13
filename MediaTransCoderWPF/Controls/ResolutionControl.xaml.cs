@@ -1,19 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MediaTransCoder.WPF.Controls {
     /// <summary>
@@ -29,20 +16,21 @@ namespace MediaTransCoder.WPF.Controls {
                     throw new ArgumentOutOfRangeException();
                 }
                 resolution = value;
-                resX.Text = resolution.X.ToString();
-                resY.Text = resolution.Y.ToString();
+                resX.Value = (int)resolution.X;
+                resY.Value = (int)resolution.Y;
                 UpdateProportion();
             }
         }
         private Vector2 resolution;
         public ResolutionControl() {
             InitializeComponent();
+            resX.MinValue = 0;
+            resX.MaxValue = 8192;
+            resX.Multiplayer = 10;
+            resY.MinValue = 0;
+            resY.MaxValue = 4320;
+            resY.Multiplayer = 10;
             Resolution = new Vector2(1920, 1080);
-        }
-
-        private void number_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void UpdateProportion() {
@@ -67,20 +55,14 @@ namespace MediaTransCoder.WPF.Controls {
             return val1 | val2;
         }
 
-        private void resX_TextChanged(object sender, TextChangedEventArgs e) {
-            if(resX.Text.Length > 0) {
-                int x = int.Parse(resX.Text.Trim());
-                int y = (int)resolution.Y;
-                Resolution = new Vector2(x, y);
-            }
+        private void resX_ValueChanged(object sender, EventArgs e) {
+            resolution = new Vector2(resX.Value, resolution.Y);
+            UpdateProportion();
         }
 
-        private void resY_TextChanged(object sender, TextChangedEventArgs e) {
-            if(resY.Text.Length > 0) {
-                int x = (int)resolution.X;
-                int y = int.Parse(resY.Text.Trim());
-                Resolution = new Vector2(x, y);
-            }
+        private void resY_ValueChanged(object sender, EventArgs e) {
+            resolution = new Vector2(resolution.X, resY.Value);
+            UpdateProportion();
         }
     }
 }

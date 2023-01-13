@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MediaTransCoder.WPF.Controls {
     /// <summary>
@@ -81,11 +79,16 @@ namespace MediaTransCoder.WPF.Controls {
                 resolutionInput.SelectedIndex = resolutionInput.Items.IndexOf(EnumHelper.GetName(Video.Resolution));
             }
             //FPS Selection
-            fpsInput.Text = Video.FPS.ToString();
+            fpsInput.MinValue = 20;
+            fpsInput.MaxValue = 120;
+            fpsInput.Value = Video.FPS;
             fpsInput.ToolTip = "20 - 120";
             //BitRate Selections
             Video.CalcBitRate();
-            brInput.Text = Video.BitRate.ToString();
+            brInput.Increment = 10;
+            brInput.MinValue = 100;
+            brInput.MaxValue = 10000;
+            brInput.Value = Video.BitRate;
         }
 
         private void vcodecInput_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -107,45 +110,18 @@ namespace MediaTransCoder.WPF.Controls {
                 if(EnumHelper.GetName(resolution) == resolutionInput.SelectedItem.ToString()) {
                     Video.Resolution = resolution;
                     Video.CalcBitRate();
-                    brInput.Text = Video.BitRate.ToString();
+                    brInput.Value = Video.BitRate;
                     break;
                 }
             }
         }
 
-        private void fpsInput_TextChanged(object sender, TextChangedEventArgs e) {
-            string input = fpsInput.Text.Trim();
-            int val = 0;
-            if (int.TryParse(input, out val)) {
-                if(val < 20) {
-                    context.Display?.Send("Minimalna wartość FPS to 20!", MessageType.ERROR);
-                    fpsInput.Text = Video.FPS.ToString();
-                }
-                if(val > 120) {
-                    context.Display?.Send("Maksymalna wartość FPS to 120!", MessageType.ERROR);
-                    fpsInput.Text = Video.FPS.ToString();
-                }
-                Video.FPS = val;
-                Video.CalcBitRate();
-                brInput.Text = Video.BitRate.ToString();
-            } else {
-                fpsInput.Text = Video.FPS.ToString();
-            }
+        private void fpsInput_ValueChanged(object sender, EventArgs e) {
+            Video.FPS = fpsInput.Value;
         }
 
-        private void brInput_TextChanged(object sender, TextChangedEventArgs e) {
-            string input = fpsInput.Text.Trim();
-            int val = 0;
-            if (int.TryParse(input, out val)) {
-                Video.BitRate = val;
-            } else {
-                brInput.Text = Video.BitRate.ToString();
-            }
-        }
-
-        private void number_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
+        private void brInput_ValueChanged(object sender, EventArgs e) {
+            Video.BitRate = brInput.Value;
         }
     }
 }
