@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MediaTransCoder.WPF.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="380">
+             d:DesignHeight="25" d:DesignWidth="450">
     <Grid Background="White">
-        <TextBlock x:Name="resText" Text="Rozdzielczość: " Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="80" />
-        <TextBox x:Name="resX" Margin="80, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" PreviewTextInput="number_PreviewTextInput" TextChanged="resX_TextChanged" />
-        <TextBlock x:Name="resSeparator" Text="x" TextAlignment="Center" Margin="150,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="10" />
-        <TextBox x:Name="resY" Margin="160, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" PreviewTextInput="number_PreviewTextInput" TextChanged="resY_TextChanged" />
-        <TextBlock x:Name="propText" Text="Proporcje: " Margin="240, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" />
-        <TextBox x:Name="propValue" Margin="310, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="20" Width="70" IsReadOnly="True"/>
+        <TextBlock x:Name="resText" Text="Rozdzielczość: " Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="80" />
+        <local:NumberInput x:Name="resX" Margin="80, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="100" ValueChanged="resX_ValueChanged" />
+        <TextBlock x:Name="resSeparator" Text="x" TextAlignment="Center" Margin="180,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="20" />
+        <local:NumberInput x:Name="resY" Margin="200, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="100" ValueChanged="resY_ValueChanged" />
+        <TextBlock x:Name="propText" Text="Proporcje: " Margin="310, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" />
+        <TextBox x:Name="propValue" Margin="380, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="70" IsReadOnly="True"/>
     </Grid>
 </UserControl>

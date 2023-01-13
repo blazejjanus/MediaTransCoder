@@ -3,9 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using System.Text.RegularExpressions;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace MediaTransCoder.WPF.Controls {
     /// <summary>
@@ -40,7 +38,7 @@ namespace MediaTransCoder.WPF.Controls {
             if(format == ImageFormat.JPG || format == ImageFormat.JPG2000) {
                 jcrInput.IsEnabled = true;
                 compressionLevel = 15;
-                jcrInput.Text = 15.ToString();
+                jcrInput.Value = 15;
                 jcrInput.ToolTip = "Zakres wartości 1 - 31";
             } else {
                 jcrInput.IsEnabled = false;
@@ -74,18 +72,15 @@ namespace MediaTransCoder.WPF.Controls {
             if (format == ImageFormat.JPG || format == ImageFormat.JPG2000) {
                 jcrInput.IsEnabled = true;
                 compressionLevel = 15;
-                jcrInput.Text = 15.ToString();
+                jcrInput.Value = 15;
+                jcrInput.MinValue = 1;
+                jcrInput.MaxValue = 31;
                 jcrInput.ToolTip = "Zakres wartości 1 - 31";
             } else {
                 jcrInput.IsEnabled = false;
                 compressionLevel = null;
                 jcrInput.ToolTip = "Tylko dla formatów z rodziny JPEG.";
             }
-        }
-
-        private void number_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
         }
 
         private void formatInput_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -109,22 +104,8 @@ namespace MediaTransCoder.WPF.Controls {
             }
         }
 
-        private void jcrInput_TextChanged(object sender, TextChangedEventArgs e) {
-            string input = jcrInput.Text.Trim();
-            int val = 0;
-            if (int.TryParse(input, out val)) {
-                if (val < 1) {
-                    context.Display?.Send("Minimalna wartość to 1!", MessageType.ERROR);
-                    jcrInput.Text = compressionLevel.ToString();
-                }
-                if (val > 31) {
-                    context.Display?.Send("Maksymalna wartość to 31!", MessageType.ERROR);
-                    jcrInput.Text = compressionLevel.ToString();
-                }
-                compressionLevel = val;
-            } else {
-                jcrInput.Text = compressionLevel.ToString();
-            }
+        private void jcrInput_ValueChanged(object sender, EventArgs e) {
+            compressionLevel = jcrInput.Value;
         }
     }
 }

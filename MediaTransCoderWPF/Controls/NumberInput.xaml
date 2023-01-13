@@ -7,8 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="100">
     <Grid Background="White">
-        <TextBox x:Name="valueBox" Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" />
-        <Button x:Name="minusButton" Content="-" Margin="50, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="25" Click="minusButton_Click" />
-        <Button x:Name="plusButton" Content="+" Margin="75, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="25" Click="plusButton_Click" />
+        <TextBox x:Name="valueBox" Margin="0, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" IsReadOnly="True"/>
+        <RepeatButton x:Name="minusButton" Content="-" Margin="50, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="25" Click="minusButton_Click" />
+        <RepeatButton x:Name="plusButton" Content="+" Margin="75, 0, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="25" Click="plusButton_Click" />
     </Grid>
 </UserControl>

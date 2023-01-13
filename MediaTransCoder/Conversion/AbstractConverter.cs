@@ -156,6 +156,7 @@ namespace MediaTransCoder.Backend {
         private Process PrepeareProcess() {
             var proc = new Process();
             proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
             proc.StartInfo.RedirectStandardOutput = true;
             proc.StartInfo.RedirectStandardError = true;
             proc.StartInfo.RedirectStandardInput = true;

@@ -38,7 +38,7 @@ namespace MediaTransCoder.WPF.Views {
                 throw new NullReferenceException();
             }
             //Detected hardware
-            detectedCPUCoresValue.Text = window.Context.Config.Backend.Hardware.MaxCPUCores.ToString();
+            detectedCPUCoresValue.Value = window.Context.Config.Backend.Hardware.MaxCPUCores;
             List<GPUType> gpus = Enum.GetValues(typeof(GPUType)).Cast<GPUType>().ToList();
             foreach (GPUType cgpu in gpus) {
                 detectedGPUValue.Items.Add(cgpu.ToString());
@@ -64,11 +64,23 @@ namespace MediaTransCoder.WPF.Views {
             }
             if (hwaccelComboBox.Items.Contains(HardwareAcceleration.CPU.ToString())) {
                 hwaccelComboBox.SelectedIndex = hwaccelComboBox.Items.IndexOf(HardwareAcceleration.CPU.ToString());
-                hwaccelDetailsCPU.Text = window.Context.Config.Backend.Hardware.CPUCores.ToString();
+                hwaccelDetailsCPU.Value = window.Context.Config.Backend.Hardware.CPUCores;
                 hwaccelDetailsCPU.Visibility = Visibility.Visible;
                 hwaccelDetailsText.Text = "Używana ilość wątków: ";
                 hwaccelDetailsText.Visibility = Visibility.Visible;
             }
+        }
+
+        private void detectedCPUCoresValue_ValueChanged(object sender, EventArgs e) {
+            if(hwaccelDetailsCPU.Value > detectedCPUCoresValue.Value) {
+                hwaccelDetailsCPU.Value = detectedCPUCoresValue.Value;
+            }
+            hwaccelDetailsCPU.MaxValue = detectedCPUCoresValue.Value;
+            window.Context.Config.Backend.Hardware.MaxCPUCores = detectedCPUCoresValue.Value;
+        }
+
+        private void hwaccelDetailsCPU_ValueChanged(object sender, EventArgs e) {
+            window.Context.Config.Backend.Hardware.CPUCores = hwaccelDetailsCPU.Value;
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e) {
@@ -77,31 +89,6 @@ namespace MediaTransCoder.WPF.Views {
             }
             window.Context.Config.SaveConfig();
             window.SetMenuView();
-        }
-
-        private void number_PreviewTextInput(object sender, TextCompositionEventArgs e) {
-            Regex regex = new Regex("[^0-9]+");
-            e.Handled = regex.IsMatch(e.Text);
-        }
-
-        private void detectedCPUCoresValue_TextChanged(object sender, TextChangedEventArgs e) {
-            if (window.Context.Config == null) {
-                throw new NullReferenceException();
-            }
-            string input = detectedCPUCoresValue.Text.Trim();
-            int cores = 0;
-            if (int.TryParse(input, out cores)) {
-                if (cores > 0) {
-                    window.Context.Config.Backend.Hardware.MaxCPUCores = cores;
-                    if (window.Context.Config.Backend.Hardware.CPUCores > window.Context.Config.Backend.Hardware.MaxCPUCores) {
-                        window.Context.Config.Backend.Hardware.CPUCores = cores;
-                        hwaccelDetailsCPU.Text = cores.ToString();
-                    }
-                } else {
-                    window.Context.Display?.Send("Liczba nieujemna!", MessageType.ERROR);
-                }
-            }
-            hwaccelDetailsCPU.Text = window.Context.Config?.Backend.Hardware.MaxCPUCores.ToString();
         }
 
         private void ffmpegPathValue_TextChanged(object sender, TextChangedEventArgs e) {
@@ -115,29 +102,6 @@ namespace MediaTransCoder.WPF.Views {
             } else {
                 e.Handled = false;
             }
-        }
-
-        private void hwaccelDetailsCPU_TextChanged(object sender, TextChangedEventArgs e) {
-            if (window.Context.Config == null) {
-                throw new NullReferenceException();
-            }
-            string input = hwaccelDetailsCPU.Text.Trim();
-            int cores = 0;
-            if (int.TryParse(input, out cores)) {
-                if (cores > 0) {
-                    if (cores > window.Context.Config?.Backend.Hardware.MaxCPUCores) {
-                        window.Context.Display?.Send("Nie można ustawić większej liczby rdzeni niż dostępna w systemie!", MessageType.ERROR);
-                    } else {
-                        if (window.Context.Config.Backend.Hardware.CPUCores > window.Context.Config.Backend.Hardware.MaxCPUCores) {
-                            window.Context.Config.Backend.Hardware.CPUCores = cores;
-                            hwaccelDetailsCPU.Text = cores.ToString();
-                        }
-                    }
-                } else {
-                    window.Context.Display?.Send("Liczba nieujemna!", MessageType.ERROR);
-                }
-            }
-            hwaccelDetailsCPU.Text = window.Context.Config.Backend.Hardware.CPUCores.ToString();
         }
 
         private void detectedGPUValue_SelectionChanged(object sender, SelectionChangedEventArgs e) {
