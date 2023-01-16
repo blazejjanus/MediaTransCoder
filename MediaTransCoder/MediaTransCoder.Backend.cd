@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MediaTransCoder.Backend.BackendConfig" Collapsed="true">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAACAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Configuration\BackendConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.HardwareConfig" Collapsed="true">
+    <Position X="4" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAIAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Common\Configuration\HardwareConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.InterfaceConfig" Collapsed="true">
+    <Position X="2.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAIQAAAAAAAAA=</HashCode>
+      <FileName>Common\Configuration\InterfaceConfig.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.AudioOptions" Collapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAAQAAAAAEAAABAAIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Options\AudioOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.EndpointOptions" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAiACEAAAEAAEIAEAAEAiEABCAAAAkEQACAIg=</HashCode>
+      <FileName>Common\Options\EndpointOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.FileOption" Collapsed="true">
+    <Position X="7.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAiAAAAAAEAAAIQAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Options\FileOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ImageOptions" Collapsed="true">
+    <Position X="4" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAQgAAAEAgAgASEAAAACAQAQAgAAgAAEAAAEAggAIA=</HashCode>
+      <FileName>Common\Options\ImageOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.VideoOptions" Collapsed="true">
+    <Position X="7.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAAAAAEAAAAAAAQAAAgAAAAABAQBAAAAAA=</HashCode>
+      <FileName>Common\Options\VideoOptions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.DependencySetup" Collapsed="true">
+    <Position X="7.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAkAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Setup\DependencySetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.HardwareDetection" Collapsed="true">
+    <Position X="4" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Setup\HardwareDetection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.Preset" Collapsed="true">
+    <Position X="5.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAACAAAAAAAAAAAQAAAABAAAA=</HashCode>
+      <FileName>Common\Shared\Preset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.Context" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAABAAAAAAQAABABAAAAAACACAAAAAAA=</HashCode>
+      <FileName>Common\Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.EnvironmentalSettings" Collapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAABAAAAAAAAAAABAAAABAAAAAAAAAgA=</HashCode>
+      <FileName>Common\EnvironmentalSettings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.FileExtensions" Collapsed="true">
+    <Position X="2.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAABACAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\FileExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.Logging" Collapsed="true">
+    <Position X="5.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAIAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Logging.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.Measurer" Collapsed="true">
+    <Position X="2.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAQAAAAAhAAAAAACAAAABIAAgAAAAAAAAQAABAYA=</HashCode>
+      <FileName>Common\Measurer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.PresetsService" Collapsed="true">
+    <Position X="0.5" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAABAAAAAAAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\PresetsService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.Compatibility" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAEAAAAJAAAAAAAAAgAAQAIAA=</HashCode>
+      <FileName>Compatibility\AudioCodecsCompatibility.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.AbstractConverter" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAwDBAAAgCAEAgAAAIgAQAIIABACAAAgAAABCACAAgA=</HashCode>
+      <FileName>Conversion\AbstractConverter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MediaTransCoder.Backend.AudioConverter" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAIAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Conversion\AudioConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.FfmpegArgs" Collapsed="true">
+    <Position X="0.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEQAgAAAAAAABEAAEAAAAACAgEABABAAAEAAAEAIg=</HashCode>
+      <FileName>Conversion\FfmpegArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.FfmpegMetadata" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAiAAAAACACAAAAAAQAAAAQAAACAAABQAAAEAAAAQA=</HashCode>
+      <FileName>Conversion\FfmpegMetadata.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ImageConverter" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Conversion\ImageConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.VideoConverter" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAIAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Conversion\VideoConverter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ConversionValidator" Collapsed="true">
+    <Position X="5.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAgAAQAAAAAAAAEgAAAAAAAAAAA=</HashCode>
+      <FileName>Endpoint\ConversionValidator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.Endpoint" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGAAgQQCAAABAAAAAQoAAABISAAAAAAAAAAQBAAIA=</HashCode>
+      <FileName>Endpoint\Endpoint.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MediaTransCoder.Backend.AudioCodecAttribute" Collapsed="true">
+    <Position X="9.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\AudioCodecAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ContainerFormatAttribute" Collapsed="true">
+    <Position X="9.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAIAAAAAAAgAAAAAAAAAAYAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\ContainerFormatAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ImageEffectsAttribute" Collapsed="true">
+    <Position X="9.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\ImageEffectsAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ImageFormatAttribute" Collapsed="true">
+    <Position X="9.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\ImageFormatAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.NameAttribute" Collapsed="true">
+    <Position X="9.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\NameAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.ResolutionAttribute" Collapsed="true">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\ResolutionAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.VideoCodecAttribute" Collapsed="true">
+    <Position X="9.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Enums\Attributes\VideoCodecAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.EnumHelper" Collapsed="true">
+    <Position X="2.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAQAAAAACIAAAAAAAgAACAAAAAAAACABCBAE=</HashCode>
+      <FileName>Enums\Helpers\AudioCodecsHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.NumberParser" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Parsers\NumberParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Backend.TimeParser" Collapsed="true">
+    <Position X="7.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAEAAAACAAAAAAAAAAAAQAAAAAAAQA=</HashCode>
+      <FileName>Parsers\TimeParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="MediaTransCoder.Backend.IDisplay" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAAAAIAAAAAEAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IDisplay.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MediaTransCoder.Backend.AudioBitRate" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAACAAAAAAAAAAAABQgAAAAAAQA=</HashCode>
+      <FileName>Enums\AudioVideo\AudioBitRate.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.AudioCodecs" Collapsed="true">
+    <Position X="4" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAwQAAAACAAAAAAAAIAAAAAgACAAAAAAACAAAAAAQ=</HashCode>
+      <FileName>Enums\AudioVideo\AudioCodecs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.ContainerFormat" Collapsed="true">
+    <Position X="0.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIFAAAAAAABAAAAAAAAAAAAAAAAAAAkAAAAAAASA=</HashCode>
+      <FileName>Enums\AudioVideo\ContainerFormat.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.Resolutions" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAIAAgAAACAAAgAAAAQCADAAAAAAEEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\AudioVideo\Resolutions.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.SamplingFrequency" Collapsed="true">
+    <Position X="7.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAQAAAAAAFAGAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\AudioVideo\SamplingFrequency.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.VideoCodecs" Collapsed="true">
+    <Position X="2.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQgAAABAAAAAAAAAAAAAAABAAAEAAAAAAAuAAAIYE=</HashCode>
+      <FileName>Enums\AudioVideo\VideoCodecs.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.ImageEffects" Collapsed="true">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Enums\Image\ImageEffects.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.ImageFormat" Collapsed="true">
+    <Position X="5.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAACAAAAAQAIAAAAIAAAAAkAEEAEAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\Image\ImageFormat.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.PixelFormats" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEEAAAAAAAAAAAAACAAAAAAAAAEAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Enums\Image\PixelFormats.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.PresetQuality" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAgAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>Enums\Preset\PresetQuality.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.PresetTarget" Collapsed="true">
+    <Position X="2.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Enums\Preset\PresetTarget.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.PresetType" Collapsed="true">
+    <Position X="5.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Enums\Preset\PresetType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.EnvironmentType" Collapsed="true">
+    <Position X="7.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAACAAACAAAAAA=</HashCode>
+      <FileName>Enums\EnvironmentType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.GPUType" Collapsed="true">
+    <Position X="4" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAARAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\GPUType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.HardwareAcceleration" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAACIAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\HardwareAcceleration.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.InputOptions" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAEAAAQAAAAAA=</HashCode>
+      <FileName>Enums\InputOptions.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.InterfaceType" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAgAAAAAAAAAEAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\InterfaceType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MediaTransCoder.Backend.MessageType" Collapsed="true">
+    <Position X="4" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACBgAAAAAAAAAAAEAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Enums\MessageType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Delegate Name="MediaTransCoder.Backend.OnProgressCallback" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Conversion\AbstractConverter.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Delegate Name="MediaTransCoder.Backend.OnMetadataUpdateCallback" Collapsed="true">
+    <Position X="7.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Conversion\AbstractConverter.cs</FileName>
+    </TypeIdentifier>
+  </Delegate>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MediaTransCoder.Shared.EnvironmentPathes" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAABAAAAAAAAAAABAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\Shared\EnvironmentPathes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Shared.PathInfo" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAIAAAAEAAAAAAAAEAAAAAAAgA=</HashCode>
+      <FileName>Common\Shared\PathInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Shared.TestingEnvironment" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAEAAAAAAgBAABAAAAAAAAAAAgg=</HashCode>
+      <FileName>Common\Shared\TestingEnvironment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MediaTransCoder.Tests.CompatibilityTests" Collapsed="true">
+    <Position X="6.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAgAAAAAAAARAAAAAAAAgBgAAAAAAQAEA=</HashCode>
+      <FileName>CompatibilityTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Tests.ConversionMeasuresTest" Collapsed="true">
+    <Position X="8.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAgAAAAAAgAAAAAAAAEAAQAAAAAAAAgFgAAAAAAAAEA=</HashCode>
+      <FileName>ConversionMeasuresTest.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Tests.ImageTests" Collapsed="true">
+    <Position X="10" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAEAAAAQAAAAAAAAgAAABAAAAAAEg=</HashCode>
+      <FileName>ImageTests.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Tests.InformationTesting" Collapsed="true">
+    <Position X="6.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAQAEA=</HashCode>
+      <FileName>InformationTesting.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MediaTransCoder.Tests.TestDisplay" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gACCAAAAAAEIAAAAAEAAAQAgBAjAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>TestDisplay.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MediaTransCoder.Tests.TryFfmpeg" Collapsed="true">
+    <Position X="10" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAEAAQAAAAAAABgAgAAAAAAAAAg=</HashCode>
+      <FileName>TryFfmpeg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
