@@ -23,11 +23,22 @@ namespace MediaTransCoder.WPF.Controls {
                     Saturation = saturationBar.Value
                 };
             }
+            set {
+                if (value == null) {
+                    throw new NullReferenceException();
+                }
+                format = value.Format;
+                pixelFormat = value.PixelFormat;
+                compressionLevel = value.CompressionLevel;
+                resControl.Resolution = value.Size;
+                brightnessBar.Value = value.Brightness;
+                contrastBar.Value = value.Contrast;
+                saturationBar.Value = value.Saturation;
+            }
         }
         private ImageFormat format;
         private PixelFormats pixelFormat;
         private int? compressionLevel;
-        private WPFContext context = WPFContext.Get();
 
         public ImageOptionBox() {
             InitializeComponent();

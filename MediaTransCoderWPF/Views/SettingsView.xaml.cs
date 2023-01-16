@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MediaTransCoder.Backend;
 
 namespace MediaTransCoder.WPF.Views {
@@ -76,10 +66,16 @@ namespace MediaTransCoder.WPF.Views {
                 hwaccelDetailsCPU.Value = detectedCPUCoresValue.Value;
             }
             hwaccelDetailsCPU.MaxValue = detectedCPUCoresValue.Value;
+            if(window.Context.Config == null) {
+                throw new NullReferenceException();
+            }
             window.Context.Config.Backend.Hardware.MaxCPUCores = detectedCPUCoresValue.Value;
         }
 
         private void hwaccelDetailsCPU_ValueChanged(object sender, EventArgs e) {
+            if (window.Context.Config == null) {
+                throw new NullReferenceException();
+            }
             window.Context.Config.Backend.Hardware.CPUCores = hwaccelDetailsCPU.Value;
         }
 
@@ -95,7 +91,13 @@ namespace MediaTransCoder.WPF.Views {
             if (window.Context.Config == null) {
                 throw new NullReferenceException();
             }
-            TextBox textBox = sender as TextBox;
+            if (sender == null) {
+                throw new NullReferenceException();
+            }
+            TextBox? textBox = sender as TextBox;
+            if (textBox == null) {
+                throw new NullReferenceException();
+            }
             if (window.Context.Backend?.CheckFfmpegPath(textBox.Text) ?? false) {
                 window.Context.Config.Backend.FfmpegPath = textBox.Text;
                 e.Handled = true;

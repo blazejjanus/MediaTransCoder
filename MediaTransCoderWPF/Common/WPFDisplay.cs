@@ -4,10 +4,12 @@ using System.Windows;
 namespace MediaTransCoder.WPF {
     internal class WPFDisplay : IDisplay {
         public RedirectMessage? Target { get; set; }
-        public bool RedirectOutput { get; set; } = false;
+        public bool RedirectOutput { get; set; }
         private static WPFDisplay? instance;
 
-        private WPFDisplay() { }
+        private WPFDisplay() { 
+            RedirectOutput = false;
+        }
 
         public static WPFDisplay GetInstance() {
             return instance ?? (instance = new WPFDisplay());
@@ -33,28 +35,32 @@ namespace MediaTransCoder.WPF {
         }
 
         public void Send(string message, MessageType type = MessageType.INFO) {
-            if (Target == null || RedirectOutput == false) {
+            if (RedirectOutput == false) {
                 string caption = "MediaTransCoder";
                 MessageBoxButton button = MessageBoxButton.OK;
                 MessageBoxImage icon = MessageBoxImage.Information;
                 MessageBox.Show(message, caption, button, icon, MessageBoxResult.OK);
             } else {
-                if(type == MessageType.WARNING || type == MessageType.ERROR) {
-                    Target(type.ToString() + ": " + message);
-                } else {
-                    Target(message);
+                if(Target != null) {
+                    if (type == MessageType.WARNING || type == MessageType.ERROR) {
+                        Target(type.ToString() + ": " + message);
+                    } else {
+                        Target(message);
+                    }
                 }
             }
         }
 
         public void ShowResults(Measurer results) {
-            if (Target == null || RedirectOutput == false) {
+            if (RedirectOutput == false) {
                 string caption = "Conversion result";
                 MessageBoxButton button = MessageBoxButton.OK;
                 MessageBoxImage icon = MessageBoxImage.Information;
                 MessageBox.Show(results.GetStats(), caption, button, icon, MessageBoxResult.OK);
             } else {
-                Target(results.GetStats());
+                if (Target != null) {
+                    Target(results.GetStats());
+                }  
             }
         }
 

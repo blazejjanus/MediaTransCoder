@@ -1,5 +1,6 @@
 ﻿using MediaTransCoder.WPF.Views;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MediaTransCoder.WPF {
     /// <summary>
@@ -8,9 +9,9 @@ namespace MediaTransCoder.WPF {
     public partial class MainWindow : Window {
         internal WPFContext Context { get; private set; }
         private readonly MenuView menuView;
-        private readonly AudioView audioView;
-        private readonly VideoView videoView;
-        private readonly ImageView imageView;
+        private AudioView audioView;
+        private VideoView videoView;
+        private ImageView imageView;
         private readonly SettingsView settingsView;
 
         public MainWindow() {
@@ -24,9 +25,24 @@ namespace MediaTransCoder.WPF {
             SetMenuView();
         }
 
-        public void SetMenuView() {
+        public void SetMenuView(UserControl? sender = null) {
             content.Content = menuView;
             Title = menuView.WindowTitle;
+            ClearSender(sender);
+        }
+
+        private void ClearSender(UserControl? sender) {
+            if(sender != null) {
+                if(sender.GetType() == typeof(AudioView)) {
+                    audioView = new AudioView(this);
+                }
+                if (sender.GetType() == typeof(VideoView)) {
+                    videoView = new VideoView(this);
+                }
+                if (sender.GetType() == typeof(ImageView)) {
+                    imageView = new ImageView(this);
+                }
+            }
         }
 
         public void SetSettingsView() {

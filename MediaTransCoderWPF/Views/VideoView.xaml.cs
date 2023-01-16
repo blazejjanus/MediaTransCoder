@@ -5,6 +5,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using MediaTransCoder.Backend;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MediaTransCoder.WPF.Views {
     /// <summary>
@@ -92,8 +93,7 @@ namespace MediaTransCoder.WPF.Views {
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e) {
-            PreFillForm();
-            window.SetMenuView();
+            window.SetMenuView(this);
         }
 
         private void formatInput_SelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -124,6 +124,21 @@ namespace MediaTransCoder.WPF.Views {
 
         private void convertButton_Click(object sender, RoutedEventArgs e) {
             if(Validate()) {
+                if (window.Context.Display == null) {
+                    throw new NullReferenceException();
+                }
+                if (inputBox.Input == null) {
+                    throw new NullReferenceException();
+                }
+                if (inputBox.InputPath == null) {
+                    throw new NullReferenceException();
+                }
+                if (inputBox.OutputPath == null) {
+                    throw new NullReferenceException();
+                }
+                if (window.Context.Backend == null) {
+                    throw new Exception("Nie można wywołać backendu!");
+                }
                 window.Context.Display.RedirectOutput = true;
                 EndpointOptions args = new EndpointOptions();
                 args.InputOption = inputBox.Input.Value;
@@ -140,13 +155,17 @@ namespace MediaTransCoder.WPF.Views {
                 args.Image = null;
                 backButton.IsEnabled = false;
                 resultsScroll.Visibility = Visibility.Visible;
-                if(window.Context.Backend == null) {
-                    throw new Exception("Nie można wywołać backendu!");
+                try {
+                    Thread thread = new Thread(() => window.Context.Backend.ConvertVideo(args));
+                    thread.Start();
+                }catch(Exception exc) {
+                    window.Context.Display.RedirectOutput = false;
+                    window.Context.Display.Send(exc.Message, MessageType.ERROR);
+                    PreFillForm();
                 }
-                Thread thread = new Thread(() => window.Context.Backend.ConvertVideo(args));
-                thread.Start();
                 backButton.IsEnabled = true;
                 window.Context.Display.RedirectOutput = false;
+                PreFillForm();
             }
         }
     }

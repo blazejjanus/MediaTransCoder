@@ -1,20 +1,9 @@
 ﻿using MediaTransCoder.Backend;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using static System.Windows.Forms.DataFormats;
 
 namespace MediaTransCoder.WPF.Views {
     /// <summary>
@@ -40,6 +29,9 @@ namespace MediaTransCoder.WPF.Views {
             this.window = window;
             WindowTitle = "MediaTransCoder - Audio";
             presetBox.ParentView = this;
+            if (window.Context.Display == null) {
+                throw new NullReferenceException();
+            }
             window.Context.Display.Target = DisplayOutput;
             PreFillForm();
         }
@@ -80,8 +72,7 @@ namespace MediaTransCoder.WPF.Views {
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e) {
-            PreFillForm();
-            window.SetMenuView();
+            window.SetMenuView(this);
         }
 
         public void PreFillForm() {
@@ -95,7 +86,7 @@ namespace MediaTransCoder.WPF.Views {
                 audioBox.IsEnabled = true;
             }
             Format = ContainerFormat.matroska;
-            List<ContainerFormat> formats = EnumHelper.GetVideoFormats();
+            List<ContainerFormat> formats = EnumHelper.GetAudioFormats();
             foreach (ContainerFormat format in formats) {
                 formatInput.Items.Add(EnumHelper.GetName(format));
             }
@@ -118,6 +109,21 @@ namespace MediaTransCoder.WPF.Views {
 
         private void convertButton_Click(object sender, RoutedEventArgs e) {
             if (Validate()) {
+                if (window.Context.Display == null) {
+                    throw new NullReferenceException();
+                }
+                if (inputBox.Input == null) {
+                    throw new NullReferenceException();
+                }
+                if (inputBox.InputPath == null) {
+                    throw new NullReferenceException();
+                }
+                if (inputBox.OutputPath == null) {
+                    throw new NullReferenceException();
+                }
+                if (window.Context.Backend == null) {
+                    throw new Exception("Nie można wywołać backendu!");
+                }
                 window.Context.Display.RedirectOutput = true;
                 EndpointOptions args = new EndpointOptions();
                 args.InputOption = inputBox.Input.Value;
@@ -134,13 +140,17 @@ namespace MediaTransCoder.WPF.Views {
                 args.Image = null;
                 backButton.IsEnabled = false;
                 resultsScroll.Visibility = Visibility.Visible;
-                if (window.Context.Backend == null) {
-                    throw new Exception("Nie można wywołać backendu!");
+                try {
+                    Thread thread = new Thread(() => window.Context.Backend.ConvertAudio(args));
+                    thread.Start();
+                }catch(Exception exc) {
+                    window.Context.Display.RedirectOutput = false;
+                    window.Context.Display.Send(exc.Message, MessageType.ERROR);
+                    PreFillForm();
                 }
-                Thread thread = new Thread(() => window.Context.Backend.ConvertAudio(args));
-                thread.Start();
                 backButton.IsEnabled = true;
                 window.Context.Display.RedirectOutput = false;
+                PreFillForm();
             }
         }
     }
