@@ -1,0 +1,5 @@
+@startuml
+!include .puml\Backend\Interfaces\IDisplay.puml
+!include .puml\CLI\MediaTransCoderCLI\CLIDisplay.puml
+!include .puml\WPF\Common\WPFDisplay.puml
+@enduml
