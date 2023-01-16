@@ -1,0 +1,18 @@
+@startuml
+enum VideoCodecs {
+    ffv1,
+    gifv,
+    h263p,
+    h264,
+    hevc,
+    mpeg4,
+    msmpeg4v3,
+    msvideo1,
+    prores,
+    rawvideo,
+    vp8,
+    vp9,
+    wmv1,
+    wmv2,
+}
+@enduml

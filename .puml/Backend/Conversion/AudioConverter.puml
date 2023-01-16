@@ -1,0 +1,9 @@
+@startuml
+class AudioConverter {
+    <<internal>> LastTimeStamp : int <<get>> <<set>>
+    + AudioConverter(args:FfmpegArgs, callback:OnProgressCallback?, metadataCallback:OnMetadataUpdateCallback?)
+    + <<override>> Convert() : int
+    # <<override>> FfmpegOutputHandler(sendingProcess:object, outLine:DataReceivedEventArgs) : void
+}
+AbstractConverter <|-- AudioConverter
+@enduml

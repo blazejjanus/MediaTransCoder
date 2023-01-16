@@ -1,0 +1,15 @@
+@startuml
+enum Resolutions {
+    r144p,
+    r180p,
+    r240p,
+    r360p,
+    r480p,
+    r540p,
+    r720p,
+    r1080p,
+    r1440p,
+    r2160p,
+    r4320p,
+}
+@enduml

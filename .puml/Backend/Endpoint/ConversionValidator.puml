@@ -1,0 +1,10 @@
+@startuml
+class ConversionValidator {
+    + MinimalLength : int <<get>> <<set>> = 512
+    - Display : IDisplay? <<get>> <<set>>
+    + ConversionValidator(display:IDisplay?)
+    + IsValid(path:string, deleteInvalid:bool) : bool
+    + Validate(path:string, deleteInvalid:bool) : void
+    + RemoveEmptyDirs(dirPath:string) : void
+}
+@enduml

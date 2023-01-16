@@ -1,0 +1,9 @@
+@startuml
+enum MessageType {
+    INFO,
+    WARNING,
+    ERROR,
+    SUCCESS,
+    DEBUG,
+}
+@enduml

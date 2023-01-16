@@ -1,0 +1,15 @@
+@startuml
+class SettingsView <<partial>> {
+    + WindowTitle : string <<get>>
+    + SettingsView(window:MainWindow)
+    - PreFillForm() : void
+    - detectedCPUCoresValue_ValueChanged(sender:object, e:EventArgs) : void
+    - hwaccelDetailsCPU_ValueChanged(sender:object, e:EventArgs) : void
+    - backButton_Click(sender:object, e:RoutedEventArgs) : void
+    - ffmpegPathValue_TextChanged(sender:object, e:TextChangedEventArgs) : void
+    - detectedGPUValue_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - hwaccelComboBox_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+}
+UserControl <|-- SettingsView
+SettingsView --> "window" MainWindow
+@enduml

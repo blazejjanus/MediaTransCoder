@@ -1,0 +1,17 @@
+@startuml
+class AudioOptionBox <<partial>> {
+    + SelectedFormat : ContainerFormat? <<get>> <<set>>
+    - selectedFormat : ContainerFormat?
+    + AudioOptionBox()
+    + Refresh() : void
+    + PreFillForm() : void
+    - acodecInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - srInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - brInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - acInput_ValueChanged(sender:object, e:EventArgs) : void
+}
+UserControl <|-- AudioOptionBox
+IRefreshableControl <|-- AudioOptionBox
+AudioOptionBox --> "Audio" AudioOptions
+AudioOptionBox o-> "context" WPFContext
+@enduml

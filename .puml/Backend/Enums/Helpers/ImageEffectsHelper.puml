@@ -1,0 +1,6 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetName(val:ImageEffects) : string
+    + {static} GetCommand(val:ImageEffects) : string
+}
+@enduml

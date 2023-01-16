@@ -1,0 +1,17 @@
+@startuml
+class FileOptionBox <<partial>> {
+    + Input : InputOptions? <<get>> <<set>>
+    + InputPath : string? <<get>> <<set>>
+    + OutputPath : string? <<get>> <<set>>
+    + IsValid : bool <<get>>
+    - inputPath : string?
+    - outputPath : string?
+    + FileOptionBox()
+    - PrefillForm() : void
+    - inputTypeComboBox_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - inputFile_Click(sender:object, e:RoutedEventArgs) : void
+    - inputDirectory_Click(sender:object, e:RoutedEventArgs) : void
+    - outputDirectory_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- FileOptionBox
+@enduml

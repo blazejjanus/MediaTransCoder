@@ -1,0 +1,12 @@
+@startuml
+enum ContainerFormat {
+    webm,
+    wav,
+    c3gp,
+    flv,
+    matroska,
+    ogg,
+    avi,
+    asf,
+}
+@enduml

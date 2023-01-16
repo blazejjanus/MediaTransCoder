@@ -1,0 +1,9 @@
+@startuml
+class Preset {
+    <<internal>> Preset(type:PresetType)
+}
+Preset --> "Type" PresetType
+Preset --> "Target" PresetTarget
+Preset --> "Quality" PresetQuality
+Preset --> "Options" EndpointOptions
+@enduml

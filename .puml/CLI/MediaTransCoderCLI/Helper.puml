@@ -1,0 +1,6 @@
+@startuml
+class Helper <<static>> {
+    + {static} GetHelp() : string
+    + {static} GetHelp(command:string) : string
+}
+@enduml

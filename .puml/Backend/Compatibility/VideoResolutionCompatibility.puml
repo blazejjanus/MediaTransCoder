@@ -1,0 +1,5 @@
+@startuml
+class Compatibility <<static>> <<partial>> {
+    + {static} GetCompatibleResolutions(codec:VideoCodecs) : List<Resolutions>
+}
+@enduml

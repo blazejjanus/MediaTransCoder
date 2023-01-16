@@ -1,0 +1,9 @@
+@startuml
+class ResolutionAttribute {
+    + Name : string? <<get>> <<set>>
+    + ResolutionAttribute(wigth:uint, height:uint, name:string?)
+    + GetResolution() : string
+}
+Attribute <|-- ResolutionAttribute
+ResolutionAttribute --> "Size" Vector2
+@enduml

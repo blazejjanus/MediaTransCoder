@@ -1,0 +1,15 @@
+@startuml
+class WPFDisplay {
+    + Target : RedirectMessage? <<get>> <<set>>
+    + RedirectOutput : bool <<get>> <<set>>
+    - {static} instance : WPFDisplay?
+    - WPFDisplay()
+    + {static} GetInstance() : WPFDisplay
+    + GetBool(message:string) : bool
+    + Read(message:string, defaultValue:string) : string
+    + Send(message:string, type:MessageType) : void
+    + ShowResults(results:Measurer) : void
+    + UpdateProgress(progress:double) : void
+}
+IDisplay <|-- WPFDisplay
+@enduml

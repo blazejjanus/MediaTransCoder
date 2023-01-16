@@ -1,0 +1,12 @@
+@startuml
+class ResolutionControl <<partial>> {
+    + ResolutionControl()
+    - UpdateProportion() : void
+    - GetGreatestDivider(val1:int, val2:int) : int
+    - resX_ValueChanged(sender:object, e:EventArgs) : void
+    - resY_ValueChanged(sender:object, e:EventArgs) : void
+}
+UserControl <|-- ResolutionControl
+ResolutionControl --> "Resolution" Vector2
+ResolutionControl --> "resolution" Vector2
+@enduml

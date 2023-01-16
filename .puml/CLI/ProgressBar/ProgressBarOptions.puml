@@ -1,0 +1,14 @@
+@startuml
+class ProgressBarOptions {
+    + DoneChar : char <<get>> <<set>> = '#'
+    + UndoneChar : char <<get>> <<set>> = ' '
+    + StartingChar : char? <<get>> <<set>> = '['
+    + EndingChar : char? <<get>> <<set>> = ']'
+    + Prefix : string? <<get>> <<set>> = null
+    + DrawInNewLine : bool <<get>> <<set>> = true
+    + EndWithNewLine : bool <<get>> <<set>> = true
+    + ProgressBarOptions()
+}
+ProgressBarOptions o-> "DoneColor" ConsoleColor
+ProgressBarOptions o-> "UndoneColor" ConsoleColor
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class CLIConfig {
+    + CLIConfig()
+    + {static} GetConfig() : CLIConfig
+    - {static} Set(config:CLIConfig) : void
+    + {static} ReadConfig() : CLIConfig
+    + {static} Defaults() : CLIConfig
+    + SaveConfig(path:string) : void
+    - {static} instance : CLIConfig?
+}
+CLIConfig --> "Backend" BackendConfig
+@enduml

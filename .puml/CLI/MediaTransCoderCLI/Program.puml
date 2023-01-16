@@ -1,0 +1,13 @@
+@startuml
+class Program {
+    - {static} Backend : Endpoint?
+    - {static} Config : CLIConfig?
+    {static} Main(args:string[]) : void
+    - {static} ConvertVideo(verbose:bool) : void
+    - {static} ConvertAudio(verbose:bool) : void
+    - {static} ConvertImage(verbose:bool) : void
+    - {static} Setup() : void
+    - {static} OnExit(sender:object, e:ConsoleCancelEventArgs) : void
+}
+Program o-> "GUI" CLIDisplay
+@enduml

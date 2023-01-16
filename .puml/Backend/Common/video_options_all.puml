@@ -1,0 +1,15 @@
+@startuml
+!include .puml\Backend\Common\Options\VideoOptions.puml
+!include .puml\Backend\Common\Options\AudioOptions.puml
+!include .puml\Backend\Common\Options\FileOptions.puml
+!include .puml\Backend\Enums\AudioVideo\AudioBitRate.puml
+!include .puml\Backend\Enums\AudioVideo\AudioCodecs.puml
+!include .puml\Backend\Enums\AudioVideo\ContainerFormat.puml
+!include .puml\Backend\Enums\AudioVideo\SamplingFrequency.puml
+!include .puml\Backend\Enums\Attributes\AudioCodecAttribute.puml
+!include .puml\Backend\Enums\Attributes\ContainerFormatAttribute.puml
+!include .puml\Backend\Enums\AudioVideo\VideoCodecs.puml
+!include .puml\Backend\Enums\AudioVideo\Resolutions.puml
+!include .puml\Backend\Enums\Attributes\VideoCodecAttribute.puml
+!include .puml\Backend\Enums\Attributes\ResolutionAttribute.puml
+@enduml

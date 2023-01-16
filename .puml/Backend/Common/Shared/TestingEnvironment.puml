@@ -1,0 +1,12 @@
+@startuml
+class TestingEnvironment {
+    - {static} instance : TestingEnvironment?
+    + {static} RootPath : string? <<get>> <<set>>
+    + CurrentRootPath : string <<get>>
+    - TestingEnvironment()
+    + {static} Get() : TestingEnvironment
+}
+TestingEnvironment --> "Video" PathInfo
+TestingEnvironment --> "Audio" PathInfo
+TestingEnvironment --> "Image" PathInfo
+@enduml

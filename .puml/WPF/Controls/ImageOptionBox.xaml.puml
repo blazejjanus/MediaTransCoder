@@ -1,0 +1,16 @@
+@startuml
+class ImageOptionBox <<partial>> {
+    - compressionLevel : int?
+    + ImageOptionBox()
+    + Refresh() : void
+    + PreFillForm() : void
+    - formatInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - pxfInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - jcrInput_ValueChanged(sender:object, e:EventArgs) : void
+}
+UserControl <|-- ImageOptionBox
+IRefreshableControl <|-- ImageOptionBox
+ImageOptionBox --> "Image" ImageOptions
+ImageOptionBox --> "format" ImageFormat
+ImageOptionBox --> "pixelFormat" PixelFormats
+@enduml

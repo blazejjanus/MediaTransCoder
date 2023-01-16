@@ -1,0 +1,13 @@
+@startuml
+class VideoOptions {
+    + BitRate : int <<get>> <<set>>
+    + FPS : int <<get>> <<set>>
+    + RemoveAudio : bool <<get>> <<set>>
+    - fps : int
+    + VideoOptions()
+    + CalcBitRate() : void
+    + <<override>> ToString() : string
+}
+VideoOptions --> "Codec" VideoCodecs
+VideoOptions --> "Resolution" Resolutions
+@enduml

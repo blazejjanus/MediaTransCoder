@@ -1,0 +1,12 @@
+@startuml
+class MenuView <<partial>> {
+    + WindowTitle : string <<get>>
+    + MenuView(window:MainWindow)
+    - settingsButton_Click(sender:object, e:RoutedEventArgs) : void
+    - imageButton_Click(sender:object, e:RoutedEventArgs) : void
+    - videoButton_Click(sender:object, e:RoutedEventArgs) : void
+    - audioButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- MenuView
+MenuView --> "window" MainWindow
+@enduml

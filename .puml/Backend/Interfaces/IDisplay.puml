@@ -1,0 +1,9 @@
+@startuml
+interface IDisplay {
+    + Read(message:string, defaultValue:string) : string
+    + GetBool(message:string) : bool
+    + Send(message:string, type:MessageType) : void
+    + UpdateProgress(progress:double) : void
+    + ShowResults(results:Measurer) : void
+}
+@enduml

@@ -1,0 +1,7 @@
+@startuml
+class FileExtensions <<static>> {
+    + {static} GetAudioExtensions(searchCriteria:bool) : List<string>
+    + {static} GetVideoExtensions(searchCriteria:bool) : List<string>
+    + {static} GetImageExtensions(searchCriteria:bool) : List<string>
+}
+@enduml

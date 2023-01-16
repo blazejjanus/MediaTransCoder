@@ -1,0 +1,18 @@
+@startuml
+class CLIDisplay {
+    - {static} instance : CLIDisplay?
+    + Progress : ProgressBar? <<get>> <<set>>
+    - WasTimeout : bool <<get>> <<set>>
+    - CLIDisplay()
+    + {static} GetInstance() : CLIDisplay
+    + Send(message:string, type:MessageType) : void
+    + UpdateProgress(progress:double) : void
+    + ShowResults(results:Measurer) : void
+    + Read(message:string, defaultValue:string) : string
+    + GetBool(message:string) : bool
+    - TimerCallback(source:object, e:ElapsedEventArgs) : void
+    - GetTimer() : Timer
+    - SetColor(type:MessageType) : void
+}
+IDisplay <|-- CLIDisplay
+@enduml

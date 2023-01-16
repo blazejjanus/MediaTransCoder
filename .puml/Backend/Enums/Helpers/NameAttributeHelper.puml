@@ -1,0 +1,8 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetName(val:SamplingFrequency) : string
+    + {static} GetDisplayedName(val:SamplingFrequency) : string
+    + {static} GetName(val:AudioBitRate) : string
+    + {static} GetDisplayedName(val:AudioBitRate) : string
+}
+@enduml

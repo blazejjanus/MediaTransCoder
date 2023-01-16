@@ -1,0 +1,17 @@
+@startuml
+class VideoOptionBox <<partial>> {
+    + SelectedFormat : ContainerFormat? <<get>> <<set>>
+    - selectedFormat : ContainerFormat?
+    + VideoOptionBox()
+    + Refresh() : void
+    + PreFillForm() : void
+    - vcodecInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - resolutionInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - fpsInput_ValueChanged(sender:object, e:EventArgs) : void
+    - brInput_ValueChanged(sender:object, e:EventArgs) : void
+}
+UserControl <|-- VideoOptionBox
+IRefreshableControl <|-- VideoOptionBox
+VideoOptionBox --> "Video" VideoOptions
+VideoOptionBox o-> "context" WPFContext
+@enduml

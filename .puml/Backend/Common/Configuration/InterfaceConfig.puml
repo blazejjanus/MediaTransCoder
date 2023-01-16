@@ -1,0 +1,8 @@
+@startuml
+class InterfaceConfig {
+    + UseConsole : bool <<get>> <<set>>
+    + UseDebug : bool <<get>> <<set>>
+    + InterfaceConfig()
+}
+InterfaceConfig --> "Type" InterfaceType
+@enduml

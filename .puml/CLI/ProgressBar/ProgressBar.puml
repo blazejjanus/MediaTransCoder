@@ -1,0 +1,14 @@
+@startuml
+class ProgressBar {
+    + Size : int <<get>>
+    + Done : int <<get>>
+    - StartingIndex : int <<get>> <<set>>
+    + Percentage : double <<get>>
+    + ProgressBar(options:ProgressBarOptions, size:int)
+    + ProgressBar(size:int)
+    + Draw() : void
+    + Update(progress:int, writeValue:bool) : void
+    + Update(progress:double, writeValue:bool) : void
+}
+ProgressBar --> "Options" ProgressBarOptions
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class ContainerFormatAttribute {
+    + Name : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + VideoExtension : string? <<get>> <<set>>
+    + AudioExtension : string? <<get>> <<set>>
+    + IsVideoFormat : bool <<get>>
+    + IsAudioFormat : bool <<get>>
+    + ContainerFormatAttribute(name:string, videoExtension:string?, audioExtension:string?)
+    + ContainerFormatAttribute(name:string, description:string, videoExtension:string?, audioExtension:string?)
+}
+Attribute <|-- ContainerFormatAttribute
+@enduml

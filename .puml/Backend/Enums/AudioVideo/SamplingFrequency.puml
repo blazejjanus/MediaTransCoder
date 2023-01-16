@@ -1,0 +1,11 @@
+@startuml
+enum SamplingFrequency {
+    ar8k= 8000,
+    ar11k= 11025,
+    ar22k= 22050,
+    ar44k= 44100,
+    ar48k= 48000,
+    ar96k= 96000,
+    ar192k= 192000,
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetName(val:ImageFormat) : string
+    + {static} GetCommand(val:ImageFormat) : string
+    + {static} GetFileExtension(val:ImageFormat) : string?
+    + {static} GetFileExtensions(val:ImageFormat) : List<string>?
+}
+@enduml

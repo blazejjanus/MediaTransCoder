@@ -1,0 +1,8 @@
+@startuml
+class ImageEffectsAttribute {
+    + Name : string <<get>> <<set>>
+    + Command : string <<get>> <<set>>
+    + ImageEffectsAttribute(name:string, command:string)
+}
+Attribute <|-- ImageEffectsAttribute
+@enduml

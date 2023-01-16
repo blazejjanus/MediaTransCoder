@@ -1,0 +1,8 @@
+@startuml
+class PresetsService <<static>> {
+    + {static} Get(type:PresetType, target:PresetTarget, quality:PresetQuality) : Preset
+    + {static} GetAudio(target:PresetTarget, quality:PresetQuality) : Preset
+    + {static} GetVideo(target:PresetTarget, quality:PresetQuality) : Preset
+    + {static} GetImage(target:PresetTarget, quality:PresetQuality) : Preset
+}
+@enduml

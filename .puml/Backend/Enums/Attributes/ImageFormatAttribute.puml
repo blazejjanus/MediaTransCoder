@@ -1,0 +1,14 @@
+@startuml
+class ImageFormatAttribute {
+    + Name : string <<get>> <<set>>
+    + Command : string <<get>> <<set>>
+    + ImageFormatAttribute(name:string)
+    + ImageFormatAttribute(name:string, command:string)
+    + ImageFormatAttribute(name:string, extensions:string[])
+    + ImageFormatAttribute(name:string, command:string, extensions:string[])
+}
+class "List`1"<T> {
+}
+Attribute <|-- ImageFormatAttribute
+ImageFormatAttribute --> "Extensions<string>" "List`1"
+@enduml

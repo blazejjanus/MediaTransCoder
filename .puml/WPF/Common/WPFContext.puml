@@ -1,0 +1,11 @@
+@startuml
+class WPFContext {
+    + Backend : Endpoint? <<get>> <<set>>
+    + Display : WPFDisplay? <<get>> <<set>>
+    + Config : WPFConfig? <<get>> <<set>>
+    - {static} instance : WPFContext?
+    - WPFContext()
+    + {static} Get() : WPFContext
+}
+WPFContext --> "DefaultAcceleration" HardwareAcceleration
+@enduml

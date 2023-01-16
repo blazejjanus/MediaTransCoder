@@ -1,0 +1,11 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetName(val:ContainerFormat) : string
+    + {static} GetDescription(val:ContainerFormat) : string
+    + {static} GetFileExtension(val:ContainerFormat, audio:bool) : string?
+    + {static} IsAudioFormat(val:ContainerFormat) : bool
+    + {static} IsVideoFormat(val:ContainerFormat) : bool
+    + {static} GetVideoFormats() : List<ContainerFormat>
+    + {static} GetAudioFormats() : List<ContainerFormat>
+}
+@enduml

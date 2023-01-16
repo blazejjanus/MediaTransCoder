@@ -1,0 +1,13 @@
+@startuml
+class WPFConfig {
+    - {static} instance : WPFConfig?
+    + WPFConfig()
+    + {static} GetConfig() : WPFConfig
+    - {static} Set(config:WPFConfig) : void
+    + {static} ReadConfig() : WPFConfig
+    + {static} TryRead() : WPFConfig
+    + {static} Defaults() : WPFConfig
+    + SaveConfig(path:string?) : void
+}
+WPFConfig --> "Backend" BackendConfig
+@enduml

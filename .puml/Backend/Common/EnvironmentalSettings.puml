@@ -1,0 +1,10 @@
+@startuml
+class EnvironmentalSettings {
+    - {static} instance : EnvironmentalSettings?
+    - EnvironmentalSettings()
+    + RootPath : string <<get>> <<set>>
+    + LogPath : string <<get>> <<set>>
+    + ConfigPath : string <<get>> <<set>>
+    + {static} Get() : EnvironmentalSettings
+}
+@enduml

@@ -1,0 +1,18 @@
+@startuml
+class AudioView <<partial>> {
+    + WindowTitle : string <<get>>
+    + AudioView(window:MainWindow)
+    + DisplayOutput(message:string) : void
+    + Refresh() : void
+    - formatInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - backButton_Click(sender:object, e:RoutedEventArgs) : void
+    + PreFillForm() : void
+    - Validate() : bool
+    - convertButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- AudioView
+IRefreshableControl <|-- AudioView
+AudioView --> "Format" ContainerFormat
+AudioView --> "format" ContainerFormat
+AudioView --> "window" MainWindow
+@enduml

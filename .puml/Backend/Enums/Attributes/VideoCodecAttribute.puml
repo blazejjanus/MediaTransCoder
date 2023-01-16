@@ -1,0 +1,9 @@
+@startuml
+class VideoCodecAttribute {
+    + Name : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + FileExtension : string? <<get>> <<set>>
+    + VideoCodecAttribute(name:string, description:string, fileExtension:string?)
+}
+Attribute <|-- VideoCodecAttribute
+@enduml

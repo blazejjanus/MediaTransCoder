@@ -1,0 +1,6 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetResolution(val:Resolutions) : string
+    + {static} GetName(val:Resolutions) : string
+}
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class EndpointOptions {
+    + OverrideExistingFiles : bool <<get>> <<set>>
+    + AllowDirectoryCreation : bool <<get>> <<set>>
+    + SkipExistingFiles : bool <<get>> <<set>>
+    + AudioOnly : bool <<get>> <<set>>
+    + Input : string <<get>> <<set>>
+    + Output : string <<get>> <<set>>
+    + OutputFileName : string? <<get>> <<set>>
+    + Format : ContainerFormat? <<get>> <<set>>
+    + Audio : AudioOptions? <<get>> <<set>>
+    + Video : VideoOptions? <<get>> <<set>>
+    + Image : ImageOptions? <<get>> <<set>>
+    + EndpointOptions()
+    + <<override>> ToString() : string
+    - AddTabulation(str:string) : string
+    + {static} GetSampleVideoOptions(input:string, output:string) : EndpointOptions
+    + {static} GetSampleVideoOptions() : EndpointOptions
+    + {static} GetSampleAudioOptions(input:string, output:string) : EndpointOptions
+    + {static} GetSampleAudioOptions() : EndpointOptions
+    + {static} GetSampleImageOptions(input:string, output:string) : EndpointOptions
+    + {static} GetSampleImageOptions() : EndpointOptions
+    - Validate() : void
+    <<internal>> ValidateVideo() : void
+    <<internal>> ValidateAudio() : void
+    <<internal>> ValidateImage() : void
+}
+EndpointOptions --> "InputOption" InputOptions
+EndpointOptions --> "Acceleration" HardwareAcceleration
+@enduml

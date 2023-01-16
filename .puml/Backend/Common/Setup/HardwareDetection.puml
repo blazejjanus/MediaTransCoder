@@ -1,0 +1,5 @@
+@startuml
+class HardwareDetection <<static>> {
+    + {static} GetConfig() : HardwareConfig
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class AudioCodecAttribute {
+    + Name : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + FileExtension : string? <<get>> <<set>>
+    + AudioCodecAttribute(name:string, description:string, fileExtension:string?)
+}
+Attribute <|-- AudioCodecAttribute
+@enduml

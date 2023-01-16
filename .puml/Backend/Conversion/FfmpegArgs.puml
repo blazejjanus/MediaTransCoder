@@ -1,0 +1,23 @@
+@startuml
+class FfmpegArgs {
+    + FfmpegPath : string <<get>> <<set>>
+    + OverrideExistingFiles : bool <<get>> <<set>>
+    + SkipExistingFiles : bool <<get>> <<set>>
+    + AudioOnly : bool <<get>> <<set>>
+    + Format : ContainerFormat? <<get>> <<set>>
+    + Audio : AudioOptions? <<get>> <<set>>
+    + Video : VideoOptions? <<get>> <<set>>
+    + Image : ImageOptions? <<get>> <<set>>
+    + FfmpegArgs()
+    <<internal>> {static} Get(options:EndpointOptions, input:string, output:string) : FfmpegArgs
+    <<internal>> {static} Get(options:EndpointOptions, files:FileOption) : FfmpegArgs
+    <<internal>> {static} Get(options:EndpointOptions) : FfmpegArgs
+    <<internal>> GetArgs() : string
+    + GenerateOutputFileName() : void
+    + {static} GenerateOutputFileExtension(containerFormat:ContainerFormat?, imageFormat:ImageFormat?, vcodec:VideoCodecs?, acodec:AudioCodecs?, audioOnly:bool) : string
+    - {static} GetAudioVideoExtension(format:ContainerFormat?, vcodec:VideoCodecs?, acodec:AudioCodecs?, audioOnly:bool) : string
+    - {static} GetImageExtension(format:ImageFormat) : string
+}
+FfmpegArgs --> "Files" FileOption
+FfmpegArgs --> "Acceleration" HardwareAcceleration
+@enduml

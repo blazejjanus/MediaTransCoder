@@ -1,0 +1,7 @@
+@startuml
+enum PresetTarget {
+    SIZE,
+    QUALITY,
+    SPEED,
+}
+@enduml

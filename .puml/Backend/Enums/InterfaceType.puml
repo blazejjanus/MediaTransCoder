@@ -1,0 +1,7 @@
+@startuml
+enum InterfaceType {
+    CLI,
+    WPF,
+    UnitTest,
+}
+@enduml

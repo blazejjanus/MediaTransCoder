@@ -1,0 +1,9 @@
+@startuml
+class NameAttribute {
+    + Name : string <<get>> <<set>>
+    + DisplayedName : string <<get>> <<set>>
+    + NameAttribute(name:string)
+    + NameAttribute(name:string, displayedName:string)
+}
+Attribute <|-- NameAttribute
+@enduml

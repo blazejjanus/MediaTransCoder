@@ -1,0 +1,5 @@
+@startuml
+class NumberParser <<static>> {
+    <<internal>> {static} ParseDoubleStringToInt(number:string) : int
+}
+@enduml

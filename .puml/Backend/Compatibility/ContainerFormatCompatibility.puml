@@ -1,0 +1,8 @@
+@startuml
+class Compatibility <<static>> <<partial>> {
+    + {static} GetCompatibleFormats(acodec:AudioCodecs) : List<ContainerFormat>
+    + {static} GetDefaultFormat(acodec:AudioCodecs) : ContainerFormat
+    + {static} GetCompatibleFormats(vcodec:VideoCodecs) : List<ContainerFormat>
+    + {static} GetDefaultFormat(vcodec:VideoCodecs) : ContainerFormat
+}
+@enduml

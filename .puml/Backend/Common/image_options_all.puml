@@ -1,0 +1,9 @@
+@startuml
+!include .puml\Backend\Common\Options\ImageOptions.puml
+!include .puml\Backend\Common\Options\FileOptions.puml
+!include .puml\Backend\Enums\Image\ImageEffects.puml
+!include .puml\Backend\Enums\Image\ImageFormat.puml
+!include .puml\Backend\Enums\Image\PixelFormats.puml
+!include .puml\Backend\Enums\Attributes\ImageFormatAttribute.puml
+!include .puml\Backend\Enums\Attributes\ImageEffectsAttribute.puml
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+class NumberInput <<partial>> {
+    +  <<event>> ValueChanged : EventHandler? 
+    + Length : int <<get>> <<set>>
+    + MaxValue : int? <<get>> <<set>>
+    + MinValue : int? <<get>> <<set>>
+    + Increment : int <<get>> <<set>> = 1
+    + Multiplayer : int <<get>> <<set>> = 1
+    + Value : int <<get>> <<set>>
+    - value : int = 0
+    + NumberInput()
+    - minusButton_Click(sender:object, e:RoutedEventArgs) : void
+    - plusButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- NumberInput
+@enduml

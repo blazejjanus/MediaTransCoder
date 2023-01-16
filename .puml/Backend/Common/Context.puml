@@ -1,0 +1,12 @@
+@startuml
+class Context {
+    + IsDebug : bool? <<get>> <<set>> = null
+    - {static} instance : Context?
+    - Context(config:BackendConfig, display:IDisplay, debug:bool?)
+    <<internal>> {static} Get() : Context
+    <<internal>> {static} Init(config:BackendConfig, display:IDisplay, debug:bool?) : void
+    + {static} IsSet : bool <<get>>
+}
+Context --> "Config" BackendConfig
+Context --> "Display" IDisplay
+@enduml

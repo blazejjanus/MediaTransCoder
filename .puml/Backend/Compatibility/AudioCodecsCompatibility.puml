@@ -1,0 +1,6 @@
+@startuml
+class Compatibility <<static>> <<partial>> {
+    + {static} GetCompatibleAudioCodecs(format:ContainerFormat) : List<AudioCodecs>
+    + {static} GetDefaultAudioCodec(format:ContainerFormat) : AudioCodecs
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+enum AudioCodecs {
+    libvorbis,
+    libopus,
+    mp3,
+    aac,
+    wmav1,
+    wmav2,
+    ac3,
+    eac3,
+    flac,
+    pcm,
+}
+@enduml

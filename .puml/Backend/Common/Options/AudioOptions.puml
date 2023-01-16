@@ -1,0 +1,11 @@
+@startuml
+class AudioOptions {
+    + AudioChannels : int <<get>> <<set>>
+    - ac : int
+    + AudioOptions()
+    + <<override>> ToString() : string
+}
+AudioOptions --> "Codec" AudioCodecs
+AudioOptions --> "BitRate" AudioBitRate
+AudioOptions --> "SamplingRate" SamplingFrequency
+@enduml

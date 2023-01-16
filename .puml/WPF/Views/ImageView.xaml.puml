@@ -1,0 +1,15 @@
+@startuml
+class ImageView <<partial>> {
+    + WindowTitle : string <<get>>
+    + ImageView(window:MainWindow)
+    + DisplayOutput(message:string) : void
+    + PreFillForm() : void
+    + Refresh() : void
+    - backButton_Click(sender:object, e:RoutedEventArgs) : void
+    - Validate() : bool
+    - convertButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- ImageView
+IRefreshableControl <|-- ImageView
+ImageView --> "window" MainWindow
+@enduml

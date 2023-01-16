@@ -1,0 +1,7 @@
+@startuml
+class DependencySetup <<static>> {
+    + {static} CheckEnvironmentalPaths() : bool
+    + {static} CheckFfmpegPath(path:string) : bool
+    - {static} CheckFfmpeg(path:string) : bool
+}
+@enduml

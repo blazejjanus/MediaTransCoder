@@ -1,0 +1,9 @@
+@startuml
+class BackendConfig {
+    + FfmpegPath : string? <<get>> <<set>>
+    + BackendConfig()
+}
+BackendConfig --> "Environment" EnvironmentType
+BackendConfig --> "Hardware" HardwareConfig
+BackendConfig --> "Interface" InterfaceConfig
+@enduml

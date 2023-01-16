@@ -1,0 +1,7 @@
+@startuml
+enum InputOptions {
+    FILE,
+    DIRECTORY,
+    RECURSIVE,
+}
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+class Endpoint {
+    + IsDebug : bool <<get>> <<set>>
+    - TotalSteps : int <<get>> <<set>>
+    - Options : EndpointOptions? <<get>> <<set>>
+    + Endpoint(config:BackendConfig, gui:IDisplay, debug:bool?)
+    + ConvertVideo(options:EndpointOptions) : void
+    + ConvertAudio(options:EndpointOptions) : void
+    + ConvertImage(options:EndpointOptions) : void
+    + {static} FirstTimeSetup() : BackendConfig
+    + CheckFfmpegPath() : bool
+    + CheckFfmpegPath(path:string) : bool
+    + GetPreset(type:PresetType, target:PresetTarget, quality:PresetQuality) : Preset
+    + GetAudioPreset(target:PresetTarget, quality:PresetQuality) : Preset
+    + GetVideoPreset(target:PresetTarget, quality:PresetQuality) : Preset
+    + GetImagePreset(target:PresetTarget, quality:PresetQuality) : Preset
+    + Dispose() : void
+    - UpdateMetadata(metadata:FfmpegMetadata) : void
+    - UpdateProgress(lastStep:int) : void
+    - DisplayFileList(files:List<FileOption>?) : void
+}
+class "List`1"<T> {
+}
+IDisposable <|-- Endpoint
+Endpoint o-> "Files<FileOption>" "List`1"
+Endpoint --> "context" Context
+@enduml

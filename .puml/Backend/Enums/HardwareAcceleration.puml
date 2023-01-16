@@ -1,0 +1,7 @@
+@startuml
+enum HardwareAcceleration {
+    NONE,
+    CPU,
+    GPU,
+}
+@enduml

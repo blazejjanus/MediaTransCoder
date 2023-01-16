@@ -1,0 +1,8 @@
+@startuml
+!include .\\.\MediaTransCoderCLI\CLIConfig.puml
+!include .\\.\MediaTransCoderCLI\CLIDisplay.puml
+!include .\\.\MediaTransCoderCLI\Helper.puml
+!include .\\.\MediaTransCoderCLI\Program.puml
+!include .\\ProgressBar\ProgressBar.puml
+!include .\\ProgressBar\ProgressBarOptions.puml
+@enduml

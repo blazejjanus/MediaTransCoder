@@ -1,0 +1,8 @@
+@startuml
+class App <<partial>> {
+    <<internal>> Context : WPFContext? <<get>> <<set>>
+    # <<override>> OnStartup(e:StartupEventArgs) : void
+    - Setup() : void
+}
+Application <|-- App
+@enduml

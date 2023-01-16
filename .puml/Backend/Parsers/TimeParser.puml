@@ -1,0 +1,12 @@
+@startuml
+class TimeParser {
+    <<internal>> TotalSeconds : int <<get>>
+    <<internal>> TotalMiliseconds : int <<get>>
+    <<internal>> TimeParser()
+    <<internal>> TimeParser(seconds:int)
+    <<internal>> TimeParser(time:string)
+    + <<override>> ToString() : string
+    - Parse(timeString:string) : TimeSpan
+}
+TimeParser --> "Time" TimeSpan
+@enduml

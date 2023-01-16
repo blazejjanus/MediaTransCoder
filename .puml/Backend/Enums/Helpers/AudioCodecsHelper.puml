@@ -1,0 +1,7 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetName(val:AudioCodecs) : string
+    + {static} GetDescription(val:AudioCodecs) : string
+    + {static} GetFileExtension(val:AudioCodecs) : string?
+}
+@enduml

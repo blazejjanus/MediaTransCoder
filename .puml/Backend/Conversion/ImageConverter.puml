@@ -1,0 +1,8 @@
+@startuml
+class ImageConverter {
+    + ImageConverter(args:FfmpegArgs, callback:OnProgressCallback?, metadataCallback:OnMetadataUpdateCallback?)
+    + <<override>> Convert() : int
+    # <<override>> FfmpegOutputHandler(sendingProcess:object, outLine:DataReceivedEventArgs) : void
+}
+AbstractConverter <|-- ImageConverter
+@enduml

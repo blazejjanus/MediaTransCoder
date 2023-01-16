@@ -1,0 +1,18 @@
+@startuml
+class FfmpegMetadata {
+    + FPS : int <<get>> = 0
+    + TotalNumberOfFrames : int <<get>>
+    + FfmpegMetadata()
+    + ReadVideo(filePath:string) : void
+    + ReadAudio(filePath:string) : void
+    + ReadImage(filePath:string) : void
+    - RunProcess(filePath:string) : string
+    - ParseDuration(output:string) : void
+    - ParseFPS(output:string) : void
+    - ParseFfmpegOutput(output:string) : void
+    + Dispose() : void
+}
+IDisposable <|-- FfmpegMetadata
+FfmpegMetadata --> "Duration" TimeParser
+FfmpegMetadata --> "context" Context
+@enduml

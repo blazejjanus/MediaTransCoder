@@ -1,0 +1,5 @@
+@startuml
+class EnumHelper <<static>> <<partial>> {
+    + {static} GetName(val:PixelFormats) : string
+}
+@enduml

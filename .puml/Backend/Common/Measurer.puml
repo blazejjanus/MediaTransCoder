@@ -1,0 +1,17 @@
+@startuml
+class Measurer {
+    + InputSize : long <<get>>
+    + OutputSize : long <<get>>
+    + CompressionRate : double <<get>>
+    + Measurer(files:FileOption)
+    + GetStats() : string
+    + GetTimeStats(prefix:string) : string
+    + GetSizeStats(prefix:string) : string
+    + StartMeasure() : void
+    + EndMeasure() : void
+}
+Measurer --> "StartTime" DateTime
+Measurer --> "EndTime" DateTime
+Measurer --> "Time" TimeSpan
+Measurer --> "Files" FileOption
+@enduml

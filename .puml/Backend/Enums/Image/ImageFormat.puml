@@ -1,0 +1,14 @@
+@startuml
+enum ImageFormat {
+    BMP,
+    DPX,
+    GIF,
+    JPG,
+    JPG2000,
+    PCX,
+    PNG,
+    PPM,
+    TGA,
+    TIFF,
+}
+@enduml

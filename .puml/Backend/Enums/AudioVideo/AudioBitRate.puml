@@ -1,0 +1,9 @@
+@startuml
+enum AudioBitRate {
+    abr64= 64,
+    abr128= 128,
+    abr192= 192,
+    abr256= 256,
+    abr320= 320,
+}
+@enduml

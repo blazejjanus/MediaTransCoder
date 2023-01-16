@@ -1,0 +1,18 @@
+@startuml
+class MainWindow <<partial>> {
+    + MainWindow()
+    + SetMenuView(sender:UserControl?) : void
+    - ClearSender(sender:UserControl?) : void
+    + SetSettingsView() : void
+    + SetAudioView() : void
+    + SetVideoView() : void
+    + SetImageView() : void
+}
+Window <|-- MainWindow
+MainWindow --> "Context" WPFContext
+MainWindow --> "menuView" MenuView
+MainWindow --> "audioView" AudioView
+MainWindow --> "videoView" VideoView
+MainWindow --> "imageView" ImageView
+MainWindow --> "settingsView" SettingsView
+@enduml

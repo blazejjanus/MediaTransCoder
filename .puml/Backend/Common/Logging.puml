@@ -1,0 +1,8 @@
+@startuml
+class Logging <<static>> {
+    + {static} IsDebug : bool <<get>>
+    + {static} LoggingLevel : string <<get>>
+    <<internal>> {static} Debug(message:string) : void
+}
+Logging o-> "context" Context
+@enduml

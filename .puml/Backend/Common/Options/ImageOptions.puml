@@ -1,0 +1,24 @@
+@startuml
+class ImageOptions {
+    + CompressionLevel : int? <<get>> <<set>>
+    + Effect : ImageEffects? <<get>> <<set>> = null
+    + Brightness : int? <<get>> <<set>>
+    + Contrast : int? <<get>> <<set>>
+    + Saturation : int? <<get>> <<set>>
+    - FormattedBrightness : string? <<get>>
+    - FormattedContrast : string? <<get>>
+    - FormattedSaturation : string? <<get>>
+    - cl : int? = null
+    - brightness : int? = null
+    - contrast : int? = null
+    - saturation : int? = null
+    + GetVF() : string
+    - GetEq() : string?
+    + ImageOptions()
+    + <<override>> ToString() : string
+}
+ImageOptions --> "Format" ImageFormat
+ImageOptions --> "Size" Vector2
+ImageOptions --> "PixelFormat" PixelFormats
+ImageOptions --> "format" ImageFormat
+@enduml

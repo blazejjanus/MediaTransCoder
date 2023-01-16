@@ -1,0 +1,10 @@
+@startuml
+class PathInfo {
+    + Input : string <<get>> <<set>>
+    + Output : string <<get>> <<set>>
+    + InputDirectory : string? <<get>>
+    + InputFile : string <<get>>
+    + InputDirectoryOrDefault : string <<get>>
+    + PathInfo(inputPath:string, outputPath:string)
+}
+@enduml

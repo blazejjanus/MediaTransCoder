@@ -1,0 +1,30 @@
+@startuml
+abstract class AbstractConverter {
+    + Progress : double <<get>> <<protected set>>
+    + WasStarted : bool <<get>> <<protected set>> = false
+    + IsRunning : bool <<get>> <<protected set>> = false
+    # ProgressCallback : OnProgressCallback?
+    # MetadataCallback : OnMetadataUpdateCallback?
+    # errorString : string
+    + OutputFile : string <<get>>
+    + InputFile : string <<get>>
+    + AbstractConverter(args:FfmpegArgs, progressCallback:OnProgressCallback?, metadataCallback:OnMetadataUpdateCallback?)
+    + {abstract} Convert() : int
+    # DebugInfo() : void
+    # {abstract} FfmpegOutputHandler(sendingProcess:object, outLine:DataReceivedEventArgs) : void
+    # FfmpegErrorHandler(sendingProcess:object, outLine:DataReceivedEventArgs) : void
+    <<internal>> Test() : bool
+    # OnProcessExit(sender:object, e:EventArgs) : void
+    # ReadMetadata() : void
+    # CheckOutputDirectory() : void
+    # StartProcess() : int
+    + Dispose() : void
+    - PrepeareProcess() : Process
+}
+IDisposable <|-- AbstractConverter
+AbstractConverter --> "Measures" Measurer
+AbstractConverter --> "context" Context
+AbstractConverter --> "args" FfmpegArgs
+AbstractConverter --> "process" Process
+AbstractConverter --> "metadata" FfmpegMetadata
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class FileOption {
+    + Input : string <<get>> <<set>>
+    + Output : string <<get>> <<set>>
+    + OutputFileName : string? <<get>> <<set>>
+    + FileOption()
+    + FileOption(input:string, output:string)
+    + FileOption(options:EndpointOptions)
+    + {static} GetFileOptionsFromList(inputFiles:List<string>, outputDirectory:string) : List<FileOption>
+    + {static} GetFileOptionsFromDirectory(inputDirectory:string, outputDirectory:string, searchCriteria:string, recursive:bool) : List<FileOption>
+    + {static} GetFileOptionsFromDirectory(inputDirectory:string, outputDirectory:string, searchCriteria:List<string>, recursive:bool) : List<FileOption>
+    + <<override>> ToString() : string
+}
+@enduml

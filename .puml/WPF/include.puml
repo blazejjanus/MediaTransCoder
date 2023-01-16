@@ -1,0 +1,23 @@
+@startuml
+!include .\\.\MediaTransCoderWPF\App.xaml.puml
+!include .\\.\MediaTransCoderWPF\AssemblyInfo.puml
+!include .\\.\MediaTransCoderWPF\MainWindow.xaml.puml
+!include .\\Common\Delegates.puml
+!include .\\Common\IRefreshableControl.puml
+!include .\\Common\WPFConfig.puml
+!include .\\Common\WPFContext.puml
+!include .\\Common\WPFDisplay.puml
+!include .\\Controls\AudioOptionBox.xaml.puml
+!include .\\Controls\FileOptionBox.xaml.puml
+!include .\\Controls\ImageOptionBox.xaml.puml
+!include .\\Controls\NumberInput.xaml.puml
+!include .\\Controls\PercentBar.xaml.puml
+!include .\\Controls\PresetControl.xaml.puml
+!include .\\Controls\ResolutionControl.xaml.puml
+!include .\\Controls\VideoOptionBox.xaml.puml
+!include .\\Views\AudioView.xaml.puml
+!include .\\Views\ImageView.xaml.puml
+!include .\\Views\MenuView.xaml.puml
+!include .\\Views\SettingsView.xaml.puml
+!include .\\Views\VideoView.xaml.puml
+@enduml

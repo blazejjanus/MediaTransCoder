@@ -1,0 +1,6 @@
+@startuml
+class Compatibility <<static>> <<partial>> {
+    + {static} GetCompatibleVideoCodecs(format:ContainerFormat) : List<VideoCodecs>
+    + {static} GetDefaultVideoCodec(format:ContainerFormat) : VideoCodecs?
+}
+@enduml

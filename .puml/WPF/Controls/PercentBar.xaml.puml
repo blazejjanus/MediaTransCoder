@@ -1,0 +1,12 @@
+@startuml
+class PercentBar <<partial>> {
+    + Description : string <<get>> <<set>>
+    + Value : int? <<get>> <<set>>
+    + PercentBar()
+    - barInput_ValueChanged(sender:object, e:RoutedPropertyChangedEventArgs<double>) : void
+    - barMinLabel_PreviewMouseDown(sender:object, e:MouseButtonEventArgs) : void
+    - barZeroLabel_PreviewMouseDown(sender:object, e:MouseButtonEventArgs) : void
+    - barMaxLabel_PreviewMouseDown(sender:object, e:MouseButtonEventArgs) : void
+}
+UserControl <|-- PercentBar
+@enduml

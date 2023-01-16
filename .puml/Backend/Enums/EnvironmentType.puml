@@ -1,0 +1,7 @@
+@startuml
+enum EnvironmentType {
+    Production,
+    Test,
+    Development,
+}
+@enduml

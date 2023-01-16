@@ -1,0 +1,18 @@
+@startuml
+class VideoView <<partial>> {
+    + WindowTitle : string <<get>>
+    + VideoView(window:MainWindow)
+    + DisplayOutput(message:string) : void
+    + Refresh() : void
+    + PreFillForm() : void
+    - backButton_Click(sender:object, e:RoutedEventArgs) : void
+    - formatInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - Validate() : bool
+    - convertButton_Click(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- VideoView
+IRefreshableControl <|-- VideoView
+VideoView --> "Format" ContainerFormat
+VideoView --> "format" ContainerFormat
+VideoView --> "window" MainWindow
+@enduml

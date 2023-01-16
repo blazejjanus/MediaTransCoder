@@ -1,0 +1,7 @@
+@startuml
+enum PresetType {
+    AUDIO,
+    VIDEO,
+    IMAGE,
+}
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class EnvironmentPathes {
+    + RootDirectory : string <<get>>
+    + LogDirectory : string <<get>>
+    - {static} instance : EnvironmentPathes?
+    - EnvironmentPathes()
+    + {static} Get() : EnvironmentPathes
+}
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+class HardwareConfig {
+    + CPUCores : int <<get>> <<set>>
+    + MaxCPUCores : int <<get>> <<set>>
+    + HardwareConfig()
+}
+HardwareConfig --> "GPU" GPUType
+@enduml

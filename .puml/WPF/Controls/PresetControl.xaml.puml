@@ -1,0 +1,18 @@
+@startuml
+class PresetControl <<partial>> {
+    + UsePreset : bool <<get>>
+    <<internal>> ParentView : IRefreshableControl? <<get>> <<set>>
+    - usePreset : bool
+    + PresetControl()
+    + GetPreset() : Preset?
+    - PreFillTemplate() : void
+    - purposeInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - qualityInput_SelectionChanged(sender:object, e:SelectionChangedEventArgs) : void
+    - presetCheck_Checked(sender:object, e:RoutedEventArgs) : void
+    - presetCheck_Unchecked(sender:object, e:RoutedEventArgs) : void
+}
+UserControl <|-- PresetControl
+PresetControl --> "Type" PresetType
+PresetControl --> "target" PresetTarget
+PresetControl --> "quality" PresetQuality
+@enduml

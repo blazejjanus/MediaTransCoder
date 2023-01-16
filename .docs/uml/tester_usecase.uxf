@@ -1,0 +1,29 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLGeneric</id><coordinates><x>430</x><y>140</y><w>210</w><h>360</h></coordinates><panel_attributes>MediaTransCoder
+CLI
+halign=left</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>430</x><y>540</y><w>210</w><h>200</h></coordinates><panel_attributes>MediaTransCoder
+Tests
+halign=left</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>440</x><y>180</y><w>130</w><h>70</h></coordinates><panel_attributes>Use Case
+--
+Definiowanie
+scenariuszy
+testowych
+valign=top</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLActor</id><coordinates><x>120</x><y>470</y><w>60</w><h>110</h></coordinates><panel_attributes>Tester</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>440</x><y>580</y><w>120</w><h>60</h></coordinates><panel_attributes>Use Case
+--
+Testy jednostkowe
+valign=top</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>440</x><y>650</y><w>130</w><h>80</h></coordinates><panel_attributes>Use Case
+--
+Wbudowane
+testy 
+komaptybilnosci
+valign=top</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>440</x><y>260</y><w>130</w><h>70</h></coordinates><panel_attributes>Use Case
+--
+Wywołanie gotowych
+scenariuszy
+testowych
+valign=top</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>440</x><y>340</y><w>130</w><h>70</h></coordinates><panel_attributes>Use Case
+--
+Zapis logów z testów
+valign=top</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLUseCase</id><coordinates><x>440</x><y>420</y><w>130</w><h>70</h></coordinates><panel_attributes>Use Case
+--
+Testy wydajności
+valign=top</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>210</y><w>290</w><h>280</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;260;270;10</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>290</y><w>290</w><h>210</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;190;270;10</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>360</y><w>290</w><h>150</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;130;270;10</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>440</y><w>290</w><h>80</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;60;270;10</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>510</y><w>290</w><h>120</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;270;100</additional_attributes></element><element><id>Relation</id><coordinates><x>170</x><y>530</y><w>290</w><h>180</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;270;160</additional_attributes></element></diagram>
