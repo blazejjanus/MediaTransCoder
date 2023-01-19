@@ -35,7 +35,7 @@ namespace MediaTransCoder.Backend {
         public AbstractConverter(FfmpegArgs args, OnProgressCallback? progressCallback, OnMetadataUpdateCallback? metadataCallback) {
             context = Context.Get();
             this.args = args;
-            process = PrepeareProcess();
+            process = PrepareProcess();
             ProgressCallback = progressCallback;
             MetadataCallback = metadataCallback;
             metadata = new FfmpegMetadata();
@@ -153,7 +153,7 @@ namespace MediaTransCoder.Backend {
             }
         }
 
-        private Process PrepeareProcess() {
+        private Process PrepareProcess() {
             var proc = new Process();
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.CreateNoWindow = true;
