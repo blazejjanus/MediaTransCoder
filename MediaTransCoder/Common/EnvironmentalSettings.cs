@@ -1,4 +1,6 @@
-﻿namespace MediaTransCoder.Backend {
+﻿using System.Diagnostics;
+
+namespace MediaTransCoder.Backend {
     public class EnvironmentalSettings {
         private static EnvironmentalSettings? instance;
         private EnvironmentalSettings() {
@@ -14,13 +16,13 @@
                 }
             }
             LogPath = Path.Combine(RootPath, ".logs");
-            if(!File.Exists(Path.Combine(RootPath, ".config.josn"))){
+            if (!File.Exists(Path.Combine(RootPath, ".config.josn"))) {
                 ConfigPath = RootPath;
             } else {
                 if (!File.Exists(Path.Combine(RootPath, ".config.josn"))) {
                     ConfigPath = RootPath;
                 } else {
-                    ConfigPath = Path.Combine(RootPath, ".config");
+                    ConfigPath = Path.Combine(RootPath, ".config/");
                 }
             }
         }

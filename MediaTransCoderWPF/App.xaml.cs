@@ -22,7 +22,16 @@ namespace MediaTransCoder.WPF
             TestingEnvironment.RootPath = env.RootPath;
             Context = WPFContext.Get();
             Context.Display = WPFDisplay.GetInstance();
-            WPFConfig config = new WPFConfig();
+            WPFConfig config = WPFConfig.TryRead();
+            if (!config.WasRead) {
+                config.Backend = Endpoint.FirstTimeSetup();
+                Context.Display.Send("Nie można odczytać ustawień, zostaną wprowadzone ustawienia domyślne.", MessageType.WARNING);
+                if (config.Backend.FfmpegPath == null) {
+                    Context.Display.Send("Nie znaleziono Ffmpeg! Upewnij się, ze został on zainstalowany, oraz że jest dodany do zmiennych środowiskowych, lub jego ścieżka znajduje się w pliku config.json");
+                }
+                config.SaveConfig();
+            }
+            /*
             if (File.Exists(env.ConfigPath + "config.json")) {
                 config = WPFConfig.ReadConfig();
             } else {
@@ -33,6 +42,7 @@ namespace MediaTransCoder.WPF
                 }
                 config.SaveConfig();
             }
+            */
             Context.Config = config;
             Context.Backend = new Endpoint(Context.Config.Backend, Context.Display);
             Context.Backend.IsDebug = false;

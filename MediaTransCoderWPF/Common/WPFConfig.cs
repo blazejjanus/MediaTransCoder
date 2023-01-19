@@ -4,11 +4,13 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Windows.Automation.Text;
 
 namespace MediaTransCoder.WPF {
     internal class WPFConfig {
         [JsonPropertyName("Backend")]
         public BackendConfig Backend { get; set; }
+        public bool WasRead { get; private set; } = false;
         [JsonIgnore]
         private static WPFConfig? instance;
 
@@ -35,6 +37,7 @@ namespace MediaTransCoder.WPF {
             var config = JsonSerializer.Deserialize<WPFConfig>(File.ReadAllText(env.ConfigPath + "config.json"));
             if (config != null) {
                 Set(config);
+                config.WasRead = true;
                 return config;
             } else {
                 throw new Exception("Cannot read config!");
@@ -45,6 +48,7 @@ namespace MediaTransCoder.WPF {
             try
             {
                 instance = ReadConfig();
+                instance.WasRead = true;
             } catch (Exception exc) {
                 Debug.WriteLine(exc.Message);
                 instance = Defaults();
