@@ -1,0 +1,21 @@
+@startuml
+class TestDisplay {
+    - {static} instance : TestDisplay?
+    - {static} GUI : IDisplay? = null
+    - logFile : string? = null
+    + LogFile : string? <<get>> <<set>>
+    + ShowProgress : bool <<get>> <<set>> = true
+    - TestDisplay()
+    + {static} GetInstance() : TestDisplay
+    + Init(gui:IDisplay) : void
+    + Init(gui:IDisplay, logFile:string) : void
+    + GetBool(message:string) : bool
+    + Read(message:string, defaultValue:string) : string
+    + Send(message:string, type:MessageType) : void
+    + UpdateProgress(progress:double) : void
+    + ShowResults(results:Measurer) : void
+    + Log(message:string, type:MessageType) : void
+    - Display(message:string, type:MessageType) : void
+}
+IDisplay <|-- TestDisplay
+@enduml

@@ -1,0 +1,15 @@
+@startuml
+class CompatibilityTests <<static>> {
+    - {static} Backend : Endpoint?
+    - {static} Config : BackendConfig?
+    - {static} LogPath : string? = null
+    {static} CompatibilityTests()
+    + {static} TestCompatibilityInfo(verbose:bool) : void
+    + {static} TestCodecResolutionCompatibility() : void
+    + {static} TestAudioSamplingFrequency(verbose:bool) : void
+    + {static} TestAudioBitRate(verbose:bool) : void
+}
+CompatibilityTests o-> "Pathes" EnvironmentPathes
+CompatibilityTests o-> "Display" TestDisplay
+CompatibilityTests o-> "Validator" ConversionValidator
+@enduml

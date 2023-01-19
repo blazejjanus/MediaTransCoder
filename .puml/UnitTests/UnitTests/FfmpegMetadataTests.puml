@@ -1,0 +1,8 @@
+@startuml
+class FfmpegMetadataTests {
+    + FfmpegMetadataTests()
+    + ReadVideoMetadata() : void
+    + ReadAudioMetadata() : void
+}
+FfmpegMetadataTests o-> "env" TestingEnvironment
+@enduml

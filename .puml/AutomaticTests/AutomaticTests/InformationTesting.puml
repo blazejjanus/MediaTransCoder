@@ -1,0 +1,9 @@
+@startuml
+class InformationTesting <<static>> {
+    + {static} GetExtensions(searchCriteria:bool) : void
+    + {static} GetCompatibilityLists() : void
+    + {static} TestExtensionsGeneration() : void
+}
+InformationTesting o-> "Pathes" EnvironmentPathes
+InformationTesting o-> "Display" TestDisplay
+@enduml

@@ -1,0 +1,8 @@
+@startuml
+!include .\\.\AutomaticTests\CompatibilityTests.puml
+!include .\\.\AutomaticTests\ConversionMeasuresTest.puml
+!include .\\.\AutomaticTests\ImageTests.puml
+!include .\\.\AutomaticTests\InformationTesting.puml
+!include .\\.\AutomaticTests\TestDisplay.puml
+!include .\\.\AutomaticTests\TryFfmpeg.puml
+@enduml

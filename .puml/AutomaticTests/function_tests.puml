@@ -1,0 +1,4 @@
+@startuml
+!include .puml\AutomaticTests\AutomaticTests\InformationTesting.puml
+!include .puml\AutomaticTests\AutomaticTests\ConversionMeasuresTest.puml
+@enduml

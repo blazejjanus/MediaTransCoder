@@ -1,0 +1,12 @@
+@startuml
+class TryFfmpeg {
+    + Verbose : bool <<get>> <<set>> = false
+    + TryFfmpeg(backend:Endpoint)
+    + Audio(options:EndpointOptions) : bool
+    + Video(options:EndpointOptions) : bool
+    + Image(options:EndpointOptions) : bool
+}
+TryFfmpeg --> "Backend" Endpoint
+TryFfmpeg o-> "Display" TestDisplay
+TryFfmpeg o-> "Validator" ConversionValidator
+@enduml

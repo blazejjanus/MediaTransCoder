@@ -1,0 +1,15 @@
+@startuml
+class ConversionMeasuresTest <<static>> {
+    - {static} Backend : Endpoint?
+    - {static} Config : BackendConfig?
+    - {static} LogPath : string? = null
+    {static} ConversionMeasuresTest()
+    + {static} Measure(verbose:bool) : void
+    + {static} MeasureAudio(verbose:bool) : void
+    + {static} MeasureVideo(verbose:bool) : void
+    + {static} MeasureImage(verbose:bool) : void
+}
+ConversionMeasuresTest o-> "Pathes" EnvironmentPathes
+ConversionMeasuresTest o-> "Display" TestDisplay
+ConversionMeasuresTest o-> "Validator" ConversionValidator
+@enduml

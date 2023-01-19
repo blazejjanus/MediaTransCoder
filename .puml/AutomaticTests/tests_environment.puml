@@ -1,0 +1,5 @@
+@startuml
+!include .puml\AutomaticTests\AutomaticTests\TestDisplay.puml
+!include .puml\Backend\Common\Shared\EnvironmentPathes.puml
+!include .puml\Backend\Common\Shared\TestingEnvironment.puml
+@enduml

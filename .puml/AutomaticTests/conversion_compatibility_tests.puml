@@ -1,0 +1,4 @@
+@startuml
+!include .puml\AutomaticTests\AutomaticTests\CompatibilityTests.puml
+!include .puml\AutomaticTests\AutomaticTests\TryFfmpeg.puml
+@enduml

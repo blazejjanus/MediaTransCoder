@@ -1,0 +1,5 @@
+@startuml
+class Mocker <<static>> {
+    <<internal>> {static} MockContext() : void
+}
+@enduml

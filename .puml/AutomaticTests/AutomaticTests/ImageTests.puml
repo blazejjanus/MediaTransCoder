@@ -1,0 +1,12 @@
+@startuml
+class ImageTests <<static>> {
+    - {static} Backend : Endpoint?
+    - {static} Config : BackendConfig?
+    {static} ImageTests()
+    + {static} TestFormats(options:EndpointOptions?, verbose:bool) : void
+    + {static} TestJPGCompression(verbose:bool) : void
+    + {static} TestEffects(verbose:bool) : void
+}
+ImageTests o-> "Pathes" EnvironmentPathes
+ImageTests o-> "Display" TestDisplay
+@enduml

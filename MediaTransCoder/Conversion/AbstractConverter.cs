@@ -94,7 +94,7 @@ namespace MediaTransCoder.Backend {
                 if (File.Exists(args.Files.Output)) {
                     File.Delete(args.Files.Output); //Remove uncompleted conversion file
                 }
-                throw new Exception("Fmmpeg exited with status code: " + process.ExitCode, new Exception(errorString));
+                throw new Exception("Ffmpeg exited with status code: " + process.ExitCode, new Exception(errorString));
             }
         }
 

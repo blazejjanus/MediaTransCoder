@@ -154,9 +154,9 @@ namespace MediaTransCoder.Backend {
                 Output = output,
                 InputOption = InputOptions.FILE,
                 AudioOnly = true,
-                Format = ContainerFormat.avi,
+                Format = ContainerFormat.ogg,
                 Audio = new AudioOptions() {
-                    Codec = AudioCodecs.mp3,
+                    Codec = AudioCodecs.libopus,
                     BitRate = AudioBitRate.abr192,
                     AudioChannels = 2,
                     SamplingRate = SamplingFrequency.ar48k
@@ -189,10 +189,8 @@ namespace MediaTransCoder.Backend {
                 Video = null,
                 Audio = null,
                 Image = new ImageOptions() {
-                    //Format = ImageFormat.JPG,
                     Format = ImageFormat.PNG,
                     Size = new System.Numerics.Vector2(1920, 1080),
-                    //CompressionLevel = 5,
                     PixelFormat = PixelFormats.RGB24,
                     Brightness = null,
                     Contrast = null,
