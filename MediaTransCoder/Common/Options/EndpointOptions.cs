@@ -35,7 +35,7 @@ namespace MediaTransCoder.Backend {
         /// </summary>
         public string? OutputFileName { get; set; }
         /// <summary>
-        /// Determines what type of input will be procesed, may be file, directory or recursive (directory and all subdirectories)
+        /// Determines what type of input will be processed, may be file, directory or recursive (directory and all subdirectories)
         /// </summary>
         public InputOptions InputOption { get; set; }
         /// <summary>

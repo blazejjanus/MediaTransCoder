@@ -1,6 +1,6 @@
 ﻿namespace MediaTransCoder.Backend {
     /// <summary>
-    /// Supported container formats. Use Name to get command, use Command to get dispalyed name.
+    /// Supported container formats. Use Name to get command, use Command to get displayed name.
     /// </summary>
     public enum ContainerFormat {
         [ContainerFormat("webm", "WebM", ".webm", null)]
