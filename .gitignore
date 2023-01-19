@@ -353,3 +353,4 @@ MigrationBackup/
 /.config/config.json
 /.config/config.json.backup
 /.logs
+/.vscode
