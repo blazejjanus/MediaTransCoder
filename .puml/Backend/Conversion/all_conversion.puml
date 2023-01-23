@@ -1,0 +1,16 @@
+@startuml
+abstract class AbstractConverter {
+    + AbstractConverter(args:FfmpegArgs, progressCallback:OnProgressCallback?, metadataCallback:OnMetadataUpdateCallback?)
+    + {abstract} Convert() : int
+    # {abstract} FfmpegOutputHandler(sendingProcess:object, outLine:DataReceivedEventArgs) : void
+}
+class AudioConverter {
+}
+class VideoConverter {
+}
+class ImageConverter {
+}
+AbstractConverter <|-- AudioConverter
+AbstractConverter <|-- VideoConverter
+AbstractConverter <|-- ImageConverter
+@enduml

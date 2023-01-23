@@ -18,7 +18,7 @@
         /// <summary>
         /// Endpoint options for preset
         /// </summary>
-        public EndpointOptions Options { get; private set; }
+        public EndpointOptions Options { get; internal set; }
 
         internal Preset(PresetType type) {
             Type = type;

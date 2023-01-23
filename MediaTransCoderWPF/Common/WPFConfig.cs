@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Windows.Automation.Text;
 
 namespace MediaTransCoder.WPF {
     internal class WPFConfig {
@@ -45,8 +44,7 @@ namespace MediaTransCoder.WPF {
         }
 
         public static WPFConfig TryRead() {
-            try
-            {
+            try {
                 instance = ReadConfig();
                 instance.WasRead = true;
             } catch (Exception exc) {
