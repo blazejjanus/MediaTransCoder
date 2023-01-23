@@ -107,6 +107,7 @@ namespace MediaTransCoder.Backend {
 
         public static Preset GetVideo(PresetTarget target, PresetQuality quality) {
             var result = new Preset(PresetType.VIDEO);
+            AudioOptions? audio = GetAudio(target, quality).Options.Audio;
             switch (target) {
                 case PresetTarget.SIZE:
                     if(result.Options.Video == null) {
@@ -114,6 +115,7 @@ namespace MediaTransCoder.Backend {
                     }
                     result.Options.Format = ContainerFormat.webm;
                     result.Options.Video.Codec = VideoCodecs.vp8;
+                    result.Options.Audio = audio;
                     switch (quality) {
                         case PresetQuality.ULTRA:
                             result.Options.Video.Resolution = Resolutions.r2160p;
@@ -145,6 +147,7 @@ namespace MediaTransCoder.Backend {
                     }
                     result.Options.Format = ContainerFormat.matroska;
                     result.Options.Video.Codec = VideoCodecs.mpeg4;
+                    result.Options.Audio = audio;
                     switch (quality) {
                         case PresetQuality.ULTRA:
                             result.Options.Video.Resolution = Resolutions.r4320p;
@@ -176,6 +179,7 @@ namespace MediaTransCoder.Backend {
                     }
                     result.Options.Format = ContainerFormat.matroska;
                     result.Options.Video.Codec = VideoCodecs.hevc;
+                    result.Options.Audio = audio;
                     switch (quality) {
                         case PresetQuality.ULTRA:
                             result.Options.Video.Resolution = Resolutions.r2160p;

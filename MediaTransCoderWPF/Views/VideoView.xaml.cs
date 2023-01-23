@@ -5,7 +5,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using MediaTransCoder.Backend;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MediaTransCoder.WPF.Views {
     /// <summary>
@@ -33,6 +32,7 @@ namespace MediaTransCoder.WPF.Views {
             this.window = window;
             WindowTitle = "MediaTransCoder - Video";
             presetBox.ParentView = this;
+            presetBox.Type = PresetType.VIDEO;
             if(window.Context.Display == null) {
                 throw new NullReferenceException();
             }
@@ -74,6 +74,18 @@ namespace MediaTransCoder.WPF.Views {
             resultsScroll.Visibility = Visibility.Hidden;
             resultText.Text = "";
             if (presetBox.UsePreset == true) {
+                var preset = presetBox.GetPreset();
+                if (preset != null) {
+                    if(preset.Options.Format != null) {
+                        format = preset.Options.Format.Value;
+                    }
+                    if(preset.Options.Video != null) {
+                        videoBox.Video = preset.Options.Video;
+                    }
+                    if(preset.Options.Audio != null) {
+                        audioBox.Audio = preset.Options.Audio;
+                    }
+                }
                 formatInput.IsEnabled = false;
                 videoBox.IsEnabled = false;
                 audioBox.IsEnabled = false;
@@ -81,8 +93,8 @@ namespace MediaTransCoder.WPF.Views {
                 formatInput.IsEnabled = true;
                 videoBox.IsEnabled = true;
                 audioBox.IsEnabled = true;
+                Format = ContainerFormat.matroska;
             }
-            Format = ContainerFormat.matroska;
             List<ContainerFormat> formats = EnumHelper.GetVideoFormats();
             foreach(ContainerFormat format in formats) {
                 formatInput.Items.Add(EnumHelper.GetName(format));
