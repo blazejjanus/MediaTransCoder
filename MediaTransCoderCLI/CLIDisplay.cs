@@ -69,7 +69,7 @@ namespace MediaTransCoder.CLI {
             }
         }
 
-        private void TimerCallback(object source, ElapsedEventArgs e) {
+        private void TimerCallback(object? source, ElapsedEventArgs e) {
             WasTimeout = true;
         }
 
